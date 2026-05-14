@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Servicios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --gold-dim:   rgba(232, 184, 75, 0.12);
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --blue-dim:   rgba(42, 84, 196, 0.12);
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg-dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+      transition: padding 0.3s;
+    }
+
+    nav.scrolled { padding: 0.65rem 3rem; }
+
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--blue) !important;
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      box-shadow: 0 0 14px rgba(42, 84, 196, 0.35);
+      transition: background 0.3s, box-shadow 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--blue-light) !important; box-shadow: 0 0 22px rgba(42, 84, 196, 0.55) !important; }
+    .nav-cta::after { display: none !important; }
+
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+    .lang-toggle { display: flex; gap: 0.4rem; }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid rgba(42, 84, 196, 0.35);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      color: var(--cream-dim);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(21, 11, 0, 0.98);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      padding: 10rem 5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201, 135, 10, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .page-hero-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      display: block;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .page-hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .page-hero-title span { color: var(--gold); }
+
+    .page-hero-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--cream-dim);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    /* Service anchor nav */
+    .service-anchors {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      padding-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .anchor-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(232, 184, 75, 0.2);
+      border-radius: 50px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .anchor-pill:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(232, 184, 75, 0.06);
+    }
+
+    /* ══ SHARED ══ */
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title span { color: var(--gold); }
+
+    .divider-gold {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 1.8rem;
+    }
+
+    .body-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--cream-dim);
+      margin-bottom: 1.2rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 2px;
+      border: 1px solid var(--blue);
+      transition: all 0.3s;
+      box-shadow: 0 0 18px rgba(42, 84, 196, 0.3);
+    }
+    .btn-primary:hover { background: var(--blue-light); box-shadow: 0 0 28px rgba(42, 84, 196, 0.5); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gold);
+      border: 1px solid rgba(232, 184, 75, 0.35);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); background: rgba(232, 184, 75, 0.07); transform: translateY(-1px); }
+
+    /* ══ SERVICE SECTIONS ══ */
+    .service-section {
+      padding: 7rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-section:nth-child(odd)  { background: var(--bg-section); }
+    .service-section:nth-child(even) { background: var(--bg-dark); }
+
+    /* Flip layout for even sections */
+    .service-section.flip .service-visual { order: 2; }
+    .service-section.flip .service-content { order: 1; }
+
+    /* Visual box */
+    .service-visual {
+      position: relative;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(232, 184, 75, 0.08);
+      overflow: hidden;
+    }
+
+    .service-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(201, 135, 10, 0.1) 0%, transparent 65%);
+    }
+
+    .visual-bg-fol {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.07;
+    }
+
+    .visual-bg-fol svg { width: 90%; height: 90%; }
+
+    .service-emoji {
+      font-size: 7rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 24px rgba(232, 184, 75, 0.3));
+      animation: floatEmoji 4s ease-in-out infinite;
+    }
+
+    .service-number {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 5rem;
+      font-weight: 600;
+      color: rgba(232, 184, 75, 0.06);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Includes list */
+    .includes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin: 1.8rem 0;
+    }
+
+    .include-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--cream-dim);
+      line-height: 1.5;
+    }
+
+    .include-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+
+    .service-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    /* Tag strip */
+    .tag-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.4rem 0;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--blue-light);
+      border: 1px solid rgba(74, 125, 224, 0.25);
+      border-radius: 50px;
+      padding: 0.3rem 0.85rem;
+    }
+
+    /* ══ FAQ / EXTRA INFO ══ */
+    .info-strip {
+      background: #0d0700;
+      padding: 5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      border-top: 1px solid rgba(232, 184, 75, 0.06);
+    }
+
+    .info-card {
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(232, 184, 75, 0.07);
+      transition: background 0.3s;
+    }
+    .info-card:hover { background: rgba(232, 184, 75, 0.03); }
+
+    .info-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+
+    .info-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .info-text {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--cream-dim);
+    }
+
+    /* ══ CTA ══ */
+    .cta-section {
+      background: linear-gradient(135deg, #1e1000 0%, #150b00 50%, #0e1a35 100%);
+      padding: 6rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(42, 84, 196, 0.1) 0%, transparent 70%);
+    }
+
+    .cta-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-title span { color: var(--gold); }
+
+    .cta-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cream-dim);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .cta-actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: #0d0700;
+      padding: 4rem 5rem 2rem;
+      border-top: 1px solid rgba(232, 184, 75, 0.08);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand img { height: 36px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201, 135, 10, 0.25)); }
+    .footer-tagline { font-family: 'Cinzel', serif; font-size: 0.7rem; font-style: italic; color: var(--cream-faint); letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+
+    .footer-social { display: flex; gap: 0.8rem; }
+    .social-link { width: 34px; height: 34px; border: 1px solid rgba(232, 184, 75, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+    .social-link:hover { border-color: var(--gold); background: rgba(232, 184, 75, 0.08); }
+
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--cream); }
+
+    .footer-contact p { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); line-height: 1.9; }
+    .footer-contact a { color: var(--blue-light); text-decoration: none; }
+
+    .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.68rem; color: rgba(240, 228, 204, 0.2); letter-spacing: 0.06em; }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes floatEmoji {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1024px) {
+      .service-section { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 3rem; }
+      .service-section.flip .service-visual { order: 0; }
+      .service-section.flip .service-content { order: 0; }
+      .service-visual { height: 300px; }
+      .info-strip { grid-template-columns: 1fr; padding: 3rem; }
+      .cta-section { padding: 5rem 3rem; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-right .lang-toggle { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 8rem 1.5rem 3rem; }
+      .service-section { padding: 4rem 1.5rem; }
+      .includes-grid { grid-template-columns: 1fr; }
+      .info-strip { padding: 3rem 1.5rem; }
+      .cta-section { padding: 4rem 1.5rem; }
+      footer { padding: 3rem 1.5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+      .service-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="navbar">
+    <a href="home.html" class="nav-logo"><img src="assets/logo_hires.png" alt="ShivaDrops"></a>
+    <ul class="nav-links">
+      <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" class="active" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
+      <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" onclick="toggleMenu()">✕</button>
+    <a href="home.html" onclick="toggleMenu()">Inicio</a>
+    <a href="servicios.html" onclick="toggleMenu()">Servicios</a>
+    <a href="recetas.html" onclick="toggleMenu()">Menús</a>
+    <a href="reservas.html" onclick="toggleMenu()">Reservas</a>
+    <a href="productos.html" onclick="toggleMenu()">Productos</a>
+    <a href="descargas.html" onclick="toggleMenu()">Descargas</a>
+    <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem;">
+      <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en')" id="mob-btn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE HERO ══ -->
+  <div class="page-hero">
+    <span class="page-hero-label" id="hero-label">Pedro Miguel Ormaechea Riera</span>
+    <h1 class="page-hero-title" id="hero-title">Servicios para tu <span>transformación</span></h1>
+    <p class="page-hero-sub" id="hero-sub">Cuatro disciplinas, un camino. Cada servicio es una puerta hacia una versión más consciente, vital y alineada de ti mismo.</p>
+    <div class="service-anchors">
+      <a href="#cocina" class="anchor-pill" id="a1">🍲 Cocinero Holístico</a>
+      <a href="#coach" class="anchor-pill" id="a2">🌿 Coach Alimentación</a>
+      <a href="#breathwork" class="anchor-pill" id="a3">🌬️ Breathwork</a>
+      <a href="#yoga" class="anchor-pill" id="a4">🧘 Yoga</a>
+    </div>
+  </div>
+
+  <!-- ══ SERVICE 1: COCINERO HOLÍSTICO ══ -->
+  <section class="service-section" id="cocina">
+    <div class="service-visual reveal">
+      <div class="visual-bg-fol">
+        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.6"/></svg>
+      </div>
+      <span class="service-emoji">🍲</span>
+      <span class="service-number">01</span>
+    </div>
+    <div class="service-content">
+      <span class="section-label" id="s1-label">Servicio 01</span>
+      <h2 class="section-title reveal" id="s1-title">Cocinero <span>Holístico</span></h2>
+      <div class="divider-gold"></div>
+      <div class="tag-strip reveal reveal-delay-1">
+        <span class="tag" id="s1-t1">Retiros de Yoga</span>
+        <span class="tag" id="s1-t2">Eventos Privados</span>
+        <span class="tag" id="s1-t3">Cocina Ayurvédica</span>
+        <span class="tag" id="s1-t4">Plant-Based</span>
+      </div>
+      <p class="body-text reveal reveal-delay-1" id="s1-body1">
+        La cocina de Pedro es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.
+      </p>
+      <p class="body-text reveal reveal-delay-2" id="s1-body2">
+        Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.
+      </p>
+      <div class="includes-grid reveal reveal-delay-2">
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i1">Menú personalizado al grupo</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i2">Adaptación a restricciones dietarias</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i3">Ingredientes orgánicos y locales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i4">Cocina in situ o catering externo</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i5">Retiros de 1 a 14+ días</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i6">Eventos privados y particulares</span></div>
+      </div>
+      <div class="service-actions reveal reveal-delay-3">
+        <a href="reservas.html" class="btn-primary" id="s1-cta1">Reservar Servicio</a>
+        <a href="contacto.html" class="btn-ghost" id="s1-cta2">Consultar Disponibilidad</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICE 2: COACH ══ -->
+  <section class="service-section flip" id="coach">
+    <div class="service-content">
+      <span class="section-label" id="s2-label">Servicio 02</span>
+      <h2 class="section-title reveal" id="s2-title">Coach de <span>Alimentación Consciente</span></h2>
+      <div class="divider-gold"></div>
+      <div class="tag-strip reveal reveal-delay-1">
+        <span class="tag" id="s2-t1">Coaching Individual</span>
+        <span class="tag" id="s2-t2">Planes Personalizados</span>
+        <span class="tag" id="s2-t3">Ayurveda</span>
+        <span class="tag" id="s2-t4">Online y Presencial</span>
+      </div>
+      <p class="body-text reveal reveal-delay-1" id="s2-body1">
+        Más allá de lo que comemos, está la manera en que nos relacionamos con el alimento. Pedro trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sustentable y gozoso.
+      </p>
+      <p class="body-text reveal reveal-delay-2" id="s2-body2">
+        El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.
+      </p>
+      <div class="includes-grid reveal reveal-delay-2">
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i1">Consulta inicial gratuita</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i2">Plan nutricional personalizado</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i3">Seguimiento continuo</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i4">Recetarios y recursos digitales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i5">Sesiones online y presenciales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s2-i6">Talleres grupales disponibles</span></div>
+      </div>
+      <div class="service-actions reveal reveal-delay-3">
+        <a href="reservas.html" class="btn-primary" id="s2-cta1">Reservar Sesión</a>
+        <a href="contacto.html" class="btn-ghost" id="s2-cta2">Consulta Gratuita</a>
+      </div>
+    </div>
+    <div class="service-visual reveal">
+      <div class="visual-bg-fol">
+        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.6"/></svg>
+      </div>
+      <span class="service-emoji">🌿</span>
+      <span class="service-number">02</span>
+    </div>
+  </section>
+
+  <!-- ══ SERVICE 3: BREATHWORK ══ -->
+  <section class="service-section" id="breathwork">
+    <div class="service-visual reveal">
+      <div class="visual-bg-fol">
+        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.6"/></svg>
+      </div>
+      <span class="service-emoji">🌬️</span>
+      <span class="service-number">03</span>
+    </div>
+    <div class="service-content">
+      <span class="section-label" id="s3-label">Servicio 03</span>
+      <h2 class="section-title reveal" id="s3-title">Facilitador de <span>Breathwork</span></h2>
+      <div class="divider-gold"></div>
+      <div class="tag-strip reveal reveal-delay-1">
+        <span class="tag" id="s3-t1">Rebirthing Breathwork</span>
+        <span class="tag" id="s3-t2">Sanación Holística</span>
+        <span class="tag" id="s3-t3">Individual y Grupal</span>
+        <span class="tag" id="s3-t4">Presencial</span>
+      </div>
+      <p class="body-text reveal reveal-delay-1" id="s3-body1">
+        El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.
+      </p>
+      <p class="body-text reveal reveal-delay-2" id="s3-body2">
+        Pedro acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.
+      </p>
+      <div class="includes-grid reveal reveal-delay-2">
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i1">Sesiones individuales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i2">Círculos grupales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i3">Integración post-sesión</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i4">Disponible en retiros</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i5">Primera consulta gratuita</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i6">Duración: 90–120 minutos</span></div>
+      </div>
+      <div class="service-actions reveal reveal-delay-3">
+        <a href="reservas.html" class="btn-primary" id="s3-cta1">Reservar Sesión</a>
+        <a href="contacto.html" class="btn-ghost" id="s3-cta2">Más Información</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICE 4: YOGA ══ -->
+  <section class="service-section flip" id="yoga">
+    <div class="service-content">
+      <span class="section-label" id="s4-label">Servicio 04</span>
+      <h2 class="section-title reveal" id="s4-title">Instructor de <span>Yoga</span></h2>
+      <div class="divider-gold"></div>
+      <div class="tag-strip reveal reveal-delay-1">
+        <span class="tag" id="s4-t1">Clases Individuales</span>
+        <span class="tag" id="s4-t2">Grupos</span>
+        <span class="tag" id="s4-t3">Movimiento Consciente</span>
+        <span class="tag" id="s4-t4">Meditación</span>
+      </div>
+      <p class="body-text reveal reveal-delay-1" id="s4-body1">
+        Las clases de yoga de Pedro integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.
+      </p>
+      <p class="body-text reveal reveal-delay-2" id="s4-body2">
+        Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.
+      </p>
+      <div class="includes-grid reveal reveal-delay-2">
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i1">Clases individuales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i2">Clases grupales</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i3">Todos los niveles</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i4">Integración con breathwork</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i5">Disponible en retiros</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s4-i6">Online y presencial</span></div>
+      </div>
+      <div class="service-actions reveal reveal-delay-3">
+        <a href="reservas.html" class="btn-primary" id="s4-cta1">Reservar Clase</a>
+        <a href="contacto.html" class="btn-ghost" id="s4-cta2">Consultar Horarios</a>
+      </div>
+    </div>
+    <div class="service-visual reveal">
+      <div class="visual-bg-fol">
+        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.6"/></svg>
+      </div>
+      <span class="service-emoji">🧘</span>
+      <span class="service-number">04</span>
+    </div>
+  </section>
+
+  <!-- ══ INFO STRIP ══ -->
+  <div class="info-strip">
+    <div class="info-card reveal">
+      <span class="info-icon">📍</span>
+      <h3 class="info-title" id="info1-title">Ubicación</h3>
+      <p class="info-text" id="info1-text">Basado en Punta del Este, Uruguay. Disponible para asistir a retiros y eventos en cualquier parte del mundo.</p>
+    </div>
+    <div class="info-card reveal reveal-delay-1">
+      <span class="info-icon">📅</span>
+      <h3 class="info-title" id="info2-title">Disponibilidad</h3>
+      <p class="info-text" id="info2-text">Agenda con al menos 2 semanas de anticipación. Para retiros de varios días se recomienda reservar con 1 mes o más de antelación.</p>
+    </div>
+    <div class="info-card reveal reveal-delay-2">
+      <span class="info-icon">💬</span>
+      <h3 class="info-title" id="info3-title">Primera Consulta</h3>
+      <p class="info-text" id="info3-text">La consulta inicial es gratuita para todos los servicios. Pedro evalúa tus necesidades y propone el enfoque más adecuado para ti.</p>
+    </div>
+  </div>
+
+  <!-- ══ CTA ══ -->
+  <div class="cta-section">
+    <h2 class="cta-title reveal" id="cta-title">¿Cuál es tu próximo <span>paso</span>?</h2>
+    <p class="cta-sub reveal reveal-delay-1" id="cta-sub">Elige el servicio que resuena contigo y da el primer paso hacia tu transformación.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a href="reservas.html" class="btn-primary" id="cta-btn1">Hacer una Reserva</a>
+      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Hablar con Pedro</a>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo_hires.png" alt="ShivaDrops">
+        <p class="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="recetas.html">Menús</a></li>
+          <li><a href="reservas.html">Reservas</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="descargas.html">Descargas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu
+    function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+
+    // Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Language
+    const T = {
+      es: {
+        'hero-label': 'Pedro Miguel Ormaechea Riera',
+        'hero-title': 'Servicios para tu <span>transformación</span>',
+        'hero-sub':   'Cuatro disciplinas, un camino. Cada servicio es una puerta hacia una versión más consciente, vital y alineada de ti mismo.',
+        'a1': '🍲 Cocinero Holístico', 'a2': '🌿 Coach Alimentación', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
+        's1-label': 'Servicio 01', 's1-title': 'Cocinero <span>Holístico</span>',
+        's1-t1':'Retiros de Yoga','s1-t2':'Eventos Privados','s1-t3':'Cocina Ayurvédica','s1-t4':'Plant-Based',
+        's1-body1': 'La cocina de Pedro es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.',
+        's1-body2': 'Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.',
+        's1-i1':'Menú personalizado al grupo','s1-i2':'Adaptación a restricciones dietarias','s1-i3':'Ingredientes orgánicos y locales','s1-i4':'Cocina in situ o catering externo','s1-i5':'Retiros de 1 a 14+ días','s1-i6':'Eventos privados y particulares',
+        's1-cta1':'Reservar Servicio','s1-cta2':'Consultar Disponibilidad',
+        's2-label': 'Servicio 02', 's2-title': 'Coach de <span>Alimentación Consciente</span>',
+        's2-t1':'Coaching Individual','s2-t2':'Planes Personalizados','s2-t3':'Ayurveda','s2-t4':'Online y Presencial',
+        's2-body1': 'Más allá de lo que comemos, está la manera en que nos relacionamos con el alimento. Pedro trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sustentable y gozoso.',
+        's2-body2': 'El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.',
+        's2-i1':'Consulta inicial gratuita','s2-i2':'Plan nutricional personalizado','s2-i3':'Seguimiento continuo','s2-i4':'Recetarios y recursos digitales','s2-i5':'Sesiones online y presenciales','s2-i6':'Talleres grupales disponibles',
+        's2-cta1':'Reservar Sesión','s2-cta2':'Consulta Gratuita',
+        's3-label': 'Servicio 03', 's3-title': 'Facilitador de <span>Breathwork</span>',
+        's3-t1':'Rebirthing Breathwork','s3-t2':'Sanación Holística','s3-t3':'Individual y Grupal','s3-t4':'Presencial',
+        's3-body1': 'El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.',
+        's3-body2': 'Pedro acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.',
+        's3-i1':'Sesiones individuales','s3-i2':'Círculos grupales','s3-i3':'Integración post-sesión','s3-i4':'Disponible en retiros','s3-i5':'Primera consulta gratuita','s3-i6':'Duración: 90–120 minutos',
+        's3-cta1':'Reservar Sesión','s3-cta2':'Más Información',
+        's4-label': 'Servicio 04', 's4-title': 'Instructor de <span>Yoga</span>',
+        's4-t1':'Clases Individuales','s4-t2':'Grupos','s4-t3':'Movimiento Consciente','s4-t4':'Meditación',
+        's4-body1': 'Las clases de yoga de Pedro integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.',
+        's4-body2': 'Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.',
+        's4-i1':'Clases individuales','s4-i2':'Clases grupales','s4-i3':'Todos los niveles','s4-i4':'Integración con breathwork','s4-i5':'Disponible en retiros','s4-i6':'Online y presencial',
+        's4-cta1':'Reservar Clase','s4-cta2':'Consultar Horarios',
+        'info1-title':'Ubicación','info1-text':'Basado en Punta del Este, Uruguay. Disponible para asistir a retiros y eventos en cualquier parte del mundo.',
+        'info2-title':'Disponibilidad','info2-text':'Agenda con al menos 2 semanas de anticipación. Para retiros de varios días se recomienda reservar con 1 mes o más de antelación.',
+        'info3-title':'Primera Consulta','info3-text':'La consulta inicial es gratuita para todos los servicios. Pedro evalúa tus necesidades y propone el enfoque más adecuado para ti.',
+        'cta-title':'¿Cuál es tu próximo <span>paso</span>?','cta-sub':'Elige el servicio que resuena contigo y da el primer paso hacia tu transformación.',
+        'cta-btn1':'Hacer una Reserva','cta-btn2':'Hablar con Pedro',
+      },
+      en: {
+        'hero-label': 'Pedro Miguel Ormaechea Riera',
+        'hero-title': 'Services for your <span>transformation</span>',
+        'hero-sub':   'Four disciplines, one path. Each service is a doorway toward a more conscious, vital and aligned version of yourself.',
+        'a1': '🍲 Holistic Chef', 'a2': '🌿 Nutrition Coach', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
+        's1-label': 'Service 01', 's1-title': 'Holistic <span>Chef</span>',
+        's1-t1':'Yoga Retreats','s1-t2':'Private Events','s1-t3':'Ayurvedic Cuisine','s1-t4':'Plant-Based',
+        's1-body1': "Pedro's kitchen is an act of love and consciousness. Each menu is designed to support the retreat's energy — organic, seasonal and local ingredients, prepared with techniques that honor the intelligence of food.",
+        's1-body2': 'From a regenerating breakfast before pranayama to an integrating dinner at the close of the day, each dish is an offering that nourishes the body without depleting it, sustaining the practice from within.',
+        's1-i1':'Menu tailored to the group','s1-i2':'Dietary restriction adaptation','s1-i3':'Organic and local ingredients','s1-i4':'On-site cooking or catering','s1-i5':'Retreats from 1 to 14+ days','s1-i6':'Private and individual events',
+        's1-cta1':'Book Service','s1-cta2':'Check Availability',
+        's2-label': 'Service 02', 's2-title': '<span>Conscious Nutrition</span> Coach',
+        's2-t1':'Individual Coaching','s2-t2':'Personalized Plans','s2-t3':'Ayurveda','s2-t4':'Online & In-Person',
+        's2-body1': 'Beyond what we eat, it is the way we relate to food. Pedro works with you to understand your patterns, heal your relationship with food and build a nourishing lifestyle that is sustainable and joyful.',
+        's2-body2': 'The process integrates Ayurvedic principles, intuitive eating techniques and self-knowledge tools so that nutrition becomes an act of love toward oneself.',
+        's2-i1':'Free initial consultation','s2-i2':'Personalized nutrition plan','s2-i3':'Ongoing follow-up','s2-i4':'Recipe books & digital resources','s2-i5':'Online and in-person sessions','s2-i6':'Group workshops available',
+        's2-cta1':'Book Session','s2-cta2':'Free Consultation',
+        's3-label': 'Service 03', 's3-title': '<span>Breathwork</span> Facilitator',
+        's3-t1':'Rebirthing Breathwork','s3-t2':'Holistic Healing','s3-t3':'Individual & Group','s3-t4':'In-Person',
+        's3-body1': 'Rebirthing Breathwork is a continuous conscious breathing technique that allows access to memories, emotions and patterns stored in the body — releasing what no longer serves and activating vital energy in its purest expression.',
+        's3-body2': 'Pedro accompanies each process with presence and care, creating a safe space where breathing becomes the key to accessing deeper layers of consciousness and wellbeing.',
+        's3-i1':'Individual sessions','s3-i2':'Group circles','s3-i3':'Post-session integration','s3-i4':'Available at retreats','s3-i5':'Free first consultation','s3-i6':'Duration: 90–120 minutes',
+        's3-cta1':'Book Session','s3-cta2':'More Information',
+        's4-label': 'Service 04', 's4-title': 'Yoga <span>Instructor</span>',
+        's4-t1':'Individual Classes','s4-t2':'Group Classes','s4-t3':'Conscious Movement','s4-t4':'Meditation',
+        's4-body1': "Pedro's yoga classes integrate conscious movement with breathing, meditation and the philosophy of holistic wellbeing. It's not just exercise — it's a practice that transforms the relationship with one's own body and with life.",
+        's4-body2': 'Each class adapts to the level and needs of the practitioner, creating a safe, deep and transformative space of exploration — both for those taking their first steps and for experienced practitioners.',
+        's4-i1':'Individual classes','s4-i2':'Group classes','s4-i3':'All levels','s4-i4':'Integration with breathwork','s4-i5':'Available at retreats','s4-i6':'Online and in-person',
+        's4-cta1':'Book Class','s4-cta2':'Check Schedule',
+        'info1-title':'Location','info1-text':'Based in Punta del Este, Uruguay. Available to assist retreats and events anywhere in the world.',
+        'info2-title':'Availability','info2-text':'Book at least 2 weeks in advance. For multi-day retreats, booking 1 month or more ahead is recommended.',
+        'info3-title':'First Consultation','info3-text':'The initial consultation is free for all services. Pedro assesses your needs and proposes the most suitable approach for you.',
+        'cta-title':'What is your next <span>step</span>?','cta-sub':'Choose the service that resonates with you and take the first step toward your transformation.',
+        'cta-btn1':'Make a Booking','cta-btn2':'Talk to Pedro',
+      }
+    };
+
+    function setLang(lang) {
+      Object.keys(T[lang]).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = T[lang][id];
+      });
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.documentElement.lang = lang;
+      ['btn-es','btn-en','mob-btn-es','mob-btn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active',
+          (lang === 'es' && id.includes('es')) || (lang === 'en' && id.includes('en'))
+        );
+      });
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    const saved = localStorage.getItem('sd-lang');
+    if (saved && saved !== 'es') setLang(saved);
+  </script>
+</body>
+</html>

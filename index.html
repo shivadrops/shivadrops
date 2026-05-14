@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Raleway:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #261400;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.7);
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── Flower of Life background ── */
+    .fol-bg {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .fol-bg svg {
+      width: min(90vw, 90vh);
+      height: min(90vw, 90vh);
+      opacity: 0.04;
+      animation: slowSpin 80s linear infinite;
+    }
+
+    /* ── Radial glow ── */
+    .glow {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 50% 48%,
+        rgba(201, 135, 10, 0.18) 0%,
+        transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 1.6rem;
+      right: 2rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid rgba(42, 84, 196, 0.35);
+      border-radius: 4px;
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(237, 232, 220, 0.5);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .lang-btn.active,
+    .lang-btn:hover {
+      border-color: var(--blue-light);
+      color: var(--blue-light);
+    }
+
+    .lang-flag { font-size: 0.9rem; }
+
+    /* ── Main card ── */
+    .landing {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      margin-top: -5vh;
+      max-width: 1200px;
+      width: 100%;
+      animation: fadeIn 1.4s ease both;
+    }
+
+    /* ── Logo ── */
+    .logo-wrap {
+      margin-bottom: 0.6rem;
+      animation: floatUp 1.6s ease both;
+    }
+
+    .logo-wrap img {
+      width: min(1000px, 95vw);
+      height: auto;
+      filter: drop-shadow(0 0 32px rgba(201, 135, 10, 0.25))
+              drop-shadow(0 0 10px rgba(232, 184, 75, 0.2));
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue-light), transparent);
+      margin-bottom: 0.8rem;
+      animation: fadeIn 2s ease 0.4s both;
+    }
+
+    /* ── Description ── */
+    .description {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.75rem, 2vw, 0.88rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      line-height: 1.9;
+      color: var(--cream-dim);
+      margin-bottom: 0.4rem;
+      animation: fadeIn 2s ease 0.5s both;
+    }
+
+    .tagline {
+      font-family: 'Raleway', sans-serif;
+      font-style: italic;
+      font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(232, 184, 75, 0.65);
+      margin-bottom: 1.2rem;
+      animation: fadeIn 2s ease 0.7s both;
+    }
+
+    /* ── Ingresar button ── */
+    .btn-enter {
+      display: inline-block;
+      padding: 0.85rem 3.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 50%, var(--blue) 100%);
+      background-size: 200% 100%;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background-position 0.5s ease, box-shadow 0.4s ease, transform 0.2s ease;
+      box-shadow: 0 0 20px rgba(42, 84, 196, 0.35), 0 2px 8px rgba(0,0,0,0.5);
+      animation: fadeIn 2s ease 0.9s both;
+    }
+
+    .btn-enter:hover {
+      background-position: 100% 0;
+      box-shadow: 0 0 35px rgba(42, 84, 196, 0.55), 0 4px 16px rgba(0,0,0,0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-enter:active { transform: translateY(0); }
+
+    /* ── Animations ── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-height: 600px) {
+      .logo-wrap { margin-bottom: 1.4rem; }
+      .tagline   { margin-bottom: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Flower of Life -->
+  <div class="fol-bg">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.6"/>
+      <circle cx="200" cy="200" r="160" stroke="#4a7de0" stroke-width="0.4"/>
+      <!-- Flower of Life petals - 6 outer circles -->
+      <circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <!-- Center circle -->
+      <circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+      <!-- Inner ring -->
+      <circle cx="200" cy="200" r="40" stroke="#4a7de0" stroke-width="0.4"/>
+      <!-- Extra outer petals -->
+      <circle cx="200" cy="60"  r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      <circle cx="200" cy="340" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      <circle cx="79.4"  cy="130" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      <circle cx="320.6" cy="130" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      <circle cx="79.4"  cy="270" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      <circle cx="320.6" cy="270" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+    </svg>
+  </div>
+
+  <!-- Glow -->
+  <div class="glow"></div>
+
+  <!-- Language toggle -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('es')" id="btn-es">
+      <span class="lang-flag">🇪🇸</span> ES
+    </button>
+    <button class="lang-btn" onclick="setLang('en')" id="btn-en">
+      <span class="lang-flag">🇬🇧</span> EN
+    </button>
+  </div>
+
+  <!-- Landing content -->
+  <main class="landing">
+    <div class="logo-wrap">
+      <img src="assets/logo_hires.png" alt="ShivaDrops">
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="description" id="desc">
+      Nutrición consciente, alimento medicina y bienestar integral<br>
+      para el cuerpo, la mente y el espíritu.
+    </p>
+
+    <p class="tagline" id="tagline">
+      al andar se hace el camino
+    </p>
+
+    <a href="home.html" class="btn-enter" id="btn-enter">Ingresar</a>
+  </main>
+
+  <script>
+    const translations = {
+      es: {
+        desc:    'Nutrición consciente, alimento medicina y bienestar integral<br>para el cuerpo, la mente y el espíritu.',
+        tagline: 'al andar se hace el camino',
+        enter:   'Ingresar',
+      },
+      en: {
+        desc:    'Conscious nutrition, food as medicine and holistic wellness<br>for the body, mind and spirit.',
+        tagline: 'the path is made by walking',
+        enter:   'Enter',
+      }
+    };
+
+    function setLang(lang) {
+      const t = translations[lang];
+      document.getElementById('desc').innerHTML    = t.desc;
+      document.getElementById('tagline').innerText = t.tagline;
+      document.getElementById('btn-enter').innerText = t.enter;
+      document.documentElement.lang = lang;
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    // Restore last language choice
+    const saved = localStorage.getItem('sd-lang');
+    if (saved && saved !== 'es') setLang(saved);
+  </script>
+</body>
+</html>

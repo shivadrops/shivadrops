@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --gold-dim:   rgba(232, 184, 75, 0.15);
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --blue-dim:   rgba(42, 84, 196, 0.15);
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg-dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════
+       NAV
+    ══════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.65rem 3rem;
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+    }
+
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--blue) !important;
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      box-shadow: 0 0 14px rgba(42, 84, 196, 0.35);
+      transition: background 0.3s, box-shadow 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: var(--blue-light) !important;
+      box-shadow: 0 0 22px rgba(42, 84, 196, 0.55) !important;
+    }
+    .nav-cta::after { display: none !important; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1px solid rgba(42, 84, 196, 0.35);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--cream-dim);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .lang-btn.active, .lang-btn:hover {
+      border-color: var(--blue-light);
+      color: var(--blue-light);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--cream);
+      transition: all 0.3s;
+    }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(21, 11, 0, 0.98);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      background: none; border: none;
+      color: var(--cream-dim);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .hero-fol {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .hero-fol svg {
+      width: min(80vw, 80vh);
+      height: min(80vw, 80vh);
+      opacity: 0.035;
+      animation: slowSpin 100s linear infinite;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 50%,
+          rgba(201, 135, 10, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: clamp(0.85rem, 1.8vw, 1rem);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--cream-dim);
+      max-width: 560px;
+      margin: 0 auto 2.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 2.4rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 2px;
+      border: 1px solid var(--blue);
+      transition: all 0.3s;
+      box-shadow: 0 0 18px rgba(42, 84, 196, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-light);
+      box-shadow: 0 0 28px rgba(42, 84, 196, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      padding: 0.85rem 2.4rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gold);
+      background: transparent;
+      border-radius: 2px;
+      border: 1px solid rgba(232, 184, 75, 0.4);
+      transition: all 0.3s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(232, 184, 75, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+
+    .scroll-hint span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ══════════════════════════════
+       SECTIONS SHARED
+    ══════════════════════════════ */
+    section { padding: 7rem 5rem; }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title span { color: var(--gold); }
+
+    .divider-line {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 2rem;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ══════════════════════════════
+       ABOUT SHIVADROPS
+    ══════════════════════════════ */
+    #about {
+      background: var(--bg-section);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-fol {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.12;
+    }
+
+    .about-fol svg {
+      width: 100%;
+      height: 100%;
+      animation: slowSpin 60s linear infinite reverse;
+    }
+
+    .about-center-glow {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 135, 10, 0.25) 0%, transparent 70%);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-drop {
+      font-size: 5rem;
+      opacity: 0.6;
+      filter: drop-shadow(0 0 20px rgba(232, 184, 75, 0.4));
+    }
+
+    .about-text {}
+
+    .about-body {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--cream-dim);
+      margin-bottom: 1.4rem;
+    }
+
+    .about-quote {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--gold);
+      border-left: 2px solid var(--amber);
+      padding-left: 1.4rem;
+      margin: 2rem 0;
+    }
+
+    /* ══════════════════════════════
+       PEDRO
+    ══════════════════════════════ */
+    #pedro {
+      background: var(--bg-dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .pedro-image {
+      position: relative;
+      height: 500px;
+      background: linear-gradient(145deg, #2a1400 0%, #150b00 100%);
+      border: 1px solid rgba(232, 184, 75, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .pedro-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 40% 40%, rgba(201, 135, 10, 0.12) 0%, transparent 65%);
+    }
+
+    .pedro-placeholder {
+      font-size: 6rem;
+      opacity: 0.25;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pedro-image-label {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+      white-space: nowrap;
+    }
+
+    .pedro-text {}
+
+    .pedro-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .pedro-role {
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--blue-light);
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .pedro-body {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--cream-dim);
+      margin-bottom: 1.4rem;
+    }
+
+    .pedro-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(232, 184, 75, 0.1);
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-lbl {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    /* ══════════════════════════════
+       SERVICES PREVIEW
+    ══════════════════════════════ */
+    #servicios-preview {
+      background: var(--bg-section);
+      text-align: center;
+    }
+
+    #servicios-preview .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+      margin-bottom: 3.5rem;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(232, 184, 75, 0.08);
+      padding: 2.8rem 2rem;
+      text-align: left;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--blue-dim) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .service-card:hover { border-color: rgba(74, 125, 224, 0.3); }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.4rem;
+      display: block;
+    }
+
+    .service-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .service-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--cream-dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-link {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+
+    .service-card:hover .service-link { gap: 0.9rem; }
+
+    /* ══════════════════════════════
+       PHILOSOPHY
+    ══════════════════════════════ */
+    #philosophy {
+      background: var(--bg-dark);
+    }
+
+    .philosophy-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .philosophy-pillars {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 4rem;
+    }
+
+    .pillar {
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(232, 184, 75, 0.08);
+      transition: background 0.3s;
+    }
+
+    .pillar:hover { background: rgba(232, 184, 75, 0.04); }
+
+    .pillar-symbol {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .pillar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pillar-text {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--cream-dim);
+    }
+
+    /* ══════════════════════════════
+       CTA STRIP
+    ══════════════════════════════ */
+    #cta {
+      background: linear-gradient(135deg, #1e1000 0%, #150b00 50%, #0e1a35 100%);
+      padding: 6rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 50% 50%,
+        rgba(42, 84, 196, 0.1) 0%, transparent 70%);
+    }
+
+    .cta-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-title span { color: var(--gold); }
+
+    .cta-sub {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cream-dim);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: #0d0700;
+      padding: 4rem 5rem 2rem;
+      border-top: 1px solid rgba(232, 184, 75, 0.08);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand img {
+      height: 36px;
+      width: auto;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 6px rgba(201, 135, 10, 0.25));
+    }
+
+    .footer-tagline {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--cream-faint);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .social-link {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(232, 184, 75, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      border-color: var(--gold);
+      background: rgba(232, 184, 75, 0.08);
+    }
+
+    .footer-col-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--cream-faint);
+      text-decoration: none;
+      transition: color 0.3s;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links a:hover { color: var(--cream); }
+
+    .footer-contact p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--cream-faint);
+      line-height: 1.9;
+    }
+
+    .footer-contact a {
+      color: var(--blue-light);
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.68rem;
+      color: rgba(240, 228, 204, 0.2);
+      letter-spacing: 0.06em;
+    }
+
+    /* ══════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50%       { opacity: 1;   transform: scaleY(1); }
+    }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1024px) {
+      section { padding: 5rem 3rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      #about, #pedro { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual, .pedro-image { height: 300px; }
+      .philosophy-inner { grid-template-columns: 1fr; }
+      .philosophy-pillars { grid-template-columns: 1fr 1fr; margin-top: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.65rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-right .lang-toggle { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      #cta { padding: 4rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      footer { padding: 3rem 1.5rem 1.5rem; }
+      .philosophy-pillars { grid-template-columns: 1fr; }
+      .pedro-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="navbar">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo_hires.png" alt="ShivaDrops">
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html" class="active" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
+      <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" onclick="toggleMenu()">✕</button>
+    <a href="home.html" onclick="toggleMenu()" data-es="Inicio" data-en="Home">Inicio</a>
+    <a href="servicios.html" onclick="toggleMenu()" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="recetas.html" onclick="toggleMenu()" data-es="Menús" data-en="Menus">Menús</a>
+    <a href="reservas.html" onclick="toggleMenu()" data-es="Reservas" data-en="Bookings">Reservas</a>
+    <a href="productos.html" onclick="toggleMenu()" data-es="Productos" data-en="Products">Productos</a>
+    <a href="descargas.html" onclick="toggleMenu()" data-es="Descargas" data-en="Downloads">Descargas</a>
+    <a href="contacto.html" onclick="toggleMenu()" data-es="Contacto" data-en="Contact">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem;">
+      <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en')" id="mob-btn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section id="hero">
+    <div class="hero-fol">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="40" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="200" cy="60"  r="70" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="200" cy="340" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="79.4"  cy="130" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="320.6" cy="130" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="79.4"  cy="270" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+        <circle cx="320.6" cy="270" r="70" stroke="#4a7de0" stroke-width="0.3"/>
+      </svg>
+    </div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow" id="hero-eyebrow">Alquimia Vibracional</span>
+      <h1 class="hero-title" id="hero-title">
+        Nutrición <span>consciente</span><br>para el cuerpo,<br>la mente y el espíritu
+      </h1>
+      <p class="hero-sub" id="hero-sub">
+        ShivaDrops es un espacio de transformación donde el alimento se convierte en medicina, el movimiento en meditación, y la vida cotidiana en un camino sagrado.
+      </p>
+      <div class="hero-actions">
+        <a href="servicios.html" class="btn-primary" id="hero-btn1">Ver Servicios</a>
+        <a href="#pedro" class="btn-ghost" id="hero-btn2">Conocer a Pedro</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span id="scroll-label">Explorar</span>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT SHIVADROPS ══ -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-fol">
+        <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.6"/>
+          <circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+          <circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="about-center-glow">
+        <span class="about-drop">💧</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-label" id="about-label">¿Qué es ShivaDrops?</span>
+      <h2 class="section-title reveal" id="about-title">
+        Un camino de <span>sanación</span> a través del alimento
+      </h2>
+      <div class="divider-line"></div>
+      <p class="about-body reveal reveal-delay-1" id="about-body1">
+        ShivaDrops nace de la convicción de que la nutrición consciente es una de las herramientas más poderosas de transformación personal. Integramos la ciencia ayurvédica milenaria con la sabiduría de Pachamama para ofrecer un enfoque holístico del bienestar.
+      </p>
+      <blockquote class="about-quote reveal reveal-delay-2" id="about-quote">
+        "El alimento es medicina. La cocina es un templo. Cada comida, una ofrenda."
+      </blockquote>
+      <p class="about-body reveal reveal-delay-3" id="about-body2">
+        Desde retiros de yoga hasta sesiones de coaching individual, ShivaDrops acompaña cada etapa del camino — con presencia, intención y amor genuino.
+      </p>
+      <a href="servicios.html" class="btn-ghost reveal reveal-delay-4" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:1rem;" id="about-btn">
+        <span id="about-btn-text">Explorar Servicios</span> →
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ PEDRO ══ -->
+  <section id="pedro">
+    <div class="pedro-image reveal">
+      <div class="pedro-placeholder">🧑‍🍳</div>
+      <span class="pedro-image-label" id="pedro-img-label">Pedro Miguel · ShivaDrops</span>
+    </div>
+    <div class="pedro-text">
+      <span class="section-label" id="pedro-label">El Fundador</span>
+      <p class="pedro-name">Pedro Miguel Ormaechea Riera</p>
+      <p class="pedro-role" id="pedro-role">Cocinero Holístico · Coach · Instructor de Yoga · Facilitador de Breathwork</p>
+      <div class="divider-line"></div>
+      <p class="pedro-body reveal reveal-delay-1" id="pedro-body1">
+        Pedro Miguel es cocinero holístico, instructor de yoga y facilitador de Rebirthing Breathwork con más de una década de experiencia en el camino del bienestar. Su visión del alimento como "alquimia vibracional" surge de un profundo proceso de autoconocimiento y conexión con los ciclos naturales.
+      </p>
+      <p class="pedro-body reveal reveal-delay-2" id="pedro-body2">
+        Radicado en Punta del Este, Uruguay, Pedro asiste a retiros y eventos en todo el mundo, llevando su cocina y sus prácticas a cualquier rincón del planeta donde la transformación sea convocada.
+      </p>
+      <div class="pedro-stats reveal reveal-delay-3">
+        <div>
+          <span class="stat-num">10+</span>
+          <span class="stat-lbl" id="stat1-lbl">Años de experiencia</span>
+        </div>
+        <div>
+          <span class="stat-num">4</span>
+          <span class="stat-lbl" id="stat2-lbl">Disciplinas</span>
+        </div>
+        <div>
+          <span class="stat-num">∞</span>
+          <span class="stat-lbl" id="stat3-lbl">Camino continuo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES PREVIEW ══ -->
+  <section id="servicios-preview">
+    <div class="section-header">
+      <span class="section-label" id="serv-label">Lo que ofrezco</span>
+      <h2 class="section-title reveal" id="serv-title">Servicios para tu <span>bienestar</span></h2>
+    </div>
+    <div class="services-grid">
+      <a href="servicios.html" class="service-card reveal">
+        <span class="service-icon">🍲</span>
+        <h3 class="service-name" id="s1-name">Cocinero Holístico</h3>
+        <p class="service-desc" id="s1-desc">Catering para retiros de yoga y eventos privados con cocina consciente, estacional y ayurvédica.</p>
+        <span class="service-link" id="s1-link">Ver más →</span>
+      </a>
+      <a href="servicios.html" class="service-card reveal reveal-delay-1">
+        <span class="service-icon">🌿</span>
+        <h3 class="service-name" id="s2-name">Coach de Alimentación Consciente</h3>
+        <p class="service-desc" id="s2-desc">Planes personalizados para transformar tu relación con el alimento y alcanzar el bienestar integral.</p>
+        <span class="service-link" id="s2-link">Ver más →</span>
+      </a>
+      <a href="servicios.html" class="service-card reveal reveal-delay-2">
+        <span class="service-icon">🌬️</span>
+        <h3 class="service-name" id="s3-name">Facilitador de Breathwork</h3>
+        <p class="service-desc" id="s3-desc">Sesiones de Rebirthing Breathwork para liberar bloqueos, activar la energía vital y expandir la conciencia.</p>
+        <span class="service-link" id="s3-link">Ver más →</span>
+      </a>
+      <a href="servicios.html" class="service-card reveal reveal-delay-3">
+        <span class="service-icon">🧘</span>
+        <h3 class="service-name" id="s4-name">Instructor de Yoga</h3>
+        <p class="service-desc" id="s4-desc">Clases individuales y grupales de yoga que integran el movimiento consciente con la respiración y la meditación.</p>
+        <span class="service-link" id="s4-link">Ver más →</span>
+      </a>
+    </div>
+    <div style="text-align:center;">
+      <a href="reservas.html" class="btn-primary" id="serv-cta">Reservar una Sesión</a>
+    </div>
+  </section>
+
+  <!-- ══ PHILOSOPHY ══ -->
+  <section id="philosophy">
+    <div class="philosophy-inner">
+      <div>
+        <span class="section-label" id="phil-label">Filosofía</span>
+        <h2 class="section-title reveal" id="phil-title">El arte de la <span>nutrición</span> consciente</h2>
+        <div class="divider-line"></div>
+        <p class="about-body reveal reveal-delay-1" id="phil-body">
+          La filosofía de ShivaDrops se asienta en la convicción de que el bienestar no es un destino sino un camino vivo. Cada elección — lo que comemos, cómo respiramos, cómo nos movemos — es una oportunidad de alinearnos con nuestra naturaleza más profunda.
+        </p>
+      </div>
+    </div>
+    <div class="philosophy-pillars">
+      <div class="pillar reveal">
+        <span class="pillar-symbol">🌱</span>
+        <h3 class="pillar-title" id="p1-title">Alimento Medicina</h3>
+        <p class="pillar-text" id="p1-text">La nutrición orgánica y consciente como herramienta de sanación. Cada ingrediente elegido con intención, cada plato preparado con amor.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-1">
+        <span class="pillar-symbol">☀️</span>
+        <h3 class="pillar-title" id="p2-title">Ciencia Ayurvédica</h3>
+        <p class="pillar-text" id="p2-text">Integramos la sabiduría milenaria del Ayurveda para equilibrar los doshas y acompañar los ciclos naturales del cuerpo y la mente.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <span class="pillar-symbol">🌬️</span>
+        <h3 class="pillar-title" id="p3-title">Respiración y Movimiento</h3>
+        <p class="pillar-text" id="p3-text">El yoga y el breathwork como prácticas que amplifican los beneficios de la nutrición, creando un sistema integral de bienestar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA ══ -->
+  <section id="cta">
+    <h2 class="cta-title reveal" id="cta-title">¿Listo para comenzar tu <span>camino</span>?</h2>
+    <p class="cta-sub reveal reveal-delay-1" id="cta-sub">Reserva una consulta gratuita y descubre cómo ShivaDrops puede acompañarte.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a href="reservas.html" class="btn-primary" id="cta-btn1">Hacer una Reserva</a>
+      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Contactar a Pedro</a>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo_hires.png" alt="ShivaDrops">
+        <p class="footer-tagline" id="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title" id="footer-nav-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+          <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+          <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
+          <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+          <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title" id="footer-contact-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy" id="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy" id="footer-rights">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Mobile menu ──
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    // ── Reveal on scroll ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Language ──
+    const T = {
+      es: {
+        'hero-eyebrow':    'Alquimia Vibracional',
+        'hero-title':      'Nutrición <span>consciente</span><br>para el cuerpo,<br>la mente y el espíritu',
+        'hero-sub':        'ShivaDrops es un espacio de transformación donde el alimento se convierte en medicina, el movimiento en meditación, y la vida cotidiana en un camino sagrado.',
+        'hero-btn1':       'Ver Servicios',
+        'hero-btn2':       'Conocer a Pedro',
+        'scroll-label':    'Explorar',
+        'about-label':     '¿Qué es ShivaDrops?',
+        'about-title':     'Un camino de <span>sanación</span> a través del alimento',
+        'about-body1':     'ShivaDrops nace de la convicción de que la nutrición consciente es una de las herramientas más poderosas de transformación personal. Integramos la ciencia ayurvédica milenaria con la sabiduría de Pachamama para ofrecer un enfoque holístico del bienestar.',
+        'about-quote':     '"El alimento es medicina. La cocina es un templo. Cada comida, una ofrenda."',
+        'about-body2':     'Desde retiros de yoga hasta sesiones de coaching individual, ShivaDrops acompaña cada etapa del camino — con presencia, intención y amor genuino.',
+        'about-btn-text':  'Explorar Servicios',
+        'pedro-label':     'El Fundador',
+        'pedro-role':      'Cocinero Holístico · Coach · Instructor de Yoga · Facilitador de Breathwork',
+        'pedro-img-label': 'Pedro Miguel · ShivaDrops',
+        'pedro-body1':     'Pedro Miguel es cocinero holístico, instructor de yoga y facilitador de Rebirthing Breathwork con más de una década de experiencia en el camino del bienestar. Su visión del alimento como "alquimia vibracional" surge de un profundo proceso de autoconocimiento y conexión con los ciclos naturales.',
+        'pedro-body2':     'Radicado en Punta del Este, Uruguay, Pedro asiste a retiros y eventos en todo el mundo, llevando su cocina y sus prácticas a cualquier rincón del planeta donde la transformación sea convocada.',
+        'stat1-lbl':       'Años de experiencia',
+        'stat2-lbl':       'Disciplinas',
+        'stat3-lbl':       'Camino continuo',
+        'serv-label':      'Lo que ofrezco',
+        'serv-title':      'Servicios para tu <span>bienestar</span>',
+        's1-name':  'Cocinero Holístico',
+        's1-desc':  'Catering para retiros de yoga y eventos privados con cocina consciente, estacional y ayurvédica.',
+        's1-link':  'Ver más →',
+        's2-name':  'Coach de Alimentación Consciente',
+        's2-desc':  'Planes personalizados para transformar tu relación con el alimento y alcanzar el bienestar integral.',
+        's2-link':  'Ver más →',
+        's3-name':  'Facilitador de Breathwork',
+        's3-desc':  'Sesiones de Rebirthing Breathwork para liberar bloqueos, activar la energía vital y expandir la conciencia.',
+        's3-link':  'Ver más →',
+        's4-name':  'Instructor de Yoga',
+        's4-desc':  'Clases individuales y grupales de yoga que integran el movimiento consciente con la respiración y la meditación.',
+        's4-link':  'Ver más →',
+        'serv-cta': 'Reservar una Sesión',
+        'phil-label': 'Filosofía',
+        'phil-title': 'El arte de la <span>nutrición</span> consciente',
+        'phil-body':  'La filosofía de ShivaDrops se asienta en la convicción de que el bienestar no es un destino sino un camino vivo. Cada elección — lo que comemos, cómo respiramos, cómo nos movemos — es una oportunidad de alinearnos con nuestra naturaleza más profunda.',
+        'p1-title': 'Alimento Medicina',
+        'p1-text':  'La nutrición orgánica y consciente como herramienta de sanación. Cada ingrediente elegido con intención, cada plato preparado con amor.',
+        'p2-title': 'Ciencia Ayurvédica',
+        'p2-text':  'Integramos la sabiduría milenaria del Ayurveda para equilibrar los doshas y acompañar los ciclos naturales del cuerpo y la mente.',
+        'p3-title': 'Respiración y Movimiento',
+        'p3-text':  'El yoga y el breathwork como prácticas que amplifican los beneficios de la nutrición, creando un sistema integral de bienestar.',
+        'cta-title': '¿Listo para comenzar tu <span>camino</span>?',
+        'cta-sub':   'Reserva una consulta gratuita y descubre cómo ShivaDrops puede acompañarte.',
+        'cta-btn1':  'Hacer una Reserva',
+        'cta-btn2':  'Contactar a Pedro',
+        'footer-tagline':       '"al andar se hace el camino"',
+        'footer-nav-title':     'Navegación',
+        'footer-contact-title': 'Contacto',
+        'footer-copy':          '© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera',
+        'footer-rights':        'Todos los derechos reservados',
+      },
+      en: {
+        'hero-eyebrow':    'Vibrational Alchemy',
+        'hero-title':      '<span>Conscious</span> nutrition<br>for the body,<br>mind and spirit',
+        'hero-sub':        'ShivaDrops is a space of transformation where food becomes medicine, movement becomes meditation, and everyday life becomes a sacred path.',
+        'hero-btn1':       'View Services',
+        'hero-btn2':       'Meet Pedro',
+        'scroll-label':    'Explore',
+        'about-label':     'What is ShivaDrops?',
+        'about-title':     'A path of <span>healing</span> through food',
+        'about-body1':     'ShivaDrops was born from the conviction that conscious nutrition is one of the most powerful tools for personal transformation. We integrate ancient Ayurvedic science with the wisdom of Pachamama to offer a holistic approach to wellbeing.',
+        'about-quote':     '"Food is medicine. The kitchen is a temple. Every meal, an offering."',
+        'about-body2':     'From yoga retreats to individual coaching sessions, ShivaDrops accompanies each stage of the journey — with presence, intention, and genuine love.',
+        'about-btn-text':  'Explore Services',
+        'pedro-label':     'The Founder',
+        'pedro-role':      'Holistic Chef · Coach · Yoga Instructor · Breathwork Facilitator',
+        'pedro-img-label': 'Pedro Miguel · ShivaDrops',
+        'pedro-body1':     'Pedro Miguel is a holistic chef, yoga instructor and Rebirthing Breathwork facilitator with over a decade of experience on the path of wellbeing. His vision of food as "vibrational alchemy" emerges from a deep process of self-knowledge and connection with natural cycles.',
+        'pedro-body2':     'Based in Punta del Este, Uruguay, Pedro travels worldwide to assist retreats and events, bringing his kitchen and practices to any corner of the planet where transformation is called for.',
+        'stat1-lbl': 'Years of experience',
+        'stat2-lbl': 'Disciplines',
+        'stat3-lbl': 'Continuous path',
+        'serv-label': 'What I offer',
+        'serv-title': 'Services for your <span>wellbeing</span>',
+        's1-name': 'Holistic Chef',
+        's1-desc': 'Catering for yoga retreats and private events with conscious, seasonal and Ayurvedic cuisine.',
+        's1-link': 'Learn more →',
+        's2-name': 'Conscious Nutrition Coach',
+        's2-desc': 'Personalized plans to transform your relationship with food and achieve holistic wellbeing.',
+        's2-link': 'Learn more →',
+        's3-name': 'Breathwork Facilitator',
+        's3-desc': 'Rebirthing Breathwork sessions to release blockages, activate vital energy and expand consciousness.',
+        's3-link': 'Learn more →',
+        's4-name': 'Yoga Instructor',
+        's4-desc': 'Individual and group yoga classes that integrate conscious movement with breathing and meditation.',
+        's4-link': 'Learn more →',
+        'serv-cta': 'Book a Session',
+        'phil-label': 'Philosophy',
+        'phil-title': 'The art of <span>conscious</span> nutrition',
+        'phil-body':  'ShivaDrops\' philosophy rests on the conviction that wellbeing is not a destination but a living path. Every choice — what we eat, how we breathe, how we move — is an opportunity to align with our deepest nature.',
+        'p1-title': 'Food as Medicine',
+        'p1-text':  'Organic and conscious nutrition as a healing tool. Each ingredient chosen with intention, each dish prepared with love.',
+        'p2-title': 'Ayurvedic Science',
+        'p2-text':  'We integrate the ancient wisdom of Ayurveda to balance the doshas and accompany the natural cycles of body and mind.',
+        'p3-title': 'Breath and Movement',
+        'p3-text':  'Yoga and breathwork as practices that amplify the benefits of nutrition, creating a holistic wellness system.',
+        'cta-title': 'Ready to begin your <span>journey</span>?',
+        'cta-sub':   'Book a free consultation and discover how ShivaDrops can accompany you.',
+        'cta-btn1':  'Make a Booking',
+        'cta-btn2':  'Contact Pedro',
+        'footer-tagline':       '"the path is made by walking"',
+        'footer-nav-title':     'Navigation',
+        'footer-contact-title': 'Contact',
+        'footer-copy':          '© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera',
+        'footer-rights':        'All rights reserved',
+      }
+    };
+
+    function setLang(lang) {
+      const t = T[lang];
+      Object.keys(t).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = t[id];
+      });
+      // Nav links with data attributes
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.documentElement.lang = lang;
+      ['btn-es','btn-en','mob-btn-es','mob-btn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active',
+          (lang === 'es' && id.includes('es')) || (lang === 'en' && id.includes('en'))
+        );
+      });
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    const saved = localStorage.getItem('sd-lang');
+    if (saved && saved !== 'es') setLang(saved);
+  </script>
+</body>
+</html>

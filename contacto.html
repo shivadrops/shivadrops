@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Contacto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+    }
+
+    body { font-family: 'Raleway', sans-serif; background: var(--bg-dark); color: var(--cream); overflow-x: hidden; }
+
+    /* ══ NAV ══ */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(21,11,0,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,184,75,0.1); transition: padding 0.3s; }
+    nav.scrolled { padding: 0.65rem 3rem; }
+    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
+    .nav-cta:hover { background: var(--blue-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .lang-toggle { display: flex; gap: 0.4rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      padding: 10rem 5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* FOL in hero */
+    .hero-fol { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 520px; height: 520px; opacity: 0.025; pointer-events: none; animation: slowSpin 80s linear infinite; }
+
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 50% 100%, rgba(201,135,10,0.08) 0%, transparent 65%); pointer-events: none; }
+
+    .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    .page-hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 400; line-height: 1.1; color: var(--cream); margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    .page-hero-title span { color: var(--gold); }
+    .page-hero-sub { font-size: 0.92rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); max-width: 520px; margin: 0 auto; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+
+    /* ══ CONTACT LAYOUT ══ */
+    .contact-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 3rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* ══ LEFT — INFO ══ */
+    .contact-info { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .contact-info.visible { opacity: 1; transform: translateY(0); }
+
+
+    .info-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
+
+    .info-name { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 400; color: var(--cream); line-height: 1.25; margin-bottom: 0.5rem; }
+    .info-role { font-size: 0.82rem; font-weight: 300; font-style: italic; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 2rem; }
+
+    .info-bio { font-size: 0.88rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); margin-bottom: 2.5rem; }
+
+    /* Contact items */
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: rgba(240,228,204,0.03);
+      border: 1px solid rgba(232,184,75,0.1);
+      border-left: 2px solid var(--gold);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contact-item:hover { background: rgba(232,184,75,0.05); border-color: rgba(232,184,75,0.25); border-left-color: var(--gold); }
+
+    .contact-item-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .contact-item-body {}
+    .contact-item-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .contact-item-value { font-size: 0.85rem; font-weight: 300; color: var(--cream); }
+    .contact-item-value a { color: var(--cream); text-decoration: none; transition: color 0.3s; }
+    .contact-item-value a:hover { color: var(--gold); }
+
+    /* Social grid */
+    .socials-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
+
+    .social-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid rgba(240,228,204,0.12);
+      text-decoration: none;
+      color: var(--cream-dim);
+      font-size: 0.78rem;
+      font-weight: 300;
+      transition: all 0.3s;
+    }
+    .social-card:hover { border-color: rgba(232,184,75,0.3); color: var(--cream); background: rgba(232,184,75,0.04); }
+    .social-card .s-icon { font-size: 1.1rem; }
+    .social-card .s-handle { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.1em; }
+
+    /* Disciplines */
+    .disciplines { margin-top: 2.5rem; }
+    .disciplines-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
+    .discipline-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .discipline-chip { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.3rem 0.8rem; border: 1px solid rgba(232,184,75,0.2); color: var(--gold); }
+
+    /* ══ RIGHT — FORM ══ */
+    .contact-form-wrap { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s; }
+    .contact-form-wrap.visible { opacity: 1; transform: translateY(0); }
+
+    .form-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 1.4rem; }
+    .form-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 400; color: var(--cream); margin-bottom: 2rem; }
+    .form-title span { color: var(--gold); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint); }
+    .form-label span { color: var(--gold); }
+
+    .form-input, .form-select, .form-textarea {
+      padding: 0.9rem 1.1rem;
+      background: rgba(240,228,204,0.04);
+      border: 1px solid rgba(232,184,75,0.15);
+      border-radius: 0;
+      color: var(--cream);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s;
+      width: 100%;
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(74,125,224,0.5); background: rgba(240,228,204,0.06); }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--cream-faint); font-style: italic; }
+
+    .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f0e4cc' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+    .form-select option { background: #1a0e00; }
+
+    .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+    /* Submit */
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      border: none;
+      border-radius: 2px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(42,84,196,0.3);
+      transition: all 0.3s;
+      width: 100%;
+    }
+    .btn-submit:hover { box-shadow: 0 0 32px rgba(42,84,196,0.5); transform: translateY(-1px); }
+    .btn-submit svg { width: 16px; height: 16px; }
+
+    .form-note { font-size: 0.7rem; font-weight: 300; font-style: italic; color: var(--cream-faint); text-align: center; margin-top: 0.4rem; }
+
+    /* ══ MAP / LOCATION STRIP ══ */
+    .location-strip {
+      background: var(--bg-section);
+      border-top: 1px solid rgba(232,184,75,0.08);
+      border-bottom: 1px solid rgba(232,184,75,0.08);
+      padding: 4rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .location-text {}
+    .location-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .location-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
+    .location-title span { color: var(--gold); }
+    .location-desc { font-size: 0.88rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); margin-bottom: 1.5rem; }
+
+    .location-detail { display: flex; flex-direction: column; gap: 0.6rem; }
+    .loc-item { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.82rem; font-weight: 300; color: var(--cream-dim); }
+    .loc-item-icon { opacity: 0.7; flex-shrink: 0; }
+
+    /* Map placeholder */
+    .map-placeholder {
+      aspect-ratio: 4/3;
+      background: rgba(240,228,204,0.03);
+      border: 1px solid rgba(232,184,75,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--cream-faint);
+    }
+    .map-placeholder-icon { font-size: 3rem; opacity: 0.4; }
+    .map-placeholder-text { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .map-placeholder-sub { font-size: 0.72rem; font-weight: 300; }
+
+    /* ══ AVAILABILITY STRIP ══ */
+    .availability-strip {
+      padding: 4rem 5rem;
+      text-align: center;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,135,10,0.05) 0%, transparent 70%);
+    }
+
+    .avail-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
+    .avail-title span { color: var(--gold); }
+    .avail-sub { font-size: 0.88rem; font-weight: 300; color: var(--cream-dim); margin-bottom: 2rem; }
+    .avail-cards { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .avail-card { padding: 1.4rem 2rem; border: 1px solid rgba(232,184,75,0.15); text-align: center; min-width: 160px; }
+    .avail-card-num { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 500; color: var(--gold); display: block; margin-bottom: 0.3rem; }
+    .avail-card-label { font-size: 0.72rem; font-weight: 300; color: var(--cream-dim); }
+
+    .btn-book {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 3rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg-dark);
+      background: linear-gradient(135deg, var(--amber), var(--gold));
+      border-radius: 2px;
+      box-shadow: 0 0 24px rgba(201,135,10,0.3);
+      transition: all 0.3s;
+    }
+    .btn-book:hover { box-shadow: 0 0 36px rgba(201,135,10,0.5); transform: translateY(-1px); }
+
+    /* ══ FOOTER ══ */
+    footer { background: var(--bg-section); border-top: 1px solid rgba(232,184,75,0.1); padding: 4rem 5rem 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-logo img { height: 52px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
+    .footer-tagline { font-style: italic; font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); margin-bottom: 1.2rem; }
+    .footer-social { display: flex; gap: 1rem; }
+    .social-link { font-size: 1.1rem; text-decoration: none; opacity: 0.6; transition: opacity 0.3s; }
+    .social-link:hover { opacity: 1; }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-contact p { font-size: 0.8rem; font-weight: 300; line-height: 2; color: var(--cream-dim); }
+    .footer-contact a { color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(240,228,204,0.07); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-copy { font-size: 0.68rem; font-weight: 300; color: var(--cream-faint); }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slowSpin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1024px) {
+      .contact-section { grid-template-columns: 1fr; gap: 3rem; }
+      .location-strip { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 8rem 2rem 3rem; }
+      .contact-section { padding: 3rem 1.5rem 4rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .location-strip { padding: 3rem 2rem; }
+      .availability-strip { padding: 3rem 2rem; }
+      footer { padding: 3rem 2rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="main-nav">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo_hires.png" alt="ShivaDrops">
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html" class="active" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">✕</button>
+    <a href="home.html" data-es="Inicio" data-en="Home">Inicio</a>
+    <a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a>
+    <a href="productos.html" data-es="Productos" data-en="Products">Productos</a>
+    <a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a>
+    <a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem">
+      <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <svg class="hero-fol" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.5"/>
+      <circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+    </svg>
+
+    <span class="page-hero-label" id="hero-label">Hablemos</span>
+    <h1 class="page-hero-title" id="hero-title">
+      <span>Conecta</span> con Pedro
+    </h1>
+    <p class="page-hero-sub" id="hero-sub">
+      ¿Tienes una consulta, un proyecto o simplemente quieres saber más?
+      Pedro responde personalmente a cada mensaje.
+    </p>
+  </section>
+
+  <!-- ══ CONTACT SECTION ══ -->
+  <section class="contact-section">
+
+    <!-- LEFT — PEDRO INFO -->
+    <div class="contact-info" id="contact-info">
+      <p class="info-eyebrow" id="info-eyebrow">Sobre Pedro</p>
+      <h2 class="info-name">Pedro Miguel<br>Ormaechea Riera</h2>
+      <p class="info-role" id="info-role">Cocinero Holístico · Coach · Breathwork · Yoga</p>
+
+      <p class="info-bio" id="info-bio">
+        Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento.
+        Basado en Punta del Este, trabaja con retiros y eventos en todo el mundo.
+      </p>
+
+      <div class="contact-items">
+        <div class="contact-item">
+          <span class="contact-item-icon">✉️</span>
+          <div class="contact-item-body">
+            <p class="contact-item-label" id="label-email">Email</p>
+            <p class="contact-item-value"><a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">💬</span>
+          <div class="contact-item-body">
+            <p class="contact-item-label">WhatsApp</p>
+            <p class="contact-item-value"><a href="#" id="wa-link">Enviar mensaje por WhatsApp</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">📍</span>
+          <div class="contact-item-body">
+            <p class="contact-item-label" id="label-location">Ubicación</p>
+            <p class="contact-item-value" id="location-value">Punta del Este, Uruguay</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">🌍</span>
+          <div class="contact-item-body">
+            <p class="contact-item-label" id="label-availability">Disponibilidad</p>
+            <p class="contact-item-value" id="availability-value">Retiros y eventos en todo el mundo</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-icon">🕐</span>
+          <div class="contact-item-body">
+            <p class="contact-item-label" id="label-response">Tiempo de respuesta</p>
+            <p class="contact-item-value" id="response-value">Generalmente menos de 24 hs</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="socials-title" id="socials-title">Redes Sociales</p>
+      <div class="social-grid">
+        <a href="https://instagram.com/shivadrops" target="_blank" class="social-card">
+          <span class="s-icon">📷</span>
+          <span class="s-handle">@shivadrops</span>
+        </a>
+        <a href="https://facebook.com/pormariera" target="_blank" class="social-card">
+          <span class="s-icon">👤</span>
+          <span class="s-handle">Facebook</span>
+        </a>
+        <a href="https://youtube.com/@shivadrops" target="_blank" class="social-card">
+          <span class="s-icon">▶️</span>
+          <span class="s-handle">YouTube</span>
+        </a>
+        <a href="mailto:shivadropsu@gmail.com" class="social-card">
+          <span class="s-icon">✉️</span>
+          <span class="s-handle">Email</span>
+        </a>
+      </div>
+
+      <div class="disciplines">
+        <p class="disciplines-title" id="disc-title">Especialidades</p>
+        <div class="discipline-chips">
+          <span class="discipline-chip" id="disc-1">Cocinero Holístico</span>
+          <span class="discipline-chip" id="disc-2">Coach Alimentación Consciente</span>
+          <span class="discipline-chip" id="disc-3">Rebirthing Breathwork</span>
+          <span class="discipline-chip" id="disc-4">Instructor de Yoga</span>
+          <span class="discipline-chip" id="disc-5">Catering para Retiros</span>
+          <span class="discipline-chip" id="disc-6">Nutrición Ayurvédica</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT — CONTACT FORM -->
+    <div class="contact-form-wrap" id="contact-form-wrap">
+      <p class="form-eyebrow" id="form-eyebrow">Formulario de Contacto</p>
+      <h2 class="form-title" id="form-title">¿En qué puedo <span>ayudarte?</span></h2>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" id="label-name">Nombre <span>*</span></label>
+            <input class="form-input" type="text" id="field-name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="label-last">Apellido</label>
+            <input class="form-input" type="text" id="field-last">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="label-email-f">Email <span>*</span></label>
+          <input class="form-input" type="email" id="field-email" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="label-wp">WhatsApp</label>
+          <input class="form-input" type="tel" id="field-wp" placeholder="+598 99 000 000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="label-topic">Tema <span>*</span></label>
+          <select class="form-select" id="field-topic" required>
+            <option value="" id="topic-placeholder">Seleccionar...</option>
+            <option value="retiro" id="topic-retiro">Catering para retiro / evento</option>
+            <option value="coaching" id="topic-coaching">Coaching de alimentación</option>
+            <option value="breathwork" id="topic-breathwork">Sesión de Breathwork</option>
+            <option value="yoga" id="topic-yoga">Clases de Yoga</option>
+            <option value="curso" id="topic-curso">Cursos y programas online</option>
+            <option value="colaboracion" id="topic-colaboracion">Colaboración / medios</option>
+            <option value="otro" id="topic-otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="label-msg">Mensaje <span>*</span></label>
+          <textarea class="form-textarea" id="field-msg" required></textarea>
+        </div>
+
+        <button class="btn-submit" type="submit" id="btn-submit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+          <span id="btn-submit-text">Enviar por WhatsApp</span>
+        </button>
+
+        <p class="form-note" id="form-note">El mensaje se enviará directamente por WhatsApp. Pedro te responde personalmente.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══ LOCATION STRIP ══ -->
+  <section class="location-strip">
+    <div class="location-text" id="loc-wrap">
+      <p class="location-eyebrow" id="loc-eyebrow">Base de Operaciones</p>
+      <h2 class="location-title" id="loc-title">Punta del Este, <span>Uruguay</span></h2>
+      <p class="location-desc" id="loc-desc">
+        Aunque Pedro está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.
+      </p>
+      <div class="location-detail">
+        <div class="loc-item"><span class="loc-item-icon">📍</span><span id="loc-detail-1">Punta del Este, Maldonado, Uruguay</span></div>
+        <div class="loc-item"><span class="loc-item-icon">✈️</span><span id="loc-detail-2">Viajes a retiros internacionales disponibles</span></div>
+        <div class="loc-item"><span class="loc-item-icon">🕐</span><span id="loc-detail-3">Zona horaria: UTC -3 (Uruguay Standard Time)</span></div>
+      </div>
+    </div>
+    <div class="map-placeholder">
+      <span class="map-placeholder-icon">🗺️</span>
+      <p class="map-placeholder-text" id="map-text">Punta del Este</p>
+      <p class="map-placeholder-sub" id="map-sub">Uruguay, Sudamérica</p>
+    </div>
+  </section>
+
+  <!-- ══ AVAILABILITY ══ -->
+  <section class="availability-strip">
+    <h2 class="avail-title" id="avail-title">¿Listo para <span>comenzar?</span></h2>
+    <p class="avail-sub" id="avail-sub">Consulta disponibilidad y reserva tu experiencia con Pedro</p>
+    <div class="avail-cards">
+      <div class="avail-card">
+        <span class="avail-card-num">10+</span>
+        <span class="avail-card-label" id="stat-1">Años de experiencia</span>
+      </div>
+      <div class="avail-card">
+        <span class="avail-card-num">4</span>
+        <span class="avail-card-label" id="stat-2">Disciplinas de bienestar</span>
+      </div>
+      <div class="avail-card">
+        <span class="avail-card-num">🌍</span>
+        <span class="avail-card-label" id="stat-3">Disponible en todo el mundo</span>
+      </div>
+      <div class="avail-card">
+        <span class="avail-card-num">&lt;24h</span>
+        <span class="avail-card-label" id="stat-4">Tiempo de respuesta</span>
+      </div>
+    </div>
+    <a href="reservas.html" class="btn-book" id="btn-book">Ver Disponibilidad</a>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/logo_hires.png" alt="ShivaDrops">
+        </div>
+        <p class="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title" id="ft-nav-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+          <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+          <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+          <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title" id="ft-contact-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy" id="ft-rights">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════
+    // CONFIGURACIÓN
+    // ══════════════════════════════════════════════
+    const CONFIG = {
+      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro (sin + ni espacios)
+    };
+
+    // Set WhatsApp direct link
+    document.getElementById('wa-link').href = `https://wa.me/${CONFIG.PEDRO_WHATSAPP}`;
+
+    // ══════════════════════════════════════════════
+    // TRADUCCIONES
+    // ══════════════════════════════════════════════
+    const T = {
+      es: {
+        'hero-label':      'Hablemos',
+        'hero-title':      '<span>Conecta</span> con Pedro',
+        'hero-sub':        '¿Tienes una consulta, un proyecto o simplemente quieres saber más? Pedro responde personalmente a cada mensaje.',
+        // Info block
+        'info-eyebrow':    'Sobre Pedro',
+        'info-role':       'Cocinero Holístico · Coach · Breathwork · Yoga',
+        'info-bio':        'Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento. Basado en Punta del Este, trabaja con retiros y eventos en todo el mundo.',
+        // Contact item labels
+        'label-email':     'Email',
+        'label-location':  'Ubicación',
+        'label-availability': 'Disponibilidad',
+        'label-response':  'Tiempo de respuesta',
+        'location-value':  'Punta del Este, Uruguay',
+        'availability-value': 'Retiros y eventos en todo el mundo',
+        'response-value':  'Generalmente menos de 24 hs',
+        'wa-link':         'Enviar mensaje por WhatsApp',
+        // Socials
+        'socials-title':   'Redes Sociales',
+        'disc-title':      'Especialidades',
+        'disc-1': 'Cocinero Holístico',
+        'disc-2': 'Coach Alimentación Consciente',
+        'disc-3': 'Rebirthing Breathwork',
+        'disc-4': 'Instructor de Yoga',
+        'disc-5': 'Catering para Retiros',
+        'disc-6': 'Nutrición Ayurvédica',
+        // Form
+        'form-eyebrow':    'Formulario de Contacto',
+        'form-title':      '¿En qué puedo <span>ayudarte?</span>',
+        'label-name':      'Nombre',
+        'label-last':      'Apellido',
+        'label-email-f':   'Email',
+        'label-wp':        'WhatsApp',
+        'label-topic':     'Tema',
+        'label-msg':       'Mensaje',
+        'topic-placeholder':'Seleccionar...',
+        'topic-retiro':    'Catering para retiro / evento',
+        'topic-coaching':  'Coaching de alimentación',
+        'topic-breathwork':'Sesión de Breathwork',
+        'topic-yoga':      'Clases de Yoga',
+        'topic-curso':     'Cursos y programas online',
+        'topic-colaboracion': 'Colaboración / medios',
+        'topic-otro':      'Otro',
+        'btn-submit-text': 'Enviar por WhatsApp',
+        'form-note':       'El mensaje se enviará directamente por WhatsApp. Pedro te responde personalmente.',
+        // Location
+        'loc-eyebrow':     'Base de Operaciones',
+        'loc-title':       'Punta del Este, <span>Uruguay</span>',
+        'loc-desc':        'Aunque Pedro está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.',
+        'loc-detail-1':    'Punta del Este, Maldonado, Uruguay',
+        'loc-detail-2':    'Viajes a retiros internacionales disponibles',
+        'loc-detail-3':    'Zona horaria: UTC -3 (Uruguay Standard Time)',
+        'map-text':        'Punta del Este',
+        'map-sub':         'Uruguay, Sudamérica',
+        // Availability
+        'avail-title':     '¿Listo para <span>comenzar?</span>',
+        'avail-sub':       'Consulta disponibilidad y reserva tu experiencia con Pedro',
+        'stat-1':          'Años de experiencia',
+        'stat-2':          'Disciplinas de bienestar',
+        'stat-3':          'Disponible en todo el mundo',
+        'stat-4':          'Tiempo de respuesta',
+        'btn-book':        'Ver Disponibilidad',
+        // Footer
+        'ft-nav-title':     'Navegación',
+        'ft-contact-title': 'Contacto',
+        'ft-rights':        'Todos los derechos reservados',
+        // WhatsApp message builder
+        waMsg: (data) => `Hola Pedro! Te escribo desde tu sitio web.\n\n*Nombre:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Tema:* ' + data.topic : ''}\n\n*Mensaje:*\n${data.msg}`,
+      },
+      en: {
+        'hero-label':      'Let\'s Talk',
+        'hero-title':      '<span>Connect</span> with Pedro',
+        'hero-sub':        'Have a question, a project, or simply want to learn more? Pedro personally replies to every message.',
+        'info-eyebrow':    'About Pedro',
+        'info-role':       'Holistic Chef · Coach · Breathwork · Yoga',
+        'info-bio':        'Founder of ShivaDrops and passionate about integral wellness. Pedro has been working for over 10 years at the intersection of conscious nutrition, ancestral practices and the transformative power of breathing and movement. Based in Punta del Este, he works with retreats and events worldwide.',
+        'label-email':     'Email',
+        'label-location':  'Location',
+        'label-availability': 'Availability',
+        'label-response':  'Response time',
+        'location-value':  'Punta del Este, Uruguay',
+        'availability-value': 'Retreats and events worldwide',
+        'response-value':  'Usually within 24 hours',
+        'wa-link':         'Send a WhatsApp message',
+        'socials-title':   'Social Media',
+        'disc-title':      'Specialties',
+        'disc-1': 'Holistic Chef',
+        'disc-2': 'Conscious Nutrition Coach',
+        'disc-3': 'Rebirthing Breathwork',
+        'disc-4': 'Yoga Instructor',
+        'disc-5': 'Retreat Catering',
+        'disc-6': 'Ayurvedic Nutrition',
+        'form-eyebrow':    'Contact Form',
+        'form-title':      'How can I <span>help you?</span>',
+        'label-name':      'First name',
+        'label-last':      'Last name',
+        'label-email-f':   'Email',
+        'label-wp':        'WhatsApp',
+        'label-topic':     'Topic',
+        'label-msg':       'Message',
+        'topic-placeholder':'Select...',
+        'topic-retiro':    'Catering for retreat / event',
+        'topic-coaching':  'Nutrition coaching',
+        'topic-breathwork':'Breathwork session',
+        'topic-yoga':      'Yoga classes',
+        'topic-curso':     'Online courses & programs',
+        'topic-colaboracion': 'Collaboration / media',
+        'topic-otro':      'Other',
+        'btn-submit-text': 'Send via WhatsApp',
+        'form-note':       'Your message will be sent directly via WhatsApp. Pedro replies personally.',
+        'loc-eyebrow':     'Home Base',
+        'loc-title':       'Punta del Este, <span>Uruguay</span>',
+        'loc-desc':        'Although Pedro is based in Punta del Este, his work brings wellness to retreats and events across the world. If your project is outside Uruguay, don\'t hesitate to reach out — distance is not an obstacle.',
+        'loc-detail-1':    'Punta del Este, Maldonado, Uruguay',
+        'loc-detail-2':    'International retreat travel available',
+        'loc-detail-3':    'Timezone: UTC -3 (Uruguay Standard Time)',
+        'map-text':        'Punta del Este',
+        'map-sub':         'Uruguay, South America',
+        'avail-title':     'Ready to <span>begin?</span>',
+        'avail-sub':       'Check availability and book your experience with Pedro',
+        'stat-1':          'Years of experience',
+        'stat-2':          'Wellness disciplines',
+        'stat-3':          'Available worldwide',
+        'stat-4':          'Response time',
+        'btn-book':        'Check Availability',
+        'ft-nav-title':     'Navigation',
+        'ft-contact-title': 'Contact',
+        'ft-rights':        'All rights reserved',
+        waMsg: (data) => `Hi Pedro! I'm writing to you from your website.\n\n*Name:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Topic:* ' + data.topic : ''}\n\n*Message:*\n${data.msg}`,
+      }
+    };
+
+    let currentLang = 'es';
+
+    // ══════════════════════════════════════════════
+    // LANGUAGE
+    // ══════════════════════════════════════════════
+    function setLang(lang) {
+      currentLang = lang;
+      const t = T[lang];
+
+      const inlineHtmlIds = ['hero-title','form-title','loc-title','avail-title'];
+      const textIds = Object.keys(t).filter(k => typeof t[k] === 'string' && !inlineHtmlIds.includes(k) && k !== 'waMsg');
+
+      textIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = t[id];
+      });
+
+      inlineHtmlIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && t[id]) el.innerHTML = t[id];
+      });
+
+      // wa-link text node
+      const waEl = document.getElementById('wa-link');
+      if (waEl) waEl.textContent = t['wa-link'];
+
+      document.querySelectorAll('[data-es][data-en]').forEach(el => {
+        el.textContent = el.dataset[lang];
+      });
+
+      ['btn-es','btn-en','mbtn-es','mbtn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id.includes(lang));
+      });
+
+      document.documentElement.lang = lang;
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    // ══════════════════════════════════════════════
+    // FORM SUBMIT → WhatsApp
+    // ══════════════════════════════════════════════
+    function handleSubmit(e) {
+      e.preventDefault();
+      const name  = document.getElementById('field-name').value.trim();
+      const last  = document.getElementById('field-last').value.trim();
+      const email = document.getElementById('field-email').value.trim();
+      const wp    = document.getElementById('field-wp').value.trim();
+      const topicEl = document.getElementById('field-topic');
+      const topic = topicEl.options[topicEl.selectedIndex].text;
+      const msg   = document.getElementById('field-msg').value.trim();
+
+      if (!name || !email || !msg) return;
+
+      const fullName = last ? `${name} ${last}` : name;
+      const text = T[currentLang].waMsg({ name: fullName, email, wp, topic, msg });
+      window.open(`https://wa.me/${CONFIG.PEDRO_WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ══════════════════════════════════════════════
+    // SCROLL REVEAL
+    // ══════════════════════════════════════════════
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+
+    ['contact-info', 'contact-form-wrap'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    // ══════════════════════════════════════════════
+    // NAV SCROLL
+    // ══════════════════════════════════════════════
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ══════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════
+    const savedLang = localStorage.getItem('sd-lang') || 'es';
+    if (savedLang !== 'es') setLang(savedLang);
+  </script>
+</body>
+</html>

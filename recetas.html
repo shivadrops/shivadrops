@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Menús para Retiros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+      --sage:       #4a7a5a;
+      --sage-light: #6aaa7a;
+    }
+
+    body { font-family: 'Raleway', sans-serif; background: var(--bg-dark); color: var(--cream); overflow-x: hidden; }
+
+    /* ══ NAV ══ */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(21,11,0,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,184,75,0.1); transition: padding 0.3s; }
+    nav.scrolled { padding: 0.65rem 3rem; }
+    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
+    .nav-cta:hover { background: var(--blue-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .lang-toggle { display: flex; gap: 0.4rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+
+    /* ══ HERO ══ */
+    .page-hero {
+      padding: 10rem 5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    /* Animated ingredient particles */
+    .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .particle {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: drift var(--dur, 12s) ease-in-out var(--delay, 0s) infinite;
+    }
+    @keyframes drift {
+      0%   { opacity: 0; transform: translateY(20px) rotate(0deg); }
+      15%  { opacity: 0.3; }
+      85%  { opacity: 0.15; }
+      100% { opacity: 0; transform: translateY(-80px) rotate(30deg); }
+    }
+
+    .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 65% 60% at 50% 80%, rgba(201,135,10,0.12) 0%, transparent 65%); pointer-events: none; }
+
+    /* FOL */
+    .hero-fol { position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); width: 560px; height: 560px; opacity: 0.03; pointer-events: none; animation: slowSpin 100s linear infinite; }
+
+    .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sage-light); display: block; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    .hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5.5vw, 4.2rem); font-weight: 400; line-height: 1.1; color: var(--cream); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub { font-size: 0.92rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); max-width: 600px; text-align: center; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+
+    /* Attribute pills */
+    .hero-attrs { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+    .attr-pill { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.12em; padding: 0.35rem 1rem; border: 1px solid rgba(240,228,204,0.15); color: var(--cream-dim); }
+    .attr-pill.gold   { border-color: rgba(232,184,75,0.3); color: var(--gold); }
+    .attr-pill.sage   { border-color: rgba(106,170,122,0.35); color: var(--sage-light); }
+    .attr-pill.blue   { border-color: rgba(74,125,224,0.35); color: var(--blue-light); }
+
+    /* ══ PHILOSOPHY STRIP ══ */
+    .philo-strip {
+      background: var(--bg-section);
+      border-top: 1px solid rgba(232,184,75,0.08);
+      border-bottom: 1px solid rgba(232,184,75,0.08);
+      padding: 3rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+    .philo-item { text-align: center; }
+    .philo-icon { font-size: 2rem; display: block; margin-bottom: 0.6rem; }
+    .philo-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .philo-desc { font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); max-width: 160px; line-height: 1.5; }
+
+    /* ══ RETREAT SELECTOR ══ */
+    .retreat-nav {
+      padding: 3rem 5rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(232,184,75,0.1);
+    }
+
+    .retreat-tab {
+      padding: 1rem 1.6rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--cream-faint);
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: -1px;
+    }
+    .retreat-tab:hover { color: var(--cream-dim); }
+    .retreat-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .retreat-tab .tab-icon { font-size: 1rem; }
+
+    /* ══ MENU SECTION ══ */
+    .menu-section { display: none; padding: 4rem 5rem 6rem; max-width: 1400px; margin: 0 auto; }
+    .menu-section.active { display: block; }
+
+    /* Menu header */
+    .menu-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(232,184,75,0.1);
+    }
+
+    .menu-header-text {}
+    .menu-type-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 1rem; }
+    .menu-title { font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 400; color: var(--cream); line-height: 1.2; margin-bottom: 0.8rem; }
+    .menu-title span { color: var(--gold); }
+    .menu-subtitle { font-size: 0.82rem; font-weight: 300; font-style: italic; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 1.4rem; }
+    .menu-desc { font-size: 0.9rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); }
+
+    /* Tags */
+    .menu-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+    .menu-tag { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.1em; padding: 0.25rem 0.75rem; border-radius: 50px; }
+    .menu-tag.gold   { background: rgba(232,184,75,0.12); border: 1px solid rgba(232,184,75,0.25); color: var(--gold); }
+    .menu-tag.sage   { background: rgba(106,170,122,0.12); border: 1px solid rgba(106,170,122,0.25); color: var(--sage-light); }
+    .menu-tag.blue   { background: rgba(74,125,224,0.12); border: 1px solid rgba(74,125,224,0.25); color: var(--blue-light); }
+    .menu-tag.cream  { background: rgba(240,228,204,0.06); border: 1px solid rgba(240,228,204,0.15); color: var(--cream-dim); }
+
+    /* Menu visual */
+    .menu-visual {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(232,184,75,0.1);
+    }
+
+
+    /* Day selector */
+    .day-selector { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    .day-btn {
+      padding: 0.5rem 1.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      background: rgba(240,228,204,0.04);
+      border: 1px solid rgba(240,228,204,0.1);
+      color: var(--cream-faint);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .day-btn:hover { border-color: rgba(232,184,75,0.25); color: var(--cream-dim); }
+    .day-btn.active { background: rgba(232,184,75,0.1); border-color: rgba(232,184,75,0.35); color: var(--gold); }
+
+    /* Meals grid */
+    .meals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: rgba(232,184,75,0.08);
+      border: 1px solid rgba(232,184,75,0.08);
+      margin-bottom: 3rem;
+    }
+
+    .meal-card {
+      background: var(--bg-dark);
+      padding: 1.6rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.3s;
+    }
+    .meal-card:hover { background: var(--bg-section); }
+
+    .meal-time {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .meal-icon { font-size: 2rem; }
+
+    .meal-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .meal-desc {
+      font-size: 0.75rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--cream-dim);
+      flex: 1;
+    }
+
+    .meal-props { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .meal-prop {
+      font-size: 0.55rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.06em;
+      padding: 0.15rem 0.5rem;
+      background: rgba(240,228,204,0.05);
+      border: 1px solid rgba(240,228,204,0.1);
+      color: var(--cream-faint);
+    }
+    .meal-prop.highlight { background: rgba(232,184,75,0.08); border-color: rgba(232,184,75,0.2); color: var(--gold-light); }
+
+    /* Sample day note */
+    .sample-note {
+      font-size: 0.72rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream-faint);
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 1rem;
+      border-top: 1px solid rgba(240,228,204,0.05);
+    }
+
+    /* ══ RECIPE HIGHLIGHTS ══ */
+    .highlights-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1.5rem; }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .highlight-card {
+      padding: 1.4rem;
+      border: 1px solid rgba(232,184,75,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .highlight-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .highlight-card.gold::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .highlight-card.sage::before { background: linear-gradient(90deg, transparent, var(--sage-light), transparent); }
+    .highlight-card.blue::before { background: linear-gradient(90deg, transparent, var(--blue-light), transparent); }
+
+    .highlight-card:hover { border-color: rgba(232,184,75,0.2); }
+    .hl-emoji { font-size: 1.8rem; display: block; margin-bottom: 0.8rem; }
+    .hl-name { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
+    .hl-desc { font-size: 0.75rem; font-weight: 300; line-height: 1.65; color: var(--cream-dim); }
+
+    /* ══ NUTRITION PRINCIPLES BAR ══ */
+    .principles-bar {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: rgba(201,135,10,0.04);
+      border: 1px solid rgba(232,184,75,0.1);
+      border-left: 3px solid var(--gold);
+    }
+    .principles-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+    .principles-text { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: var(--cream-dim); font-style: italic; }
+
+    /* ══ CTA SECTION ══ */
+    .menu-cta {
+      margin-top: 3.5rem;
+      padding: 2.5rem;
+      background: var(--bg-section);
+      border: 1px solid rgba(232,184,75,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .menu-cta-text {}
+    .menu-cta-title { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 500; color: var(--cream); margin-bottom: 0.4rem; }
+    .menu-cta-sub { font-size: 0.8rem; font-weight: 300; color: var(--cream-dim); }
+
+    .menu-cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-reserve {
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2.2rem;
+      font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--bg-dark); background: linear-gradient(135deg, var(--amber), var(--gold));
+      border: none; border-radius: 2px; cursor: pointer;
+      box-shadow: 0 0 20px rgba(201,135,10,0.25); transition: all 0.3s;
+    }
+    .btn-reserve:hover { box-shadow: 0 0 32px rgba(201,135,10,0.4); transform: translateY(-1px); }
+
+    .btn-consult {
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2.2rem;
+      font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; color: var(--cream-dim); background: transparent;
+      border: 1px solid rgba(240,228,204,0.2); border-radius: 2px; cursor: pointer; transition: all 0.3s;
+    }
+    .btn-consult:hover { border-color: rgba(240,228,204,0.4); color: var(--cream); }
+
+    /* ══ CREDENTIALS STRIP ══ */
+    .credentials {
+      background: var(--bg-section);
+      border-top: 1px solid rgba(232,184,75,0.08);
+      border-bottom: 1px solid rgba(232,184,75,0.08);
+      padding: 4rem 5rem;
+      text-align: center;
+    }
+
+    .cred-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .cred-title { font-family: 'Cinzel', serif; font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
+    .cred-title span { color: var(--gold); }
+    .cred-desc { font-size: 0.9rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); max-width: 680px; margin: 0 auto 3rem; }
+
+    .cred-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .cred-item { text-align: center; }
+    .cred-num { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 500; color: var(--gold); display: block; margin-bottom: 0.3rem; }
+    .cred-label { font-size: 0.75rem; font-weight: 300; color: var(--cream-faint); max-width: 120px; line-height: 1.4; }
+
+    /* ══ FOOTER ══ */
+    footer { background: var(--bg-section); border-top: 1px solid rgba(232,184,75,0.1); padding: 4rem 5rem 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-logo img { height: 52px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
+    .footer-tagline { font-style: italic; font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); margin-bottom: 1.2rem; }
+    .footer-social { display: flex; gap: 1rem; }
+    .social-link { font-size: 1.1rem; text-decoration: none; opacity: 0.6; transition: opacity 0.3s; }
+    .social-link:hover { opacity: 1; }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-contact p { font-size: 0.8rem; font-weight: 300; line-height: 2; color: var(--cream-dim); }
+    .footer-contact a { color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(240,228,204,0.07); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-copy { font-size: 0.68rem; font-weight: 300; color: var(--cream-faint); }
+
+    /* ══ SCROLL REVEAL ══ */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slowSpin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1200px) {
+      .meals-grid { grid-template-columns: repeat(3, 1fr); }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .menu-header { grid-template-columns: 1fr; gap: 2rem; }
+      .menu-visual { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 8rem 2rem 3rem; min-height: auto; }
+      .philo-strip { padding: 2.5rem 2rem; gap: 2rem; }
+      .retreat-nav { padding: 2rem 1rem 0; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; }
+      .retreat-tab { padding: 0.8rem 1.2rem; }
+      .menu-section { padding: 3rem 1.5rem 4rem; }
+      .meals-grid { grid-template-columns: 1fr 1fr; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .menu-cta { flex-direction: column; text-align: center; }
+      .menu-cta-btns { justify-content: center; }
+      .credentials { padding: 3rem 2rem; }
+      footer { padding: 3rem 2rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 500px) {
+      .meals-grid { grid-template-columns: 1fr; }
+      .day-selector { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="main-nav">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo_hires.png" alt="ShivaDrops">
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html"      data-es="Inicio"    data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="recetas.html"   class="active" data-es="Menús" data-en="Menus">Menús</a></li>
+      <li><a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html"  class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">✕</button>
+    <a href="home.html"      data-es="Inicio"    data-en="Home">Inicio</a>
+    <a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="recetas.html"   data-es="Menús"     data-en="Menus">Menús</a>
+    <a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a>
+    <a href="productos.html" data-es="Productos" data-en="Products">Productos</a>
+    <a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a>
+    <a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem">
+      <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section class="page-hero">
+    <!-- floating ingredient particles -->
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-glow"></div>
+    <svg class="hero-fol" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.5"/>
+      <circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.5"/>
+    </svg>
+
+    <span class="hero-eyebrow" id="hero-eyebrow">Alimento como Medicina</span>
+    <h1 class="hero-title" id="hero-title">
+      Menús diseñados para<br><em>transformar</em>
+    </h1>
+    <p class="hero-sub" id="hero-sub">
+      Cada retiro merece una cocina que lo potencie. Pedro diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro — desde el amanecer hasta el cierre ceremonial.
+    </p>
+    <div class="hero-attrs">
+      <span class="attr-pill sage" id="attr-1">Plant-Based</span>
+      <span class="attr-pill gold" id="attr-2">Ayurvédico</span>
+      <span class="attr-pill cream" id="attr-3">Sin Gluten</span>
+      <span class="attr-pill sage" id="attr-4">Alimentos Vivos</span>
+      <span class="attr-pill blue" id="attr-5">Estacional</span>
+      <span class="attr-pill cream" id="attr-6">Ceremonial</span>
+    </div>
+  </section>
+
+  <!-- ══ PHILOSOPHY STRIP ══ -->
+  <div class="philo-strip">
+    <div class="philo-item reveal">
+      <span class="philo-icon">🌱</span>
+      <p class="philo-label" id="ph1-label">Intención</p>
+      <p class="philo-desc" id="ph1-desc">Cada plato diseñado para sostener la práctica del día</p>
+    </div>
+    <div class="philo-item reveal">
+      <span class="philo-icon">⚖️</span>
+      <p class="philo-label" id="ph2-label">Equilibrio</p>
+      <p class="philo-desc" id="ph2-desc">Doshas y energía en balance a lo largo del día</p>
+    </div>
+    <div class="philo-item reveal">
+      <span class="philo-icon">🔥</span>
+      <p class="philo-label" id="ph3-label">Agni</p>
+      <p class="philo-desc" id="ph3-desc">Fuego digestivo respetado en cada preparación</p>
+    </div>
+    <div class="philo-item reveal">
+      <span class="philo-icon">🌍</span>
+      <p class="philo-label" id="ph4-label">Terroir</p>
+      <p class="philo-desc" id="ph4-desc">Ingredientes locales y estacionales, donde sea posible</p>
+    </div>
+    <div class="philo-item reveal">
+      <span class="philo-icon">✨</span>
+      <p class="philo-label" id="ph5-label">Vibración</p>
+      <p class="philo-desc" id="ph5-desc">Cocina preparada con amor, presencia y gratitud</p>
+    </div>
+  </div>
+
+  <!-- ══ RETREAT TABS ══ -->
+  <div class="retreat-nav" id="retreat-nav">
+    <button class="retreat-tab active" onclick="showMenu('yoga')" id="tab-yoga">
+      <span class="tab-icon">🧘</span>
+      <span id="tab-yoga-label">Yoga</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('detox')" id="tab-detox">
+      <span class="tab-icon">🌿</span>
+      <span id="tab-detox-label">Detox</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('breathwork')" id="tab-breathwork">
+      <span class="tab-icon">🌬️</span>
+      <span id="tab-breathwork-label">Breathwork</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('ayurveda')" id="tab-ayurveda">
+      <span class="tab-icon">🪷</span>
+      <span id="tab-ayurveda-label">Ayurveda</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('medicina')" id="tab-medicina">
+      <span class="tab-icon">🌙</span>
+      <span id="tab-medicina-label">Plantas & Medicina</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('privado')" id="tab-privado">
+      <span class="tab-icon">✦</span>
+      <span id="tab-privado-label">Evento Privado</span>
+    </button>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: YOGA RETREAT
+  ════════════════════════════════════════ -->
+  <div class="menu-section active" id="menu-yoga">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label" id="yoga-type">Menú para Retiro de</p>
+        <h2 class="menu-title" id="yoga-title">Yoga <span>Integral</span></h2>
+        <p class="menu-subtitle" id="yoga-subtitle">"Nutrir el cuerpo para liberar la mente"</p>
+        <p class="menu-desc" id="yoga-desc">La cocina para un retiro de yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restorative).</p>
+        <div class="menu-tags">
+          <span class="menu-tag sage">Sáttvico</span>
+          <span class="menu-tag gold">Sin gluten</span>
+          <span class="menu-tag sage">Vegetariano</span>
+          <span class="menu-tag blue">Alta energía</span>
+          <span class="menu-tag cream">Digestión ligera</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.2), rgba(232,184,75,0.1));">
+        🧘
+      </div>
+    </div>
+
+    <!-- Day tabs -->
+    <div class="day-selector">
+      <button class="day-btn active" onclick="showDay('yoga','1')" id="yoga-day1" data-es="Día 1 — Apertura" data-en="Day 1 — Opening">Día 1 — Apertura</button>
+      <button class="day-btn" onclick="showDay('yoga','2')" id="yoga-day2" data-es="Día 2 — Práctica" data-en="Day 2 — Practice">Día 2 — Práctica</button>
+      <button class="day-btn" onclick="showDay('yoga','3')" id="yoga-day3" data-es="Día 3 — Cierre" data-en="Day 3 — Closing">Día 3 — Cierre</button>
+    </div>
+
+    <!-- Meals -->
+    <div class="meals-grid" id="yoga-meals-1">
+      <div class="meal-card">
+        <span class="meal-time" id="y1-t1">Amanecer · 6:00</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name" id="y1-n1">Agua de Cúrcuma & Jengibre</p>
+        <p class="meal-desc" id="y1-d1">Elixir de bienvenida: agua caliente con cúrcuma fresca, jengibre, pimienta negra y limón. Activa el fuego digestivo y despierta el sistema inmune antes de la práctica.</p>
+        <div class="meal-props">
+          <span class="meal-prop highlight">Agni activador</span>
+          <span class="meal-prop">Anti-inflamatorio</span>
+        </div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="y1-t2">Desayuno · 8:30</span>
+        <span class="meal-icon">🫐</span>
+        <p class="meal-name" id="y1-n2">Bowl de Kichari Blanco & Frutas Estacionales</p>
+        <p class="meal-desc" id="y1-d2">Arroz basmati con mung dal, ghee y especias suaves (comino, cilantro, hinojo). Acompañado de frutas frescas de temporada y miel cruda local.</p>
+        <div class="meal-props">
+          <span class="meal-prop highlight">Tri-dóshico</span>
+          <span class="meal-prop">Digestión suave</span>
+        </div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="y1-t3">Almuerzo · 12:30</span>
+        <span class="meal-icon">🥗</span>
+        <p class="meal-name" id="y1-n3">Curry Verde de Vegetales & Arroz Rojo</p>
+        <p class="meal-desc" id="y1-d3">Leche de coco con albahaca sagrada (tulsi), cúrcuma, espinaca y calabaza. Arroz rojo integral con semillas de sésamo negro. Chutneys artesanales de mango y menta.</p>
+        <div class="meal-props">
+          <span class="meal-prop highlight">Plato principal</span>
+          <span class="meal-prop">Sin gluten</span>
+          <span class="meal-prop">Vegan</span>
+        </div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="y1-t4">Merienda · 16:00</span>
+        <span class="meal-icon">🍯</span>
+        <p class="meal-name" id="y1-n4">Dátiles Rellenos & Leche Dorada</p>
+        <p class="meal-desc" id="y1-d4">Dátiles medjool rellenos de mantequilla de almendra y cardamomo. Golden milk con leche de avena, cúrcuma, canela, jengibre y pimienta.</p>
+        <div class="meal-props">
+          <span class="meal-prop highlight">Post-práctica</span>
+          <span class="meal-prop">Energizante natural</span>
+        </div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="y1-t5">Cena · 19:00</span>
+        <span class="meal-icon">🌙</span>
+        <p class="meal-name" id="y1-n5">Sopa de Lentejas Rojas & Pan de Avena</p>
+        <p class="meal-desc" id="y1-d5">Sopa liviana de lentejas rojas con comino, laurel y limón. Pan de avena sin gluten. Ensalada tibia de rúcula con aceite de oliva infusionado con romero. Digestión suave para el descanso.</p>
+        <div class="meal-props">
+          <span class="meal-prop highlight">Cena liviana</span>
+          <span class="meal-prop">Pre-descanso</span>
+        </div>
+      </div>
+    </div>
+    <div class="meals-grid" id="yoga-meals-2" style="display:none">
+      <div class="meal-card">
+        <span class="meal-time">Amanecer · 6:00</span>
+        <span class="meal-icon">🌅</span>
+        <p class="meal-name" id="y2-n1">Pranayama Tea & Tónico de Adaptógenos</p>
+        <p class="meal-desc" id="y2-d1">Infusión de ashwagandha, tulsi y amalaki. Tónico de rhodiola y maca para sostener la energía nerviosa durante la práctica intensa del día central.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Adaptógeno</span><span class="meal-prop">Nervino</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Desayuno · 8:00</span>
+        <span class="meal-icon">🥣</span>
+        <p class="meal-name" id="y2-n2">Porridge de Amaranto & Compota de Frutas</p>
+        <p class="meal-desc" id="y2-d2">Amaranto cocido con leche de almendra, vainilla y cardamomo. Compota caliente de manzana, pera y pasas de uva. Granola artesanal de quinoa inflada y coco.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Alta proteína vegetal</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo · 13:00</span>
+        <span class="meal-icon">🍲</span>
+        <p class="meal-name" id="y2-n3">Thali Ayurvédico del Día</p>
+        <p class="meal-desc" id="y2-d3">Bandeja con 5 preparaciones: dal de mung, sabji de estación, arroz basmati, chutney de coco, raita de pepino. Equilibra los 6 sabores (dulce, ácido, salado, picante, amargo, astringente).</p>
+        <div class="meal-props"><span class="meal-prop highlight">Menú completo</span><span class="meal-prop">6 sabores</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Merienda · 15:30</span>
+        <span class="meal-icon">🫙</span>
+        <p class="meal-name" id="y2-n4">Smoothie de Batata Morada & Espirulina</p>
+        <p class="meal-desc" id="y2-d4">Batata morada asada, espirulina, jengibre fresco, limón y miel de caña. Potente combinación antioxidante y alcalinizante para el punto de mayor intensidad del retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Antioxidante</span><span class="meal-prop">Alcalinizante</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena · 18:30</span>
+        <span class="meal-icon">🕯️</span>
+        <p class="meal-name" id="y2-n5">Cena Ceremonial de Fuego</p>
+        <p class="meal-desc" id="y2-d5">Hummus de remolacha, pan de semillas artesanal, falafel al horno con tahini de sésamo negro, ensalada de hierbas frescas. Servida en silencio como práctica de consciencia.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Compartido</span></div>
+      </div>
+    </div>
+    <div class="meals-grid" id="yoga-meals-3" style="display:none">
+      <div class="meal-card">
+        <span class="meal-time">Amanecer · 6:30</span>
+        <span class="meal-icon">🌸</span>
+        <p class="meal-name" id="y3-n1">Té de Cierre & Oración al Sol</p>
+        <p class="meal-desc" id="y3-d1">Infusión de flores (rosa, manzanilla, hibisco) con miel y limón. Ritual de apertura consciente para el último amanecer del retiro. Acción de gracias a Pachamama.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Floral</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Desayuno · 9:00</span>
+        <span class="meal-icon">🥞</span>
+        <p class="meal-name" id="y3-n2">Panqueques de Avena & Frutas del Bosque</p>
+        <p class="meal-desc" id="y3-d2">Panqueques de avena y banana, frutas del bosque frescas, jarabe de arce puro y crema de coco. Desayuno festivo para celebrar el cierre del retiro con alegría y abundancia.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Festivo</span><span class="meal-prop">Sin lácteos</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo · 13:00</span>
+        <span class="meal-icon">🎉</span>
+        <p class="meal-name" id="y3-n3">Gran Banquete de Despedida</p>
+        <p class="meal-desc" id="y3-d3">Buffet completo de las mejores preparaciones del retiro. Ensaladas vivas, curries, arroces aromáticos, panes artesanales, salsas y chutneys. Mesa de gratitud compartida.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Banquete</span><span class="meal-prop">Mesa compartida</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Tarde · 15:00</span>
+        <span class="meal-icon">🫖</span>
+        <p class="meal-name" id="y3-n4">Ceremonia del Té de Cierre</p>
+        <p class="meal-desc" id="y3-d4">Espacio íntimo de té ceremonial con infusiones selectas, chocolates crudos y mantras de gratitud. Cierre energético del contenedor del retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Cacao crudo</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Para el camino · 16:30</span>
+        <span class="meal-icon">🎁</span>
+        <p class="meal-name" id="y3-n5">Kit de Integración para Llevar</p>
+        <p class="meal-desc" id="y3-d5">Canasta de despedida: recetario artesanal, mezcla de especias curadas, adaptógenos en polvo, tarjeta con recomendaciones personalizadas y semillas para continuar el viaje en casa.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Regalo</span><span class="meal-prop">Personalizado</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note" id="yoga-note">✦ Menú de muestra basado en un retiro de 3 días para 12 personas. Pedro adapta cada menú a la duración, grupo y estación del año.</p>
+
+    <!-- Highlights -->
+    <p class="highlights-title" id="yoga-hl-title">Platos Estrella del Retiro de Yoga</p>
+    <div class="highlights-grid reveal">
+      <div class="highlight-card gold">
+        <span class="hl-emoji">🍛</span>
+        <p class="hl-name" id="hl-y1-name">Kichari Dorado</p>
+        <p class="hl-desc" id="hl-y1-desc">El plato maestro del Ayurveda. Arroz basmati y mung dal cocinados con ghee y 9 especias sagradas. La comida más nutritiva y fácil de digerir de la tradición india.</p>
+      </div>
+      <div class="highlight-card sage">
+        <span class="hl-emoji">🥬</span>
+        <p class="hl-name" id="hl-y2-name">Ensalada Prāṇa Viva</p>
+        <p class="hl-desc" id="hl-y2-desc">Mezcla de brotes vivos, hierbas aromáticas frescas, flores comestibles y semillas activadas. Aderezo de limón, tahini y hierbas andinas. Máxima energía vital en cada bocado.</p>
+      </div>
+      <div class="highlight-card blue">
+        <span class="hl-emoji">🍮</span>
+        <p class="hl-name" id="hl-y3-name">Kheer de Arroz & Azafrán</p>
+        <p class="hl-desc" id="hl-y3-desc">Postre sagrado ayurvédico. Arroz de grano corto cocinado lentamente en leche de almendra con azafrán, rosas, cardamomo y pistachos. Ofrenda dulce al final del día.</p>
+      </div>
+    </div>
+
+    <div class="principles-bar">
+      <p class="principles-label" id="yoga-princ-label">Principio del Retiro de Yoga</p>
+      <p class="principles-text" id="yoga-princ">"En un retiro de yoga la comida es práctica. Elegimos alimentos que incrementan la sattva — la cualidad de claridad, ligereza y paz — para que el cuerpo y la mente se conviertan en un instrumento afinado para la consciencia."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title" id="yoga-cta-title">¿Organizás un retiro de yoga?</p>
+        <p class="menu-cta-sub" id="yoga-cta-sub">Pedro trabaja contigo desde el diseño del menú hasta la cocina in situ. Disponible en Uruguay y a nivel mundial.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve" id="yoga-cta-btn1">Reservar Servicio</a>
+        <a href="contacto.html" class="btn-consult" id="yoga-cta-btn2">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: DETOX RETREAT
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-detox">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label" id="detox-type">Menú para Retiro de</p>
+        <h2 class="menu-title" id="detox-title">Detox & <span>Regeneración</span></h2>
+        <p class="menu-subtitle" id="detox-subtitle">"Vaciar para poder llenarse de nuevo"</p>
+        <p class="menu-desc" id="detox-desc">Un protocolo de depuración profunda que honra el proceso natural del cuerpo. Sin ayuno extremo — en cambio, una abundancia de alimentos limpios, jugos vivos, caldos minerales y preparaciones que activan los órganos de eliminación con gentileza y eficiencia.</p>
+        <div class="menu-tags">
+          <span class="menu-tag sage">Alcalinizante</span>
+          <span class="menu-tag gold">Sin procesados</span>
+          <span class="menu-tag sage">Alimentos vivos</span>
+          <span class="menu-tag cream">Bajo en fructosa</span>
+          <span class="menu-tag blue">Crudo 60%</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.25), rgba(42,84,196,0.1));">
+        🌿
+      </div>
+    </div>
+
+    <div class="meals-grid" id="detox-meals">
+      <div class="meal-card">
+        <span class="meal-time" id="d-t1">Despertar · 6:00</span>
+        <span class="meal-icon">💧</span>
+        <p class="meal-name" id="d-n1">Agua Mineral & Arcilla Blanca</p>
+        <p class="meal-desc" id="d-d1">Vaso de agua tibia con unas gotas de jugo de limón, una pizca de arcilla blanca comestible y spirulina. Protocolo de limpieza intestinal profunda para el inicio del día.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Limpieza intestinal</span><span class="meal-prop">Alcalinizante</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="d-t2">Jugo Verde · 7:30</span>
+        <span class="meal-icon">🥤</span>
+        <p class="meal-name" id="d-n2">Jugo Maestro Detox</p>
+        <p class="meal-desc" id="d-d2">Pepino, apio, manzana verde, jengibre, limón, cilantro y una hoja de aloe vera. Extracción en frío para máxima biodisponibilidad enzimática. Suministra clorofila en forma directa.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Cold pressed</span><span class="meal-prop">Clorofila</span><span class="meal-prop">Enzimático</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="d-t3">Desayuno · 9:00</span>
+        <span class="meal-icon">🫙</span>
+        <p class="meal-name" id="d-n3">Chia Pudding & Frutas de Bajo IG</p>
+        <p class="meal-desc" id="d-d3">Semillas de chía activadas en leche de almendra con vainilla. Coronado con berries, granada y semillas de cáñamo. Sin azúcar añadido. Índice glucémico ultra bajo para estabilizar la energía.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Omega 3</span><span class="meal-prop">Bajo IG</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="d-t4">Almuerzo · 12:30</span>
+        <span class="meal-icon">🥗</span>
+        <p class="meal-name" id="d-n4">Bowl Raw de Zoodles & Pesto Crudo</p>
+        <p class="meal-desc" id="d-d3b">Zucchini en espiral, brotes de alfalfa, tomates cherry, aguacate y pesto fresco de albahaca y nueces de macadamia. 100% sin cocción para preservar enzimas y nutrientes.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Raw Food</span><span class="meal-prop">Enzimas vivas</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="d-t5">Cena · 18:00</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name" id="d-n5">Caldo Mineral de 12 Horas</p>
+        <p class="meal-desc" id="d-d5">Caldo largo de huesos de vegetales (cebolla, zanahoria, apio, perejil, kombu) cocinado 12 horas. Rico en minerales, silicio y glutamina para reparar la mucosa intestinal. Cierre suave del día.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Intestino permeable</span><span class="meal-prop">Mineral</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note" id="detox-note">✦ Protocolo de muestra para un día de detox completo. Pedro diseña programas de 3 a 21 días según los objetivos del retiro.</p>
+
+    <div class="highlights-grid reveal">
+      <div class="highlight-card sage">
+        <span class="hl-emoji">🥬</span>
+        <p class="hl-name" id="hl-d1-name">Shot de Wheatgrass & Jengibre</p>
+        <p class="hl-desc" id="hl-d1-desc">Shot de pasto de trigo recién extraído con jengibre fresco. Concentrado máximo de clorofila, vitamina K y enzimas vivas. Ritual diario de cada mañana.</p>
+      </div>
+      <div class="highlight-card gold">
+        <span class="hl-emoji">🍋</span>
+        <p class="hl-name" id="hl-d2-name">Limonada con Cayena & Maple</p>
+        <p class="hl-desc" id="hl-d2-desc">La bebida de limpieza clásica renovada: limón fresco, cayena, sirope de maple puro y agua de manantial. Activa el metabolismo y la circulación linfática.</p>
+      </div>
+      <div class="highlight-card blue">
+        <span class="hl-emoji">🫐</span>
+        <p class="hl-name" id="hl-d3-name">Açaí Bowl Antioxidante</p>
+        <p class="hl-desc" id="hl-d3-desc">Puré de açaí salvaje con maqui berry, banana congelada y leche de coco. Topping de goji, cacao crudo, coco rallado y semillas activadas. El desayuno más antioxidante del mundo.</p>
+      </div>
+    </div>
+
+    <div class="principles-bar">
+      <p class="principles-label">Principio del Retiro Detox</p>
+      <p class="principles-text" id="detox-princ">"El cuerpo no necesita que lo ayudemos a detoxificar — ya sabe cómo. Nuestro rol es quitarle la carga: sin procesados, sin estimulantes, sin venenos. En ese espacio de limpieza, el cuerpo recuerda su capacidad infinita de regenerarse."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title" id="detox-cta-title">¿Organizás un retiro de detox?</p>
+        <p class="menu-cta-sub" id="detox-cta-sub">Pedro diseña el protocolo completo: jugos, comidas, suplementos y rituales de limpieza. Adaptado a la duración y profundidad del proceso.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Reservar</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: BREATHWORK
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-breathwork">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label">Menú para Retiro de</p>
+        <h2 class="menu-title" id="bw-title">Breathwork & <span>Consciencia</span></h2>
+        <p class="menu-subtitle" id="bw-subtitle">"Alimentos que no interrumpen el silencio interior"</p>
+        <p class="menu-desc" id="bw-desc">Las sesiones de Rebirthing Breathwork y respiración holotrópica requieren el estómago liviano y la mente despejada. El menú evita todo estimulante (cafeína, picante excesivo, azúcares refinados) y prioriza alimentos grounding que ayudan a integrar las experiencias de expansión de consciencia.</p>
+        <div class="menu-tags">
+          <span class="menu-tag gold">Sin cafeína</span>
+          <span class="menu-tag sage">Grounding</span>
+          <span class="menu-tag cream">Ligero antes de sesión</span>
+          <span class="menu-tag blue">Integrador post-sesión</span>
+          <span class="menu-tag cream">Sin azúcar refinado</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(42,84,196,0.2), rgba(74,122,90,0.1));">
+        🌬️
+      </div>
+    </div>
+
+    <div class="meals-grid" id="bw-meals">
+      <div class="meal-card">
+        <span class="meal-time" id="bw-t1">Pre-sesión · 7:00</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name" id="bw-n1">Té de Cacao Ceremonial Suave</p>
+        <p class="meal-desc" id="bw-d1">Cacao crudo de baja dosis (20g) con leche de avena, miel, canela y una pizca de sal marina. El cacao abre el corazón y eleva la energía sin la disrupción de la cafeína.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Abre-corazones</span><span class="meal-prop">Sin cafeína</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="bw-t2">Desayuno · 8:30</span>
+        <span class="meal-icon">🍌</span>
+        <p class="meal-name" id="bw-n2">Banana & Semillas — Desayuno Mínimo</p>
+        <p class="meal-desc" id="bw-d2">Banana madura, un puñado de semillas de calabaza activadas y una cucharada de mantequilla de almendra. Simple, liviano, sin elaborar. El cuerpo lo agradece antes de una sesión profunda.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ultra liviano</span><span class="meal-prop">Serotonina</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="bw-t3">Post-sesión · 13:00</span>
+        <span class="meal-icon">🌍</span>
+        <p class="meal-name" id="bw-n3">Bowl de Integración — Raíces Asadas</p>
+        <p class="meal-desc" id="bw-d3">Batatas, remolachas y zanahorias asadas lentamente con ghee, tomillo y sal del Himalaya. Granos integrales. El calor y el peso de las raíces ayudan al sistema nervioso a aterrizar después de la expansión.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Grounding potente</span><span class="meal-prop">Sistema nervioso</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="bw-t4">Tarde · 16:00</span>
+        <span class="meal-icon">🫙</span>
+        <p class="meal-name" id="bw-n4">Caldo de Miso & Wakame</p>
+        <p class="meal-desc" id="bw-d4">Caldo de miso blanco con alga wakame, tofu, cebollín y sésamo. Fermentado vivo. Los probióticos del miso calman el sistema digestivo y el mineral del wakame equilibra el sistema nervioso.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Mineral marino</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="bw-t5">Cena · 19:00</span>
+        <span class="meal-icon">🌕</span>
+        <p class="meal-name" id="bw-n5">Sopa de Avena & Hierbas de Integración</p>
+        <p class="meal-desc" id="bw-d5">Avena cocinada con caldo de verduras, tomillo, sage, laurel y aceite de oliva. Con pan de masa madre. Cena sencilla y amorosa que cierra el ciclo del día con calidez y simplicidad.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sedante suave</span><span class="meal-prop">Calor integrador</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note">✦ Menú diseñado especialmente para sostener procesos transpersonales. Pedro coordina los horarios de comida con los facilitadores del retiro.</p>
+
+    <div class="highlights-grid reveal">
+      <div class="highlight-card blue">
+        <span class="hl-emoji">🍫</span>
+        <p class="hl-name">Cacao Ceremonial Completo</p>
+        <p class="hl-desc">Para ceremonias de mayor profundidad, Pedro prepara cacao ceremonial de origen (Guatemala o Perú) en dosis completa con rezos, intención y especias sagradas.</p>
+      </div>
+      <div class="highlight-card gold">
+        <span class="hl-emoji">🥔</span>
+        <p class="hl-name">Papas Rellenas al Fuego</p>
+        <p class="hl-desc">Papas enteras cocinadas sobre brasas, rellenas de puré de aguacate, cebollín y sal ahumada. El alimento más ancestral y grounding para noches de integración.</p>
+      </div>
+      <div class="highlight-card sage">
+        <span class="hl-emoji">🌾</span>
+        <p class="hl-name">Congee de Arroz Medicinal</p>
+        <p class="hl-desc">Arroz blanco cocinado 2 horas hasta formar una sopa espesa. Con jengibre, miso y algas. Alimento de máxima digestibilidad y profundo descanso celular.</p>
+      </div>
+    </div>
+
+    <div class="principles-bar">
+      <p class="principles-label">Principio del Retiro de Breathwork</p>
+      <p class="principles-text">"La respiración conecta mundos. La comida que se elige en estos días es un puente entre la experiencia transpersonal y el regreso al cuerpo. Cocinamos con la consciencia de que cada bocado es un ancla al presente, un abrazo a la carne sagrada que nos contiene."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title" id="bw-cta-title">¿Facilitás un retiro de Breathwork?</p>
+        <p class="menu-cta-sub" id="bw-cta-sub">Pedro comprende la arquitectura energética de estas jornadas. Coordina menús y horarios con el facilitador para maximizar la profundidad del proceso.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Reservar</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: AYURVEDA
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-ayurveda">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label">Menú para Retiro de</p>
+        <h2 class="menu-title" id="ay-title">Cocina <span>Ayurvédica</span></h2>
+        <p class="menu-subtitle" id="ay-subtitle">"La comida correcta, en el momento correcto, para el ser correcto"</p>
+        <p class="menu-desc" id="ay-desc">El Ayurveda — la ciencia de la vida — entiende que no existe una dieta perfecta universal: existe la dieta perfecta para tu dosha, tu estación y tu momento vital. Pedro evalúa la composición constitucional del grupo y diseña menús que balancean Vata, Pitta y Kapha en armonía con la naturaleza del retiro.</p>
+        <div class="menu-tags">
+          <span class="menu-tag gold">Tri-dóshico</span>
+          <span class="menu-tag sage">Especias medicinales</span>
+          <span class="menu-tag gold">Ghee clarificado</span>
+          <span class="menu-tag blue">Estacional</span>
+          <span class="menu-tag cream">6 sabores</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(201,135,10,0.2), rgba(74,122,90,0.1));">
+        🪷
+      </div>
+    </div>
+
+    <div class="meals-grid" id="ay-meals">
+      <div class="meal-card">
+        <span class="meal-time" id="ay-t1">Dinacharya · 6:00</span>
+        <span class="meal-icon">🌅</span>
+        <p class="meal-name" id="ay-n1">Rasayana Matutino</p>
+        <p class="meal-desc" id="ay-d1">Chyawanprash (mermelada ayurvédica de amla) con ghee y leche caliente de vaca. Rasayana clásico para rejuvenecer el tejido profundo (ojas). 5 minutos de práctica de respiración antes de tomarlo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Rasayana</span><span class="meal-prop">Ojas builder</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="ay-t2">Desayuno · 8:00</span>
+        <span class="meal-icon">🫕</span>
+        <p class="meal-name" id="ay-n2">Kichari Tridóshico con Ghee & 9 Especias</p>
+        <p class="meal-desc" id="ay-d2">El plato más sagrado del Ayurveda. Arroz basmati y mung dal dorado cocinados juntos con ghee clarificado artesanal y la trinidad especiada: cúrcuma, comino, cilantro, jengibre, hinojo, cardamomo, canela, clavo y pimienta negra.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Satmya universal</span><span class="meal-prop">9 especias</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="ay-t3">Almuerzo · 12:00</span>
+        <span class="meal-icon">🍱</span>
+        <p class="meal-name" id="ay-n3">Thali de Estación — Los 6 Sabores</p>
+        <p class="meal-desc" id="ay-d3">Banquete completo con 6 a 8 preparaciones que cubren todos los sabores ayurvédicos: dulce (dal), ácido (chutney de tamarindo), salado (pickle), picante (curry), amargo (karela), astringente (ensalada de lentejas).</p>
+        <div class="meal-props"><span class="meal-prop highlight">6 rasas</span><span class="meal-prop">Digestión óptima</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="ay-t4">Merienda · 15:30</span>
+        <span class="meal-icon">🫖</span>
+        <p class="meal-name" id="ay-n4">Tridoshic Tea & Ladoos de Sésamo</p>
+        <p class="meal-desc" id="ay-d4">Infusión de las 3 hierbas sagradas: ashwagandha, tulsi y amalaki. Ladoos artesanales de sésamo negro, dátiles, cardamomo y ghee. Confitería medicinal de la tradición india.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Adaptógenos</span><span class="meal-prop">Dulce medicinal</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="ay-t5">Cena · 18:30</span>
+        <span class="meal-icon">🌙</span>
+        <p class="meal-name" id="ay-n5">Sopa de Masoor Dal & Chapati Artesanal</p>
+        <p class="meal-desc" id="ay-d5">Sopa liviana de lentejas rojas (masoor) con tarka de semillas de mostaza, hojas de curry y ghee. Pan chapati hecho a mano con harina integral. Cena antes del sunset, como prescribe el Ayurveda.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Cena temprana</span><span class="meal-prop">Pan artesanal</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note">✦ Pedro también realiza evaluaciones de dosha para los participantes del retiro y personaliza porciones y especias según cada constitución.</p>
+
+    <div class="highlights-grid reveal">
+      <div class="highlight-card gold">
+        <span class="hl-emoji">🧈</span>
+        <p class="hl-name">Ghee Clarificado Artesanal</p>
+        <p class="hl-desc">Pedro elabora su propio ghee clarificando mantequilla orgánica a fuego lento con mantras. El ghee es considerado el alimento más sáttvico y el principal rasayana en la tradición ayurvédica.</p>
+      </div>
+      <div class="highlight-card sage">
+        <span class="hl-emoji">🌿</span>
+        <p class="hl-name">Pasta de Especias Masala Propia</p>
+        <p class="hl-desc">Blend personalizado de 15 especias tostadas y molidas en el momento. Adaptado a la estación y al dosha predominante del grupo. La columna vertebral aromática de toda la cocina del retiro.</p>
+      </div>
+      <div class="highlight-card blue">
+        <span class="hl-emoji">🍮</span>
+        <p class="hl-name">Payasam de Luna Llena</p>
+        <p class="hl-desc">Postre ceremonial de luna llena: arroz de grano fino, leche entera, azafrán iraní, rosas secas, pistachos y pétalos de flores comestibles. Se cocina bajo la luna como práctica de gratitud.</p>
+      </div>
+    </div>
+
+    <div class="principles-bar">
+      <p class="principles-label">Principio del Retiro Ayurvédico</p>
+      <p class="principles-text">"Ahara — el alimento — es el primer pilar del Ayurveda. No como dieta, sino como relación viva con la naturaleza. Comer en la hora correcta, cocinar con amor, usar especias con intención: esto es medicina. Esto es lo que enseño cada vez que me paro frente a un fogón."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title">¿Organizás un retiro de Ayurveda?</p>
+        <p class="menu-cta-sub">Pedro integra evaluaciones de dosha, charlas de nutrición y talleres de cocina junto al servicio de catering. Una experiencia educativa y transformadora.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Reservar</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: PLANTAS & MEDICINA
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-medicina">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label">Menú para Retiro de</p>
+        <h2 class="menu-title" id="med-title">Plantas <span>Maestras</span></h2>
+        <p class="menu-subtitle" id="med-subtitle">"Preparar el templo para la enseñanza"</p>
+        <p class="menu-desc" id="med-desc">Los retiros con plantas maestras (Ayahuasca, San Pedro, Psilocibina) y ceremonias de medicina exigen una dieta de preparación específica — la dieta del curandero. Sin alcohol, sin carne roja, sin azúcar, sin sal excesiva. Pedro diseña menús de preparación y de integración que honran el proceso de purificación y la sabiduría de la planta.</p>
+        <div class="meal-props" style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+        </div>
+        <div class="menu-tags">
+          <span class="menu-tag sage">Dieta del curandero</span>
+          <span class="menu-tag gold">Sin alcohol</span>
+          <span class="menu-tag cream">Sin carne roja</span>
+          <span class="menu-tag blue">Preparación & integración</span>
+          <span class="menu-tag sage">Alimentos puros</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.2), rgba(155,110,204,0.15));">
+        🌙
+      </div>
+    </div>
+
+    <div class="meals-grid" id="med-meals">
+      <div class="meal-card">
+        <span class="meal-time" id="med-t1">Preparación — Día previo</span>
+        <span class="meal-icon">🌱</span>
+        <p class="meal-name" id="med-n1">Caldo Purificador de 7 Plantas</p>
+        <p class="meal-desc" id="med-d1">Caldo medicinal con ortiga, diente de león, bardana, romero, salvia, tomillo y perejil. Sin sal, sin aceite. Purifica el hígado y los riñones para potenciar la apertura de la noche ceremonial.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Purificación hepática</span><span class="meal-prop">Sin sal</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="med-t2">Día de ceremonia</span>
+        <span class="meal-icon">🍚</span>
+        <p class="meal-name" id="med-n2">Arroz Blanco & Verduras al Vapor</p>
+        <p class="meal-desc" id="med-d2">La comida más pura: arroz blanco de grano largo sin condimentar, verduras verdes al vapor (brócoli, espinaca, zapallito). Con mínima sal marina. Máxima simpleza para honrar el espacio ceremonial.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Dieta maestra</span><span class="meal-prop">Mínimo proceso</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="med-t3">Post-ceremonia · Mañana</span>
+        <span class="meal-icon">🌅</span>
+        <p class="meal-name" id="med-n3">Sopa de Integración & Fruta Dulce</p>
+        <p class="meal-desc" id="med-d3">Sopa liviana con fideos de arroz, zanahorias, apio y hierbas suaves. Frutas dulces y maduras: mango, papaya, sandía. El dulce ayuda a integrar y cerrar suavemente la energía de la noche.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Integrador</span><span class="meal-prop">Suave al estómago</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="med-t4">Día de integración</span>
+        <span class="meal-icon">🫶</span>
+        <p class="meal-name" id="med-n4">Kichari Blanco de Retorno</p>
+        <p class="meal-desc" id="med-d4">Kichari preparado sin especias picantes: arroz, mung, comino suave, cúrcuma y ghee. El alimento más fácil de digerir que existe. Permite al sistema digestivo descansar mientras el ser procesa la experiencia.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ultra digestible</span><span class="meal-prop">Integración</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="med-t5">Cierre — Banquete sagrado</span>
+        <span class="meal-icon">🎊</span>
+        <p class="meal-name" id="med-n5">Banquete de Gratitud</p>
+        <p class="meal-desc" id="med-d5">Al finalizar el período de dieta, mesa comunitaria abundante con los sabores de la tierra: sopas ricas, panes artesanales, ensaladas vivas, postres de fruta. Celebración del retorno al mundo ordinario con gratitud.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Celebratorio</span><span class="meal-prop">Mesa comunitaria</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note">✦ Pedro trabaja en estrecha colaboración con el facilitador/curandero para respetar las restricciones de cada tradición. El menú se adapta completamente al protocolo de la medicina.</p>
+
+    <div class="principles-bar">
+      <p class="principles-label">Principio de los Retiros de Medicina</p>
+      <p class="principles-text">"La dieta es el primer acto de la ceremonia. Lo que comes en los días previos prepara el suelo — el cuerpo se vuelve un instrumento limpio, receptivo, abierto. La Planta enseña mejor cuando el templo está preparado con honestidad y respeto."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title">¿Facilitás ceremonias de medicina?</p>
+        <p class="menu-cta-sub">Pedro tiene experiencia trabajando junto a facilitadores de distintas tradiciones. Respeta los protocolos de cada linaje y asegura que la cocina sostenga el espacio sagrado.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Reservar</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MENU: EVENTO PRIVADO
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-privado">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label">Menú para</p>
+        <h2 class="menu-title" id="priv-title">Evento <span>Privado</span></h2>
+        <p class="menu-subtitle" id="priv-subtitle">"Alta cocina con alma — para momentos que merecen lo extraordinario"</p>
+        <p class="menu-desc" id="priv-desc">Para cenas privadas, celebraciones íntimas, retiros de bienestar personalizados o experiencias gastronómicas exclusivas. Pedro diseña menús de autor que combinan técnicas de alta cocina con los principios de la alimentación consciente y la sabiduría ayurvédica. Cada plato cuenta una historia, honra la tierra y sorprende al paladar.</p>
+        <div class="menu-tags">
+          <span class="menu-tag gold">Alta cocina</span>
+          <span class="menu-tag sage">Plant-forward</span>
+          <span class="menu-tag blue">Personalizado 100%</span>
+          <span class="menu-tag cream">Maridaje de infusiones</span>
+          <span class="menu-tag gold">Presentación premium</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(232,184,75,0.2), rgba(201,135,10,0.08));">
+        ✦
+      </div>
+    </div>
+
+    <div class="meals-grid" id="priv-meals">
+      <div class="meal-card">
+        <span class="meal-time" id="priv-t1">Aperitivo</span>
+        <span class="meal-icon">🍾</span>
+        <p class="meal-name" id="priv-n1">Bienvenida — Kefir de Coco & Canapes Vivos</p>
+        <p class="meal-desc" id="priv-d1">Kefir artesanal de leche de coco con frutos rojos. Tabla de canapés crudos: crackers de semillas, hummus de remolacha, tartare de aguacate, láminas de nabo marinado y flores comestibles.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Fermentado artesanal</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="priv-t2">Entrada</span>
+        <span class="meal-icon">🍜</span>
+        <p class="meal-name" id="priv-n2">Sopa de Miso Negro con Oro Comestible</p>
+        <p class="meal-desc" id="priv-d2">Miso de cebada envejecido 2 años, dashi de kombu, nameko, tofu sedoso y cebollino. Terminada con aceite de sésamo negro y láminas de oro comestible. Profundidad umami con elegancia minimalista.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Umami profundo</span><span class="meal-prop">Oro comestible</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="priv-t3">Plato principal</span>
+        <span class="meal-icon">🌺</span>
+        <p class="meal-name" id="priv-n3">Risotto de Quinoa Negra & Trufa</p>
+        <p class="meal-desc" id="priv-d3">Quinoa negra cocinada al estilo risotto con vino blanco, caldo de hongos shiitake, mantequilla de caju y láminas de trufa negra fresca. Terminado con aceite de trufa y parmesano de macadamia.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Plato estrella</span><span class="meal-prop">Vegan</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="priv-t4">Pre-postre</span>
+        <span class="meal-icon">🍋</span>
+        <p class="meal-name" id="priv-n4">Sorbet de Yuzu & Cardamomo</p>
+        <p class="meal-desc" id="priv-d4">Sorbet de yuzu japonés, cardamomo verde y jengibre fresco. Sirve como palate cleanser entre el plato principal y el postre. Presentado en cáscara de limón con polvo de matcha y menta fresca.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Palate cleanser</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time" id="priv-t5">Postre</span>
+        <span class="meal-icon">🍫</span>
+        <p class="meal-name" id="priv-n5">Tarta de Cacao Crudo & Sal de Mar</p>
+        <p class="meal-desc" id="priv-d5">Base de dátiles y nueces. Ganache de cacao crudo peruano 100%, crema de coco y vainilla. Terminada con sal de Fleur de Sel y micro hierbas. Servida a temperatura ambiente para máxima expresión del cacao.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Raw</span><span class="meal-prop">Sin azúcar refinado</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note">✦ Menú de alta cocina para cenas privadas de 6 a 20 personas. Pedro cotiza por persona según la complejidad del menú, el número de comensales y la ubicación del evento.</p>
+
+    <div class="highlights-grid reveal">
+      <div class="highlight-card gold">
+        <span class="hl-emoji">🌹</span>
+        <p class="hl-name">Mise en Place Ceremonial</p>
+        <p class="hl-desc">Pedro no solo cocina: diseña la experiencia completa. Mesa, flores, vajilla, música y ambiente. Cada detalle al servicio de la memoria que se quiere crear.</p>
+      </div>
+      <div class="highlight-card sage">
+        <span class="hl-emoji">🍵</span>
+        <p class="hl-name">Maridaje de Infusiones</p>
+        <p class="hl-desc">En lugar de vinos, Pedro diseña una carta de infusiones medicinales maridadas con cada plato. Kombucha artesanal, kefir de agua, aguas de flores y tónicos de adaptógenos.</p>
+      </div>
+      <div class="highlight-card blue">
+        <span class="hl-emoji">👨‍🍳</span>
+        <p class="hl-name">Taller de Cocina Privado</p>
+        <p class="hl-desc">La cena puede incorporar un taller participativo: los invitados aprenden a preparar uno o dos platos del menú junto a Pedro. Una experiencia transformadora que va más allá de comer.</p>
+      </div>
+    </div>
+
+    <div class="principles-bar">
+      <p class="principles-label">Principio del Evento Privado</p>
+      <p class="principles-text">"Una cena extraordinaria no es solo buena comida. Es un espacio de conexión, de presencia compartida, de belleza hecha materia. Cuando cocino para una ocasión especial, pongo en cada plato toda mi historia, mis viajes y mi amor por la vida. Es mi forma de rezar."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title">¿Tenés un evento especial?</p>
+        <p class="menu-cta-sub">Bodas, celebraciones íntimas, retiros personalizados, cenas de negocios con consciencia. Pedro cotiza cada propuesta de forma personalizada.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Solicitar Cotización</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CREDENTIALS STRIP ══ -->
+  <section class="credentials">
+    <p class="cred-eyebrow" id="cred-eyebrow">Por qué elegir a Pedro</p>
+    <h2 class="cred-title" id="cred-title">Un cocinero que es también <span>facilitador</span></h2>
+    <p class="cred-desc" id="cred-desc">La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. Pedro no solo domina la técnica — lleva a la cocina su formación en Ayurveda, su práctica de yoga, su experiencia con el Breathwork y su profunda conexión con la naturaleza. Cada menú es una extensión del mismo trabajo de transformación que sucede en el tapete de práctica.</p>
+    <div class="cred-grid">
+      <div class="cred-item reveal">
+        <span class="cred-num">10+</span>
+        <p class="cred-label" id="cred-1">Años de cocina holística y retiros</p>
+      </div>
+      <div class="cred-item reveal">
+        <span class="cred-num">4</span>
+        <p class="cred-label" id="cred-2">Disciplinas integradas en cada menú</p>
+      </div>
+      <div class="cred-item reveal">
+        <span class="cred-num">100%</span>
+        <p class="cred-label" id="cred-3">Personalizado para cada retiro</p>
+      </div>
+      <div class="cred-item reveal">
+        <span class="cred-num">🌍</span>
+        <p class="cred-label" id="cred-4">Disponible en todo el mundo</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/logo_hires.png" alt="ShivaDrops">
+        </div>
+        <p class="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title" id="ft-nav-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html"      data-es="Inicio"    data-en="Home">Inicio</a></li>
+          <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+          <li><a href="recetas.html"   data-es="Menús"     data-en="Menus">Menús</a></li>
+          <li><a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a></li>
+          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+          <li><a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title" id="ft-contact-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy" id="ft-rights">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // ══ PARTICLES ══
+    const PARTICLES = ['🌿','🌱','✦','🍃','🌸','🔥','🌾','🫚','🌺','⚡'];
+    const pContainer = document.getElementById('particles');
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      p.textContent = PARTICLES[i % PARTICLES.length];
+      p.style.cssText = `left:${Math.random()*100}%; top:${20+Math.random()*70}%; --dur:${10+Math.random()*14}s; --delay:${Math.random()*8}s;`;
+      pContainer.appendChild(p);
+    }
+
+    // ══ RETREAT TABS ══
+    function showMenu(id) {
+      document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.retreat-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('menu-' + id).classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+      // Trigger reveal for newly shown section
+      triggerReveal();
+    }
+
+    // ══ DAY TABS (yoga only) ══
+    function showDay(menu, day) {
+      [1,2,3].forEach(d => {
+        const el = document.getElementById(`${menu}-meals-${d}`);
+        if (el) el.style.display = d == day ? 'grid' : 'none';
+        const btn = document.getElementById(`${menu}-day${d}`);
+        if (btn) btn.classList.toggle('active', d == day);
+      });
+    }
+
+    // ══ SCROLL REVEAL ══
+    function triggerReveal() {
+      const els = document.querySelectorAll('.reveal:not(.visible)');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      els.forEach(el => io.observe(el));
+    }
+    triggerReveal();
+    document.querySelectorAll('.retreat-tab').forEach(tab => tab.addEventListener('click', () => setTimeout(triggerReveal, 50)));
+
+    // ══ NAV SCROLL ══
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ══ LANGUAGE ══
+    const T = {
+      es: {
+        // Hero
+        'hero-eyebrow':   'Alimento como Medicina',
+        'hero-title':     'Menús diseñados para<br><em>transformar</em>',
+        'hero-sub':       'Cada retiro merece una cocina que lo potencie. Pedro diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro — desde el amanecer hasta el cierre ceremonial.',
+        'attr-1':'Plant-Based','attr-2':'Ayurvédico','attr-3':'Sin Gluten','attr-4':'Alimentos Vivos','attr-5':'Estacional','attr-6':'Ceremonial',
+        // Philosophy
+        'ph1-label':'Intención','ph1-desc':'Cada plato diseñado para sostener la práctica del día',
+        'ph2-label':'Equilibrio','ph2-desc':'Doshas y energía en balance a lo largo del día',
+        'ph3-label':'Agni','ph3-desc':'Fuego digestivo respetado en cada preparación',
+        'ph4-label':'Terroir','ph4-desc':'Ingredientes locales y estacionales, donde sea posible',
+        'ph5-label':'Vibración','ph5-desc':'Cocina preparada con amor, presencia y gratitud',
+        // Tabs
+        'tab-yoga-label':'Yoga','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
+        'tab-ayurveda-label':'Ayurveda','tab-medicina-label':'Plantas & Medicina','tab-privado-label':'Evento Privado',
+        // Yoga days
+        'yoga-day1':'Día 1 — Apertura','yoga-day2':'Día 2 — Práctica','yoga-day3':'Día 3 — Cierre',
+        // Yoga menu
+        'yoga-type':'Menú para Retiro de','yoga-title':'Yoga <span>Integral</span>',
+        'yoga-subtitle':'"Nutrir el cuerpo para liberar la mente"',
+        'yoga-desc':'La cocina para un retiro de yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restorative).',
+        'yoga-note':'✦ Menú de muestra basado en un retiro de 3 días para 12 personas. Pedro adapta cada menú a la duración, grupo y estación del año.',
+        'yoga-hl-title':'Platos Estrella del Retiro de Yoga',
+        'yoga-princ-label':'Principio del Retiro de Yoga',
+        'yoga-cta-title':'¿Organizás un retiro de yoga?','yoga-cta-btn1':'Reservar Servicio','yoga-cta-btn2':'Consultar',
+        'yoga-cta-sub':'Pedro trabaja contigo desde el diseño del menú hasta la cocina in situ. Disponible en Uruguay y a nivel mundial.',
+        // Credentials
+        'cred-eyebrow':'Por qué elegir a Pedro',
+        'cred-title':'Un cocinero que es también <span>facilitador</span>',
+        'cred-desc':'La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. Pedro no solo domina la técnica — lleva a la cocina su formación en Ayurveda, su práctica de yoga, su experiencia con el Breathwork y su profunda conexión con la naturaleza.',
+        'cred-1':'Años de cocina holística y retiros','cred-2':'Disciplinas integradas en cada menú',
+        'cred-3':'Personalizado para cada retiro','cred-4':'Disponible en todo el mundo',
+        // Footer
+        'ft-nav-title':'Navegación','ft-contact-title':'Contacto','ft-rights':'Todos los derechos reservados',
+      },
+      en: {
+        'hero-eyebrow':   'Food as Medicine',
+        'hero-title':     'Menus designed to<br><em>transform</em>',
+        'hero-sub':       'Every retreat deserves a kitchen that amplifies it. Pedro designs complete menus adapted to the energy, intention and discipline of each gathering — from dawn to the ceremonial closing.',
+        'attr-1':'Plant-Based','attr-2':'Ayurvedic','attr-3':'Gluten-Free','attr-4':'Living Foods','attr-5':'Seasonal','attr-6':'Ceremonial',
+        'ph1-label':'Intention','ph1-desc':'Every dish designed to support the day\'s practice',
+        'ph2-label':'Balance','ph2-desc':'Doshas and energy in harmony throughout the day',
+        'ph3-label':'Agni','ph3-desc':'Digestive fire honored in every preparation',
+        'ph4-label':'Terroir','ph4-desc':'Local and seasonal ingredients, wherever possible',
+        'ph5-label':'Vibration','ph5-desc':'Food cooked with love, presence and gratitude',
+        'tab-yoga-label':'Yoga','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
+        'tab-ayurveda-label':'Ayurveda','tab-medicina-label':'Plant Medicine','tab-privado-label':'Private Event',
+        'yoga-day1':'Day 1 — Opening','yoga-day2':'Day 2 — Practice','yoga-day3':'Day 3 — Closing',
+        'yoga-type':'Menu for','yoga-title':'Integral <span>Yoga</span>',
+        'yoga-subtitle':'"Nourishing the body to free the mind"',
+        'yoga-desc':'Yoga retreat cooking aims to be light, energizing and toxin-free. Sāttvic foods — fresh, pure, nourishing — support practice without creating heaviness or mental distraction. Menus vary depending on whether the practice is active (Vinyasa, Ashtanga) or contemplative (Yin, Restorative).',
+        'yoga-note':'✦ Sample menu based on a 3-day retreat for 12 people. Pedro adapts each menu to the duration, group and season of the year.',
+        'yoga-hl-title':'Star Dishes of the Yoga Retreat',
+        'yoga-princ-label':'Yoga Retreat Principle',
+        'yoga-cta-title':'Are you organizing a yoga retreat?','yoga-cta-btn1':'Book Service','yoga-cta-btn2':'Enquire',
+        'yoga-cta-sub':'Pedro works with you from menu design to on-site cooking. Available in Uruguay and worldwide.',
+        'cred-eyebrow':'Why choose Pedro',
+        'cred-title':'A cook who is also a <span>facilitator</span>',
+        'cred-desc':'The difference between a chef and a holistic cook is the consciousness with which one cooks. Pedro not only masters technique — he brings to the kitchen his Ayurvedic training, yoga practice, Breathwork experience and his deep connection with nature.',
+        'cred-1':'Years of holistic cooking & retreats','cred-2':'Disciplines integrated in each menu',
+        'cred-3':'Customized for every retreat','cred-4':'Available worldwide',
+        'ft-nav-title':'Navigation','ft-contact-title':'Contact','ft-rights':'All rights reserved',
+      }
+    };
+
+    function setLang(lang) {
+      const t = T[lang];
+      const htmlIds = ['hero-title','yoga-title','cred-title'];
+      Object.keys(t).forEach(id => {
+        if (typeof t[id] !== 'string') return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (htmlIds.includes(id)) { el.innerHTML = t[id]; }
+        else { el.textContent = t[id]; }
+      });
+      document.querySelectorAll('[data-es][data-en]').forEach(el => { el.textContent = el.dataset[lang]; });
+      ['btn-es','btn-en','mbtn-es','mbtn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id.includes(lang));
+      });
+      document.documentElement.lang = lang;
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('sd-lang') || 'es';
+    if (savedLang !== 'es') setLang(savedLang);
+  </script>
+</body>
+</html>

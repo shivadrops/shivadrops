@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Descargas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+      --green:      #2a7a4a;
+      --green-light:#3daa68;
+    }
+
+    body { font-family: 'Raleway', sans-serif; background: var(--bg-dark); color: var(--cream); overflow-x: hidden; }
+
+    /* ══ NAV ══ */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(21,11,0,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,184,75,0.1); transition: padding 0.3s; }
+    nav.scrolled { padding: 0.65rem 3rem; }
+    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
+    .nav-cta:hover { background: var(--blue-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .lang-toggle { display: flex; gap: 0.4rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+
+    /* ══ PAGE HERO ══ */
+    .page-hero { padding: 10rem 5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 50% 100%, rgba(201,135,10,0.08) 0%, transparent 65%); pointer-events: none; }
+
+    /* Subtle decorative FOL behind hero */
+    .hero-fol { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 480px; height: 480px; opacity: 0.025; pointer-events: none; }
+
+    .page-hero-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--green-light); display: block; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    .page-hero-title { font-family: 'Cinzel', serif; font-size: clamp(2rem, 4.5vw, 3.6rem); font-weight: 500; line-height: 1.15; color: var(--cream); margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+    .page-hero-title span { color: var(--gold); }
+    .page-hero-sub { font-size: 0.92rem; font-weight: 300; line-height: 1.85; color: var(--cream-dim); max-width: 560px; margin: 0 auto; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+
+    /* ══ FREE BADGE STRIP ══ */
+    .free-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.4rem 5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .free-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.4rem;
+      border: 1px solid rgba(61,170,104,0.3);
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.1em;
+      color: var(--green-light);
+    }
+
+    /* ══ FILTER TABS ══ */
+    .filter-bar { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; padding: 2rem 5rem 0; opacity: 0; animation: fadeUp 0.8s ease 1s forwards; }
+    .filter-btn { padding: 0.55rem 1.4rem; font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em; border: 1px solid rgba(232,184,75,0.2); border-radius: 50px; background: transparent; color: var(--cream-dim); cursor: pointer; transition: all 0.25s; display: flex; align-items: center; gap: 0.4rem; }
+    .filter-btn:hover { border-color: rgba(232,184,75,0.5); color: var(--cream); }
+    .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--bg-dark); font-weight: 500; }
+
+    /* ══ DOWNLOADS GRID ══ */
+    .downloads-wrapper { max-width: 1300px; margin: 0 auto; padding: 3rem 3rem 6rem; }
+
+    .downloads-count { font-size: 0.7rem; font-weight: 300; color: var(--cream-faint); letter-spacing: 0.08em; margin-bottom: 2rem; text-align: center; }
+
+    .downloads-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    /* ══ DOWNLOAD CARD ══ */
+    .dl-card {
+      background: var(--bg-section);
+      border: 1px solid rgba(232,184,75,0.08);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s;
+    }
+
+    .dl-card.visible { opacity: 1; transform: translateY(0); }
+    .dl-card:hover { border-color: rgba(232,184,75,0.25); transform: translateY(-3px) !important; }
+    .dl-card.featured { grid-column: span 2; }
+
+    /* Color accent bar by category */
+    .dl-card[data-cat="receta"]    { border-top: 2px solid var(--gold); }
+    .dl-card[data-cat="guia"]      { border-top: 2px solid var(--blue-light); }
+    .dl-card[data-cat="meditacion"]{ border-top: 2px solid var(--green-light); }
+    .dl-card[data-cat="audio"]     { border-top: 2px solid #9b6ecc; }
+    .dl-card[data-cat="otro"]      { border-top: 2px solid var(--cream-dim); }
+
+    /* Visual area */
+    .dl-visual {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dl-card[data-cat="receta"]     .dl-visual { background: linear-gradient(135deg, rgba(201,135,10,0.12), rgba(232,184,75,0.05)); }
+    .dl-card[data-cat="guia"]       .dl-visual { background: linear-gradient(135deg, rgba(42,84,196,0.15), rgba(74,125,224,0.05)); }
+    .dl-card[data-cat="meditacion"] .dl-visual { background: linear-gradient(135deg, rgba(42,122,74,0.15), rgba(61,170,104,0.05)); }
+    .dl-card[data-cat="audio"]      .dl-visual { background: linear-gradient(135deg, rgba(155,110,204,0.15), rgba(200,160,255,0.05)); }
+    .dl-card[data-cat="otro"]       .dl-visual { background: linear-gradient(135deg, rgba(240,228,204,0.08), rgba(240,228,204,0.02)); }
+
+    .dl-card.featured .dl-visual { height: 180px; font-size: 5rem; }
+
+    /* Category badge */
+    .dl-badge {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.8rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+    }
+    .dl-card[data-cat="receta"]     .dl-badge { background: rgba(201,135,10,0.2); color: var(--gold); }
+    .dl-card[data-cat="guia"]       .dl-badge { background: rgba(42,84,196,0.25); color: var(--blue-light); }
+    .dl-card[data-cat="meditacion"] .dl-badge { background: rgba(42,122,74,0.25); color: var(--green-light); }
+    .dl-card[data-cat="audio"]      .dl-badge { background: rgba(155,110,204,0.25); color: #c8a0ff; }
+    .dl-card[data-cat="otro"]       .dl-badge { background: rgba(240,228,204,0.12); color: var(--cream-dim); }
+
+    /* Free badge */
+    .dl-free-badge {
+      position: absolute;
+      top: 0.8rem;
+      left: 0.8rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 50px;
+      background: rgba(61,170,104,0.2);
+      border: 1px solid rgba(61,170,104,0.35);
+      color: var(--green-light);
+    }
+
+    .dl-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .dl-name { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 500; color: var(--cream); line-height: 1.3; }
+    .dl-card.featured .dl-name { font-size: 1.2rem; }
+
+    .dl-desc { font-size: 0.82rem; font-weight: 300; line-height: 1.7; color: var(--cream-dim); flex: 1; }
+
+    /* Includes chips */
+    .dl-includes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .dl-chip { font-size: 0.6rem; font-family: 'Cinzel', serif; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; background: rgba(240,228,204,0.06); border: 1px solid rgba(240,228,204,0.12); color: var(--cream-faint); }
+
+    /* Format info */
+    .dl-meta { display: flex; align-items: center; gap: 0.8rem; font-size: 0.72rem; color: var(--cream-faint); font-weight: 300; }
+    .dl-meta-sep { opacity: 0.3; }
+
+    /* Download button */
+    .dl-footer { padding: 0 1.4rem 1.4rem; }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.8rem 1.4rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .btn-download.green {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(42,122,74,0.3);
+    }
+    .btn-download.green:hover { box-shadow: 0 0 28px rgba(42,122,74,0.5); transform: translateY(-1px); }
+
+    .btn-download.blue {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(42,84,196,0.3);
+    }
+    .btn-download.blue:hover { box-shadow: 0 0 28px rgba(42,84,196,0.5); transform: translateY(-1px); }
+
+    .btn-download.gold {
+      background: linear-gradient(135deg, var(--amber) 0%, var(--gold) 100%);
+      color: var(--bg-dark);
+      box-shadow: 0 0 18px rgba(201,135,10,0.3);
+    }
+    .btn-download.gold:hover { box-shadow: 0 0 28px rgba(201,135,10,0.5); transform: translateY(-1px); }
+
+    .btn-download svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ══ EMPTY STATE ══ */
+    .empty-state { display: none; text-align: center; padding: 4rem 2rem; color: var(--cream-faint); }
+    .empty-state.show { display: block; }
+    .empty-state p { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em; }
+
+    /* ══ NEWSLETTER STRIP ══ */
+    .newsletter-strip {
+      background: var(--bg-section);
+      border-top: 1px solid rgba(232,184,75,0.1);
+      border-bottom: 1px solid rgba(232,184,75,0.1);
+      padding: 4rem 5rem;
+      text-align: center;
+    }
+
+    .newsletter-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--green-light); margin-bottom: 1rem; }
+    .newsletter-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 400; color: var(--cream); margin-bottom: 0.8rem; }
+    .newsletter-title span { color: var(--gold); }
+    .newsletter-sub { font-size: 0.85rem; font-weight: 300; color: var(--cream-dim); margin-bottom: 2rem; }
+
+    .newsletter-form { display: flex; gap: 0.8rem; max-width: 480px; margin: 0 auto; }
+    .newsletter-input {
+      flex: 1;
+      padding: 0.85rem 1.2rem;
+      background: rgba(240,228,204,0.05);
+      border: 1px solid rgba(232,184,75,0.2);
+      border-radius: 2px;
+      color: var(--cream);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .newsletter-input:focus { border-color: rgba(61,170,104,0.5); }
+    .newsletter-input::placeholder { color: var(--cream-faint); font-style: italic; }
+    .newsletter-btn {
+      padding: 0.85rem 1.8rem;
+      background: var(--green);
+      border: none;
+      border-radius: 2px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .newsletter-btn:hover { background: var(--green-light); }
+
+    .newsletter-note { font-size: 0.68rem; color: var(--cream-faint); margin-top: 0.8rem; font-style: italic; }
+
+    /* ══ PRODUCTOS CTA ══ */
+    .products-cta {
+      padding: 4rem 5rem;
+      text-align: center;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(42,84,196,0.06) 0%, transparent 70%);
+    }
+
+    .products-cta-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; color: var(--blue-light); margin-bottom: 1rem; }
+    .products-cta-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 400; color: var(--cream); margin-bottom: 0.8rem; }
+    .products-cta-sub { font-size: 0.85rem; font-weight: 300; color: var(--cream-dim); margin-bottom: 2rem; }
+
+    .btn-products {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2.8rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      border-radius: 2px;
+      box-shadow: 0 0 20px rgba(42,84,196,0.3);
+      transition: all 0.3s;
+    }
+    .btn-products:hover { box-shadow: 0 0 32px rgba(42,84,196,0.5); transform: translateY(-1px); }
+
+    /* ══ FOOTER ══ */
+    footer { background: var(--bg-section); border-top: 1px solid rgba(232,184,75,0.1); padding: 4rem 5rem 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-logo img { height: 52px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
+    .footer-tagline { font-style: italic; font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); margin-bottom: 1.2rem; }
+    .footer-social { display: flex; gap: 1rem; }
+    .social-link { font-size: 1.1rem; text-decoration: none; opacity: 0.6; transition: opacity 0.3s; }
+    .social-link:hover { opacity: 1; }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-contact p { font-size: 0.8rem; font-weight: 300; line-height: 2; color: var(--cream-dim); }
+    .footer-contact a { color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(240,228,204,0.07); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-copy { font-size: 0.68rem; font-weight: 300; color: var(--cream-faint); }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1024px) {
+      .downloads-grid { grid-template-columns: repeat(2, 1fr); }
+      .dl-card.featured { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 8rem 2rem 3rem; }
+      .free-strip { padding: 1rem 2rem; flex-wrap: wrap; gap: 0.6rem; }
+      .filter-bar { padding: 1.5rem 2rem 0; }
+      .downloads-wrapper { padding: 2rem 1.5rem 4rem; }
+      .downloads-grid { grid-template-columns: 1fr; }
+      .dl-card.featured { grid-column: span 1; }
+      .newsletter-strip { padding: 3rem 2rem; }
+      .newsletter-form { flex-direction: column; }
+      .products-cta { padding: 3rem 2rem; }
+      footer { padding: 3rem 2rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav id="main-nav">
+    <a href="home.html" class="nav-logo">
+      <img src="assets/logo_hires.png" alt="ShivaDrops">
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" class="active" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">✕</button>
+    <a href="home.html" data-es="Inicio" data-en="Home">Inicio</a>
+    <a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a>
+    <a href="productos.html" data-es="Productos" data-en="Products">Productos</a>
+    <a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a>
+    <a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem">
+      <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <!-- subtle FOL -->
+    <svg class="hero-fol" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="#3daa68" stroke-width="0.5"/>
+      <circle cx="200" cy="130" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="200" cy="270" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="139.4" cy="165" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="260.6" cy="165" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="139.4" cy="235" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="260.6" cy="235" r="70" stroke="#3daa68" stroke-width="0.4"/>
+      <circle cx="200" cy="200" r="70" stroke="#3daa68" stroke-width="0.5"/>
+    </svg>
+
+    <span class="page-hero-label" id="hero-label">Recursos Gratuitos</span>
+    <h1 class="page-hero-title" id="hero-title">
+      Nutre Tu <span>Camino</span>
+    </h1>
+    <p class="page-hero-sub" id="hero-sub">
+      Materiales gratuitos para acompañar tu proceso de transformación.
+      Recetas, guías y recursos para integrar el bienestar consciente en tu vida diaria.
+    </p>
+  </section>
+
+  <!-- ══ FREE PILLS ══ -->
+  <div class="free-strip">
+    <div class="free-pill">✦ <span id="pill-1">100% Gratuito</span></div>
+    <div class="free-pill">✦ <span id="pill-2">Sin registro obligatorio</span></div>
+    <div class="free-pill">✦ <span id="pill-3">Descarga inmediata</span></div>
+  </div>
+
+  <!-- ══ FILTER TABS ══ -->
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" data-cat="all" onclick="filterCat('all')">
+      <span id="cat-all">✦ Todo</span>
+    </button>
+    <button class="filter-btn" data-cat="receta" onclick="filterCat('receta')">
+      <span id="cat-receta">🍃 Recetas</span>
+    </button>
+    <button class="filter-btn" data-cat="guia" onclick="filterCat('guia')">
+      <span id="cat-guia">📘 Guías</span>
+    </button>
+    <button class="filter-btn" data-cat="meditacion" onclick="filterCat('meditacion')">
+      <span id="cat-meditacion">🧘 Meditaciones</span>
+    </button>
+    <button class="filter-btn" data-cat="audio" onclick="filterCat('audio')">
+      <span id="cat-audio">🎵 Audios</span>
+    </button>
+    <button class="filter-btn" data-cat="otro" onclick="filterCat('otro')">
+      <span id="cat-otro">📄 Otros</span>
+    </button>
+  </div>
+
+  <!-- ══ DOWNLOADS GRID ══ -->
+  <div class="downloads-wrapper">
+    <p class="downloads-count" id="dl-count"></p>
+    <div class="downloads-grid" id="downloads-grid"></div>
+    <div class="empty-state" id="empty-state">
+      <p id="empty-msg">No hay recursos en esta categoría aún.</p>
+    </div>
+  </div>
+
+  <!-- ══ NEWSLETTER STRIP ══ -->
+  <section class="newsletter-strip">
+    <p class="newsletter-eyebrow" id="nl-eyebrow">Comunidad ShivaDrops</p>
+    <h2 class="newsletter-title" id="nl-title">Recibe recursos <span>exclusivos</span> directo a tu correo</h2>
+    <p class="newsletter-sub" id="nl-sub">Únete a la comunidad y sé el primero en recibir nuevas recetas, guías y materiales gratuitos.</p>
+    <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+      <input class="newsletter-input" type="email" id="nl-email" placeholder="tu@correo.com" required>
+      <button class="newsletter-btn" type="submit" id="nl-btn">Suscribir</button>
+    </form>
+    <p class="newsletter-note" id="nl-note">Sin spam. Puedes cancelar en cualquier momento.</p>
+  </section>
+
+  <!-- ══ PRODUCTOS CTA ══ -->
+  <section class="products-cta">
+    <p class="products-cta-label" id="cta-label">¿Quieres ir más profundo?</p>
+    <h2 class="products-cta-title" id="cta-title">Explora los programas y materiales premium</h2>
+    <p class="products-cta-sub" id="cta-sub">Recetarios completos, cursos online y kits físicos para transformar tu relación con el alimento.</p>
+    <a href="productos.html" class="btn-products" id="cta-btn">
+      <span>Ver Productos</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/logo_hires.png" alt="ShivaDrops">
+        </div>
+        <p class="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title" id="ft-nav-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+          <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+          <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+          <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title" id="ft-contact-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy" id="ft-rights">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════
+    // CONFIGURACIÓN
+    // ══════════════════════════════════════════════
+    const CONFIG = {
+      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro (sin + ni espacios)
+    };
+
+    // ══════════════════════════════════════════════
+    // DESCARGAS — Agregar recursos aquí
+    //
+    // Campos:
+    //   id       — número único
+    //   cat      — 'receta' | 'guia' | 'meditacion' | 'audio' | 'otro'
+    //   emoji    — ícono visual del card
+    //   featured — true = card doble ancho (máx 1 por fila)
+    //   name_es / name_en      — título del recurso
+    //   desc_es / desc_en      — descripción breve
+    //   includes_es / includes_en — lista de lo que incluye (array de strings)
+    //   format   — 'PDF' | 'MP3' | 'MP4' | 'ZIP' | etc.
+    //   size     — tamaño del archivo (ej: '2.4 MB')
+    //   link     — URL directa al archivo (Google Drive, Dropbox, etc.)
+    //              Si está vacío, el botón abre WhatsApp para pedir el archivo.
+    //   btnStyle — 'green' | 'blue' | 'gold'
+    //
+    // CÓMO AÑADIR UN RECURSO:
+    //   1. Agrega un objeto nuevo al array DOWNLOADS
+    //   2. Sube el archivo a Google Drive, Dropbox o similar
+    //   3. Obtén el link de descarga directa y colócalo en 'link'
+    //   4. Para Google Drive: usa https://drive.google.com/uc?export=download&id=FILE_ID
+    //
+    // ══════════════════════════════════════════════
+    const DOWNLOADS = [
+      {
+        id: 1,
+        cat: 'receta',
+        emoji: '🌿',
+        featured: true,
+        name_es: '7 Recetas Ayurvédicas para Comenzar',
+        name_en: '7 Ayurvedic Recipes to Get Started',
+        desc_es: 'Una selección de recetas esenciales basadas en principios ayurvédicos para equilibrar los doshas y nutrir el cuerpo desde adentro. Perfectas para incorporar como rituales diarios de bienestar.',
+        desc_en: 'A selection of essential recipes based on Ayurvedic principles to balance the doshas and nourish the body from within. Perfect for incorporating as daily wellness rituals.',
+        includes_es: ['7 recetas completas', 'Guía de especias', 'Tabla de doshas', 'Lista de compras', 'PDF 15 páginas'],
+        includes_en: ['7 complete recipes', 'Spice guide', 'Dosha chart', 'Shopping list', '15-page PDF'],
+        format: 'PDF',
+        size: '3.2 MB',
+        link: '', // Agregar link de Google Drive aquí
+        btnStyle: 'green',
+      },
+      {
+        id: 2,
+        cat: 'guia',
+        emoji: '📘',
+        featured: false,
+        name_es: 'Guía de Iniciación al Ayurveda',
+        name_en: 'Ayurveda Beginner\'s Guide',
+        desc_es: 'Introducción práctica a la ciencia del Ayurveda: doshas, ritmos circadianos, principios de alimentación consciente y rituales de autocuidado para cada tipo constitucional.',
+        desc_en: 'Practical introduction to the science of Ayurveda: doshas, circadian rhythms, conscious eating principles and self-care rituals for each constitutional type.',
+        includes_es: ['Tri-dosha explicado', 'Test de dosha', 'Rituales diarios', 'PDF 20 páginas'],
+        includes_en: ['Tri-dosha explained', 'Dosha quiz', 'Daily rituals', '20-page PDF'],
+        format: 'PDF',
+        size: '4.1 MB',
+        link: '',
+        btnStyle: 'blue',
+      },
+      {
+        id: 3,
+        cat: 'meditacion',
+        emoji: '🧘',
+        featured: false,
+        name_es: 'Meditación: Conexión con el Alimento',
+        name_en: 'Meditation: Connection with Food',
+        desc_es: 'Práctica guiada de 12 minutos para desarrollar una relación consciente y amorosa con el acto de comer. Ideal para realizar antes de las comidas principales.',
+        desc_en: 'Guided 12-minute practice to develop a conscious and loving relationship with the act of eating. Ideal to do before main meals.',
+        includes_es: ['Audio 12 min', 'Guía de práctica', 'MP3 HD'],
+        includes_en: ['12 min audio', 'Practice guide', 'HD MP3'],
+        format: 'MP3',
+        size: '11.2 MB',
+        link: '',
+        btnStyle: 'green',
+      },
+      {
+        id: 4,
+        cat: 'guia',
+        emoji: '🌙',
+        featured: false,
+        name_es: 'Ritual de Desintoxicación Matutino',
+        name_en: 'Morning Detox Ritual',
+        desc_es: 'Protocolo de 30 minutos para comenzar el día purificando el cuerpo y la mente. Incluye técnicas de respiración, movimiento suave y desayuno detox.',
+        desc_en: '30-minute protocol to start the day purifying body and mind. Includes breathing techniques, gentle movement and detox breakfast.',
+        includes_es: ['Secuencia de 7 pasos', 'Recetas de mañana', 'Respiración pranayama', 'PDF'],
+        includes_en: ['7-step sequence', 'Morning recipes', 'Pranayama breathing', 'PDF'],
+        format: 'PDF',
+        size: '1.8 MB',
+        link: '',
+        btnStyle: 'gold',
+      },
+      {
+        id: 5,
+        cat: 'audio',
+        emoji: '🎵',
+        featured: false,
+        name_es: 'Respiración Consciente — Intro al Rebirthing',
+        name_en: 'Conscious Breathing — Intro to Rebirthing',
+        desc_es: 'Sesión introductoria de Rebirthing Breathwork para explorar el poder de la respiración circular continua como herramienta de liberación emocional y expansión de conciencia.',
+        desc_en: 'Introductory Rebirthing Breathwork session to explore the power of continuous circular breathing as a tool for emotional release and consciousness expansion.',
+        includes_es: ['Audio 20 min', 'Guía de preparación', 'Notas post-sesión', 'MP3'],
+        includes_en: ['20 min audio', 'Preparation guide', 'Post-session notes', 'MP3'],
+        format: 'MP3',
+        size: '19.4 MB',
+        link: '',
+        btnStyle: 'blue',
+      },
+      {
+        id: 6,
+        cat: 'receta',
+        emoji: '🍵',
+        featured: false,
+        name_es: 'Tés y Aguas Medicinales',
+        name_en: 'Medicinal Teas & Waters',
+        desc_es: 'Colección de 12 recetas de bebidas medicinales para distintos momentos del día. Infusiones ayurvédicas, aguas minerales y elixires de plantas para cada necesidad.',
+        desc_en: 'Collection of 12 medicinal drink recipes for different times of day. Ayurvedic infusions, mineral waters and plant elixirs for every need.',
+        includes_es: ['12 recetas de bebidas', 'Propiedades medicinales', 'Temporadas recomendadas', 'PDF'],
+        includes_en: ['12 drink recipes', 'Medicinal properties', 'Recommended seasons', 'PDF'],
+        format: 'PDF',
+        size: '2.1 MB',
+        link: '',
+        btnStyle: 'green',
+      },
+    ];
+
+    // ══════════════════════════════════════════════
+    // TRADUCCIONES
+    // ══════════════════════════════════════════════
+    const T = {
+      es: {
+        // Hero
+        'hero-label':  'Recursos Gratuitos',
+        'hero-title':  'Nutre Tu <span>Camino</span>',
+        'hero-sub':    'Materiales gratuitos para acompañar tu proceso de transformación. Recetas, guías y recursos para integrar el bienestar consciente en tu vida diaria.',
+        // Pills
+        'pill-1': '100% Gratuito',
+        'pill-2': 'Sin registro obligatorio',
+        'pill-3': 'Descarga inmediata',
+        // Categories
+        'cat-all':       '✦ Todo',
+        'cat-receta':    '🍃 Recetas',
+        'cat-guia':      '📘 Guías',
+        'cat-meditacion':'🧘 Meditaciones',
+        'cat-audio':     '🎵 Audios',
+        'cat-otro':      '📄 Otros',
+        // Count
+        'count': (n) => `${n} recurso${n !== 1 ? 's' : ''} disponible${n !== 1 ? 's' : ''}`,
+        // Buttons
+        'btn-download':  'Descargar',
+        'btn-whatsapp':  'Pedir por WhatsApp',
+        // Empty
+        'empty-msg':     'No hay recursos en esta categoría aún.',
+        // Newsletter
+        'nl-eyebrow':    'Comunidad ShivaDrops',
+        'nl-title':      'Recibe recursos <span>exclusivos</span> directo a tu correo',
+        'nl-sub':        'Únete a la comunidad y sé el primero en recibir nuevas recetas, guías y materiales gratuitos.',
+        'nl-btn':        'Suscribir',
+        'nl-note':       'Sin spam. Puedes cancelar en cualquier momento.',
+        // Products CTA
+        'cta-label':     '¿Quieres ir más profundo?',
+        'cta-title':     'Explora los programas y materiales premium',
+        'cta-sub':       'Recetarios completos, cursos online y kits físicos para transformar tu relación con el alimento.',
+        'cta-btn':       'Ver Productos',
+        // Footer
+        'ft-nav-title':     'Navegación',
+        'ft-contact-title': 'Contacto',
+        'ft-rights':        'Todos los derechos reservados',
+        // Format label
+        'format-label':  'Formato',
+        'size-label':    'Tamaño',
+        // WhatsApp message
+        'wa-msg': (name) => `Hola Pedro! Quisiera recibir el recurso gratuito: "${name}". ¡Gracias!`,
+      },
+      en: {
+        'hero-label':  'Free Resources',
+        'hero-title':  'Nourish Your <span>Path</span>',
+        'hero-sub':    'Free materials to support your transformation journey. Recipes, guides and resources to integrate conscious wellness into your daily life.',
+        'pill-1': '100% Free',
+        'pill-2': 'No registration required',
+        'pill-3': 'Instant download',
+        'cat-all':       '✦ All',
+        'cat-receta':    '🍃 Recipes',
+        'cat-guia':      '📘 Guides',
+        'cat-meditacion':'🧘 Meditations',
+        'cat-audio':     '🎵 Audios',
+        'cat-otro':      '📄 Other',
+        'count': (n) => `${n} resource${n !== 1 ? 's' : ''} available`,
+        'btn-download':  'Download',
+        'btn-whatsapp':  'Request via WhatsApp',
+        'empty-msg':     'No resources in this category yet.',
+        'nl-eyebrow':    'ShivaDrops Community',
+        'nl-title':      'Get <span>exclusive</span> resources straight to your inbox',
+        'nl-sub':        'Join the community and be the first to receive new recipes, guides and free materials.',
+        'nl-btn':        'Subscribe',
+        'nl-note':       'No spam. You can unsubscribe at any time.',
+        'cta-label':     'Want to go deeper?',
+        'cta-title':     'Explore our premium programs and materials',
+        'cta-sub':       'Complete recipe books, online courses and physical kits to transform your relationship with food.',
+        'cta-btn':       'View Products',
+        'ft-nav-title':     'Navigation',
+        'ft-contact-title': 'Contact',
+        'ft-rights':        'All rights reserved',
+        'format-label':  'Format',
+        'size-label':    'Size',
+        'wa-msg': (name) => `Hi Pedro! I'd like to receive the free resource: "${name}". Thank you!`,
+      }
+    };
+
+    let currentLang = 'es';
+    let currentCat  = 'all';
+
+    // ══════════════════════════════════════════════
+    // RENDER CARDS
+    // ══════════════════════════════════════════════
+    function renderDownloads() {
+      const t = T[currentLang];
+      const grid = document.getElementById('downloads-grid');
+      const empty = document.getElementById('empty-state');
+      grid.innerHTML = '';
+
+      const filtered = currentCat === 'all'
+        ? DOWNLOADS
+        : DOWNLOADS.filter(d => d.cat === currentCat);
+
+      document.getElementById('dl-count').textContent = t.count(filtered.length);
+
+      if (filtered.length === 0) {
+        empty.classList.add('show');
+        document.getElementById('empty-msg').textContent = t['empty-msg'];
+        return;
+      }
+      empty.classList.remove('show');
+
+      filtered.forEach((dl, i) => {
+        const name = dl[`name_${currentLang}`];
+        const desc = dl[`desc_${currentLang}`];
+        const includes = dl[`includes_${currentLang}`];
+        const badge = catLabel(dl.cat, currentLang);
+
+        const card = document.createElement('div');
+        card.className = 'dl-card' + (dl.featured ? ' featured' : '');
+        card.dataset.cat = dl.cat;
+
+        const btnLabel = dl.link ? t['btn-download'] : t['btn-whatsapp'];
+        const btnAction = dl.link
+          ? `window.open('${dl.link}', '_blank')`
+          : `window.open('https://wa.me/${CONFIG.PEDRO_WHATSAPP}?text=${encodeURIComponent(t['wa-msg'](name))}', '_blank')`;
+
+        card.innerHTML = `
+          <div class="dl-visual">
+            <span>${dl.emoji}</span>
+            <span class="dl-badge">${badge}</span>
+            <span class="dl-free-badge">${t['pill-1'].split(' ').slice(-1)[0] === 'Free' ? 'Free' : 'Gratis'}</span>
+          </div>
+          <div class="dl-body">
+            <h3 class="dl-name">${name}</h3>
+            <p class="dl-desc">${desc}</p>
+            <div class="dl-includes">
+              ${includes.map(inc => `<span class="dl-chip">${inc}</span>`).join('')}
+            </div>
+            <div class="dl-meta">
+              <span>${t['format-label']}: <strong>${dl.format}</strong></span>
+              <span class="dl-meta-sep">·</span>
+              <span>${t['size-label']}: <strong>${dl.size}</strong></span>
+            </div>
+          </div>
+          <div class="dl-footer">
+            <button class="btn-download ${dl.btnStyle}" onclick="${btnAction}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 15V3M12 15l-4-4M12 15l4-4M3 19h18"/>
+              </svg>
+              ${btnLabel}
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+
+        // Scroll reveal
+        setTimeout(() => {
+          const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            });
+          }, { threshold: 0.08 });
+          observer.observe(card);
+        }, i * 60);
+      });
+    }
+
+    function catLabel(cat, lang) {
+      const labels = {
+        es: { receta: 'Receta', guia: 'Guía', meditacion: 'Meditación', audio: 'Audio', otro: 'Otro' },
+        en: { receta: 'Recipe', guia: 'Guide', meditacion: 'Meditation', audio: 'Audio', otro: 'Other' },
+      };
+      return labels[lang][cat] || cat;
+    }
+
+    // ══════════════════════════════════════════════
+    // FILTER
+    // ══════════════════════════════════════════════
+    function filterCat(cat) {
+      currentCat = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.cat === cat);
+      });
+      renderDownloads();
+    }
+
+    // ══════════════════════════════════════════════
+    // LANGUAGE
+    // ══════════════════════════════════════════════
+    function setLang(lang) {
+      currentLang = lang;
+      const t = T[lang];
+
+      // Static text IDs
+      const staticIds = [
+        'hero-label','hero-sub',
+        'pill-1','pill-2','pill-3',
+        'cat-all','cat-receta','cat-guia','cat-meditacion','cat-audio','cat-otro',
+        'empty-msg','nl-eyebrow','nl-sub','nl-btn','nl-note',
+        'cta-label','cta-title','cta-sub','cta-btn',
+        'ft-nav-title','ft-contact-title','ft-rights',
+      ];
+      staticIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && t[id]) el.textContent = t[id];
+      });
+
+      // innerHTML for ones with spans
+      ['hero-title','nl-title'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && t[id]) el.innerHTML = t[id];
+      });
+
+      // data-es / data-en links
+      document.querySelectorAll('[data-es][data-en]').forEach(el => {
+        el.textContent = el.dataset[lang];
+      });
+
+      // Lang buttons
+      ['btn-es','btn-en','mbtn-es','mbtn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id.includes(lang));
+      });
+
+      document.documentElement.lang = lang;
+      localStorage.setItem('sd-lang', lang);
+      renderDownloads();
+    }
+
+    // ══════════════════════════════════════════════
+    // NEWSLETTER
+    // ══════════════════════════════════════════════
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const email = document.getElementById('nl-email').value;
+      const msg = currentLang === 'es'
+        ? `Hola Pedro! Me gustaría unirme a la comunidad ShivaDrops y recibir recursos gratuitos. Mi email: ${email}`
+        : `Hi Pedro! I'd like to join the ShivaDrops community and receive free resources. My email: ${email}`;
+      window.open(`https://wa.me/${CONFIG.PEDRO_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // ══════════════════════════════════════════════
+    // NAV SCROLL EFFECT
+    // ══════════════════════════════════════════════
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ══════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════
+    const savedLang = localStorage.getItem('sd-lang') || 'es';
+    if (savedLang !== 'es') {
+      setLang(savedLang);
+    } else {
+      renderDownloads();
+    }
+  </script>
+</body>
+</html>

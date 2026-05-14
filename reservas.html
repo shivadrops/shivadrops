@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShivaDrops — Reservas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-dark:    #150b00;
+      --bg-mid:     #1e1000;
+      --bg-section: #1a0e00;
+      --amber:      #c9870a;
+      --gold:       #e8b84b;
+      --gold-light: #f5d07a;
+      --blue:       #2a54c4;
+      --blue-light: #4a7de0;
+      --cream:      #f0e4cc;
+      --cream-dim:  rgba(240, 228, 204, 0.6);
+      --cream-faint:rgba(240, 228, 204, 0.25);
+      --blocked:    #3d1a1a;
+      --blocked-text:#a05050;
+      --selected:   #2a54c4;
+      --in-range:   rgba(42, 84, 196, 0.15);
+      --available:  rgba(232, 184, 75, 0.06);
+      --success:    #2d6a4f;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--bg-dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 0.65rem 3rem; }
+    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3)); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim);
+      text-decoration: none; transition: color 0.3s; position: relative;
+    }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
+    .nav-cta:hover { background: var(--blue-light) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .lang-toggle { display: flex; gap: 0.4rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      padding: 10rem 5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 50% 100%, rgba(201,135,10,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-label {
+      font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--blue-light); display: block;
+      margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .page-hero-title {
+      font-family: 'Cinzel', serif; font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 500; line-height: 1.15; color: var(--cream); margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .page-hero-title span { color: var(--gold); }
+    .page-hero-sub {
+      font-size: 0.92rem; font-weight: 300; line-height: 1.85; color: var(--cream-dim);
+      max-width: 560px; margin: 0 auto;
+      opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    /* ══ BOOKING LAYOUT ══ */
+    .booking-wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 4rem 3rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ══ CALENDAR ══ */
+    .calendar-panel {
+      background: var(--bg-section);
+      border: 1px solid rgba(232, 184, 75, 0.1);
+      padding: 2rem;
+      position: sticky;
+      top: 100px;
+    }
+
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .cal-nav-btn {
+      background: none;
+      border: 1px solid rgba(232, 184, 75, 0.2);
+      border-radius: 2px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--cream-dim);
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .cal-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .cal-month-label {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cream);
+      letter-spacing: 0.08em;
+      text-align: center;
+      flex: 1;
+    }
+
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      margin-bottom: 4px;
+    }
+
+    .cal-weekday {
+      text-align: center;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+      padding: 0.4rem 0;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 300;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      user-select: none;
+    }
+
+    .cal-day.empty { cursor: default; }
+
+    .cal-day.past {
+      color: rgba(240, 228, 204, 0.15);
+      cursor: not-allowed;
+    }
+
+    .cal-day.today {
+      color: var(--gold);
+      font-weight: 500;
+    }
+    .cal-day.today::after {
+      content: '';
+      position: absolute;
+      bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .cal-day.blocked {
+      background: var(--blocked);
+      color: var(--blocked-text);
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .cal-day.available:not(.past):not(.blocked):hover {
+      background: rgba(232, 184, 75, 0.12);
+      color: var(--cream);
+    }
+
+    .cal-day.in-range {
+      background: var(--in-range);
+      color: var(--cream);
+      border-radius: 0;
+    }
+
+    .cal-day.selected-start,
+    .cal-day.selected-end {
+      background: var(--selected);
+      color: #fff;
+      font-weight: 500;
+      box-shadow: 0 0 12px rgba(42, 84, 196, 0.5);
+      border-radius: 2px;
+      z-index: 1;
+    }
+
+    .cal-day.selected-start.selected-end {
+      border-radius: 2px;
+    }
+
+    /* Loading state */
+    .cal-loading {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--cream-faint);
+      font-style: italic;
+    }
+
+    /* Calendar legend */
+    .cal-legend {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(232,184,75,0.08);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      color: var(--cream-faint);
+    }
+
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+    }
+
+    .legend-dot.available { background: rgba(232,184,75,0.2); border: 1px solid rgba(232,184,75,0.3); }
+    .legend-dot.blocked   { background: var(--blocked); }
+    .legend-dot.selected  { background: var(--selected); }
+    .legend-dot.range     { background: var(--in-range); border: 1px solid rgba(42,84,196,0.3); }
+
+    /* Selection summary */
+    .selection-summary {
+      margin-top: 1.2rem;
+      padding: 1rem 1.2rem;
+      background: rgba(42, 84, 196, 0.1);
+      border: 1px solid rgba(42, 84, 196, 0.25);
+      border-radius: 2px;
+      display: none;
+    }
+    .selection-summary.visible { display: block; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      padding: 0.3rem 0;
+    }
+
+    .summary-label { color: var(--cream-faint); font-weight: 300; }
+
+    .summary-value {
+      color: var(--cream);
+      font-weight: 400;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+    }
+
+    .summary-duration {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--gold);
+      text-align: center;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(42,84,196,0.2);
+    }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--cream-faint);
+      font-size: 0.65rem;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: 'Raleway', sans-serif;
+      margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+    .clear-btn:hover { color: var(--cream); }
+
+    /* ══ FORM PANEL ══ */
+    .form-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .form-section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .form-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(74, 125, 224, 0.2);
+    }
+
+    /* Service selector */
+    .service-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .service-option {
+      padding: 1.2rem;
+      border: 1px solid rgba(232, 184, 75, 0.12);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      position: relative;
+    }
+
+    .service-option:hover {
+      border-color: rgba(232, 184, 75, 0.3);
+      background: rgba(232, 184, 75, 0.04);
+    }
+
+    .service-option.selected {
+      border-color: var(--blue-light);
+      background: rgba(42, 84, 196, 0.12);
+    }
+
+    .service-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .service-opt-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    .service-opt-text {}
+    .service-opt-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
+    }
+    .service-opt-sub {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--cream-faint);
+      line-height: 1.4;
+    }
+
+    .service-opt-check {
+      position: absolute;
+      top: 0.7rem; right: 0.7rem;
+      width: 16px; height: 16px;
+      border: 1px solid rgba(232,184,75,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .service-option.selected .service-opt-check {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .service-option.selected .service-opt-check::after {
+      content: '✓';
+      font-size: 0.55rem;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Date display */
+    .date-display {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .date-box {
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(232, 184, 75, 0.12);
+      border-radius: 2px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .date-box-label {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .date-box-value {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--cream);
+      min-height: 1.2rem;
+    }
+
+    .date-box-value.empty { color: var(--cream-faint); font-style: italic; font-family: 'Raleway', sans-serif; font-size: 0.78rem; }
+
+    .duration-display {
+      grid-column: 1 / -1;
+      padding: 0.8rem 1.2rem;
+      background: rgba(232, 184, 75, 0.06);
+      border: 1px solid rgba(232, 184, 75, 0.12);
+      border-radius: 2px;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      display: none;
+    }
+    .duration-display.visible { display: block; }
+
+    /* Form inputs */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .form-label {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-light);
+    }
+
+    .form-input, .form-textarea {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(232,184,75,0.12);
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--cream);
+      transition: border-color 0.3s, background 0.3s;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--cream-faint); }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: rgba(74, 125, 224, 0.5);
+      background: rgba(42, 84, 196, 0.05);
+    }
+
+    .form-input.error { border-color: rgba(200, 80, 80, 0.5); }
+
+    .form-textarea { min-height: 110px; resize: vertical; }
+
+    /* Submit */
+    .submit-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .btn-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1.1rem 2rem;
+      background: #128C7E;
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(18, 140, 126, 0.3);
+    }
+
+    .btn-whatsapp:hover {
+      background: #075E54;
+      box-shadow: 0 0 30px rgba(18, 140, 126, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-whatsapp:disabled {
+      background: rgba(18, 140, 126, 0.3);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .wa-icon { font-size: 1.3rem; }
+
+    .submit-note {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--cream-faint);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* Validation notice */
+    .form-notice {
+      padding: 0.8rem 1rem;
+      border-radius: 2px;
+      font-size: 0.78rem;
+      font-weight: 300;
+      display: none;
+    }
+    .form-notice.error   { background: rgba(180,60,60,0.12); border: 1px solid rgba(180,60,60,0.3); color: #e88; display: block; }
+    .form-notice.warning { background: rgba(201,135,10,0.1); border: 1px solid rgba(201,135,10,0.3); color: var(--gold); display: block; }
+
+    /* ══ INFO STRIP ══ */
+    .info-strip {
+      background: #0d0700;
+      padding: 4rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      border-top: 1px solid rgba(232,184,75,0.06);
+    }
+
+    .info-card { padding: 2.2rem 2rem; border: 1px solid rgba(232,184,75,0.07); transition: background 0.3s; }
+    .info-card:hover { background: rgba(232,184,75,0.03); }
+    .info-icon { font-size: 1.6rem; margin-bottom: 0.8rem; display: block; }
+    .info-title { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 500; color: var(--gold); margin-bottom: 0.6rem; }
+    .info-text { font-size: 0.8rem; font-weight: 300; line-height: 1.85; color: var(--cream-dim); }
+
+    /* ══ FOOTER ══ */
+    footer { background: #0d0700; padding: 4rem 5rem 2rem; border-top: 1px solid rgba(232,184,75,0.08); }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+    .footer-brand img { height: 36px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201,135,10,0.25)); }
+    .footer-tagline { font-family: 'Cinzel', serif; font-size: 0.7rem; font-style: italic; color: var(--cream-faint); margin-bottom: 1.5rem; }
+    .footer-social { display: flex; gap: 0.8rem; }
+    .social-link { width: 34px; height: 34px; border: 1px solid rgba(232,184,75,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+    .social-link:hover { border-color: var(--gold); background: rgba(232,184,75,0.08); }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-contact p { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); line-height: 1.9; }
+    .footer-contact a { color: var(--blue-light); text-decoration: none; }
+    .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 0.68rem; color: rgba(240,228,204,0.2); }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 1024px) {
+      .booking-wrapper { grid-template-columns: 1fr; padding: 3rem 2rem 5rem; }
+      .calendar-panel { position: static; }
+      .info-strip { grid-template-columns: 1fr; padding: 3rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-right .lang-toggle { display: none; }
+      .hamburger { display: flex; }
+      .page-hero { padding: 8rem 1.5rem 3rem; }
+      .booking-wrapper { padding: 2rem 1.5rem 4rem; }
+      .service-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .info-strip { padding: 3rem 1.5rem; }
+      footer { padding: 3rem 1.5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+  ══════════════════════════════════════════════════════════════
+  CONFIGURACIÓN — Leer antes de publicar
+  ══════════════════════════════════════════════════════════════
+  1. WhatsApp de Pedro:
+     Editar PEDRO_WHATSAPP en el CONFIG de abajo (con código de país, sin +)
+     Ej: Uruguay = 598XXXXXXXX
+
+  2. Calendario de fechas bloqueadas:
+     a) Crear una Google Sheet con estas columnas en la fila 1:
+        inicio | fin | servicio | notas
+        (fechas en formato YYYY-MM-DD, ej: 2024-03-15)
+     b) Publicar la hoja: Archivo → Compartir → Publicar en la web → CSV
+     c) Copiar el ID de la hoja (la parte larga de la URL) y pegarlo en SHEET_ID
+     d) Cada vez que Pedro cierre una reserva, solo agrega una fila con las fechas
+
+  3. Para bloquear fechas temporalmente sin la hoja, agregar al array DEMO_BLOCKED:
+     { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
+  ══════════════════════════════════════════════════════════════
+  -->
+
+  <!-- ══ NAV ══ -->
+  <nav id="navbar">
+    <a href="home.html" class="nav-logo"><img src="assets/logo_hires.png" alt="ShivaDrops"></a>
+    <ul class="nav-links">
+      <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
+      <li><a href="reservas.html" class="active" data-es="Reservas" data-en="Bookings">Reservas</a></li>
+      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
+      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
+      <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
+      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" onclick="toggleMenu()">✕</button>
+    <a href="home.html" onclick="toggleMenu()">Inicio</a>
+    <a href="servicios.html" onclick="toggleMenu()">Servicios</a>
+    <a href="recetas.html" onclick="toggleMenu()">Menús</a>
+    <a href="reservas.html" onclick="toggleMenu()">Reservas</a>
+    <a href="productos.html" onclick="toggleMenu()">Productos</a>
+    <a href="descargas.html" onclick="toggleMenu()">Descargas</a>
+    <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
+    <div class="lang-toggle" style="margin-top:1rem;">
+      <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
+      <button class="lang-btn" onclick="setLang('en')" id="mob-btn-en">🇬🇧 EN</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE HERO ══ -->
+  <div class="page-hero">
+    <span class="page-hero-label" id="hero-label">ShivaDrops</span>
+    <h1 class="page-hero-title" id="hero-title">Reserva tu <span>experiencia</span></h1>
+    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro se pondrá en contacto contigo para confirmar los detalles.</p>
+  </div>
+
+  <!-- ══ BOOKING ══ -->
+  <div class="booking-wrapper">
+
+    <!-- CALENDAR -->
+    <div class="calendar-panel">
+      <div class="calendar-header">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)" id="btn-prev">‹</button>
+        <div class="cal-month-label" id="cal-month-label">Cargando...</div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)" id="btn-next">›</button>
+      </div>
+
+      <div class="cal-weekdays" id="cal-weekdays">
+        <div class="cal-weekday" id="wd-0">Dom</div>
+        <div class="cal-weekday" id="wd-1">Lun</div>
+        <div class="cal-weekday" id="wd-2">Mar</div>
+        <div class="cal-weekday" id="wd-3">Mié</div>
+        <div class="cal-weekday" id="wd-4">Jue</div>
+        <div class="cal-weekday" id="wd-5">Vie</div>
+        <div class="cal-weekday" id="wd-6">Sáb</div>
+      </div>
+
+      <div class="cal-grid" id="cal-grid">
+        <div class="cal-loading" id="cal-loading" style="grid-column:1/-1">
+          Cargando disponibilidad...
+        </div>
+      </div>
+
+      <div class="cal-legend">
+        <div class="legend-item"><div class="legend-dot available"></div><span id="leg-available">Disponible</span></div>
+        <div class="legend-item"><div class="legend-dot blocked"></div><span id="leg-blocked">No disponible</span></div>
+        <div class="legend-item"><div class="legend-dot selected"></div><span id="leg-selected">Seleccionado</span></div>
+        <div class="legend-item"><div class="legend-dot range"></div><span id="leg-range">Tu período</span></div>
+      </div>
+
+      <div class="selection-summary" id="selection-summary">
+        <div class="summary-row">
+          <span class="summary-label" id="sum-start-lbl">Inicio</span>
+          <span class="summary-value" id="sum-start">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label" id="sum-end-lbl">Fin</span>
+          <span class="summary-value" id="sum-end">—</span>
+        </div>
+        <div class="summary-duration" id="sum-duration"></div>
+        <button class="clear-btn" onclick="clearSelection()" id="clear-btn">Limpiar selección</button>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-panel">
+
+      <!-- Service selector -->
+      <div>
+        <div class="form-section-title" id="step1-title">01 · Elige tu servicio</div>
+        <div class="service-cards" id="service-cards">
+          <label class="service-option" onclick="selectService(this)">
+            <input type="radio" name="service" value="Cocinero Holístico (Retiros y Eventos)">
+            <span class="service-opt-icon">🍲</span>
+            <div class="service-opt-text">
+              <div class="service-opt-name" id="s1n">Cocinero Holístico</div>
+              <div class="service-opt-sub" id="s1s">Retiros y Eventos</div>
+            </div>
+            <div class="service-opt-check"></div>
+          </label>
+          <label class="service-option" onclick="selectService(this)">
+            <input type="radio" name="service" value="Coach de Alimentación Consciente">
+            <span class="service-opt-icon">🌿</span>
+            <div class="service-opt-text">
+              <div class="service-opt-name" id="s2n">Coach Alimentación</div>
+              <div class="service-opt-sub" id="s2s">Coaching Individual</div>
+            </div>
+            <div class="service-opt-check"></div>
+          </label>
+          <label class="service-option" onclick="selectService(this)">
+            <input type="radio" name="service" value="Facilitador de Breathwork">
+            <span class="service-opt-icon">🌬️</span>
+            <div class="service-opt-text">
+              <div class="service-opt-name" id="s3n">Breathwork</div>
+              <div class="service-opt-sub" id="s3s">Rebirthing</div>
+            </div>
+            <div class="service-opt-check"></div>
+          </label>
+          <label class="service-option" onclick="selectService(this)">
+            <input type="radio" name="service" value="Instructor de Yoga">
+            <span class="service-opt-icon">🧘</span>
+            <div class="service-opt-text">
+              <div class="service-opt-name" id="s4n">Yoga</div>
+              <div class="service-opt-sub" id="s4s">Individual o Grupal</div>
+            </div>
+            <div class="service-opt-check"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Dates summary -->
+      <div>
+        <div class="form-section-title" id="step2-title">02 · Fechas seleccionadas</div>
+        <div class="date-display">
+          <div class="date-box">
+            <span class="date-box-label" id="db-start-lbl">Inicio</span>
+            <div class="date-box-value empty" id="db-start">← Selecciona en el calendario</div>
+          </div>
+          <div class="date-box">
+            <span class="date-box-label" id="db-end-lbl">Fin</span>
+            <div class="date-box-value empty" id="db-end">← Selecciona en el calendario</div>
+          </div>
+          <div class="duration-display" id="db-duration"></div>
+        </div>
+      </div>
+
+      <!-- Personal info -->
+      <div>
+        <div class="form-section-title" id="step3-title">03 · Tus datos</div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="lbl-name">Nombre completo *</label>
+              <input type="text" class="form-input" id="inp-name" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-email">Email *</label>
+              <input type="email" class="form-input" id="inp-email" placeholder="tu@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" id="lbl-phone">WhatsApp *</label>
+              <input type="tel" class="form-input" id="inp-phone" placeholder="+598 99 000 000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="lbl-people">Número de personas</label>
+              <input type="number" class="form-input" id="inp-people" placeholder="1" min="1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-location">Lugar del evento / retiro</label>
+            <input type="text" class="form-input" id="inp-location" placeholder="Ciudad, país o dirección">
+          </div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-message">Mensaje o detalles adicionales</label>
+            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Pedro sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notice -->
+      <div class="form-notice" id="form-notice"></div>
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <button class="btn-whatsapp" onclick="submitBooking()" id="btn-reservar">
+          <span class="wa-icon">💬</span>
+          <span id="btn-reservar-text">Reservar por WhatsApp</span>
+        </button>
+        <p class="submit-note" id="submit-note">
+          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro revisará la disponibilidad y confirmará tu reserva personalmente.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ INFO STRIP ══ -->
+  <div class="info-strip">
+    <div class="info-card">
+      <span class="info-icon">📋</span>
+      <h3 class="info-title" id="i1-title">¿Cómo funciona?</h3>
+      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">⏱️</span>
+      <h3 class="info-title" id="i2-title">Tiempo de respuesta</h3>
+      <p class="info-text" id="i2-text">Pedro responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">🌍</span>
+      <h3 class="info-title" id="i3-title">Disponibilidad mundial</h3>
+      <p class="info-text" id="i3-text">Pedro asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/logo_hires.png" alt="ShivaDrops">
+        <p class="footer-tagline">"al andar se hace el camino"</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegación</p>
+        <ul class="footer-links">
+          <li><a href="home.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="recetas.html">Menús</a></li>
+          <li><a href="reservas.html">Reservas</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="descargas.html">Descargas</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contacto</p>
+        <p>
+          <a href="mailto:shivadropsu@gmail.com">shivadropsu@gmail.com</a><br><br>
+          Punta del Este, Uruguay<br><br>
+          <a href="https://instagram.com/shivadrops" target="_blank">@shivadrops</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy">Todos los derechos reservados</span>
+    </div>
+  </footer>
+
+  <script>
+    // ══════════════════════════════════════════════
+    // CONFIGURACIÓN — EDITAR ANTES DE PUBLICAR
+    // ══════════════════════════════════════════════
+    const CONFIG = {
+      // WhatsApp de Pedro (código de país + número, sin + ni espacios)
+      // Uruguay: 598XXXXXXXXX
+      PEDRO_WHATSAPP: '598XXXXXXXXX',
+
+      // Google Sheet ID para fechas bloqueadas
+      // Pasos:
+      // 1. Crear Google Sheet con columnas: inicio | fin | servicio | notas
+      // 2. Archivo > Compartir > Publicar en la web > Hoja1 > CSV > Publicar
+      // 3. Pegar aquí el ID de la URL de la hoja
+      // Ejemplo de ID: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms'
+      SHEET_ID: '',
+
+      // Fechas bloqueadas manuales (mientras no hay Google Sheet configurada)
+      // Formato: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
+      MANUAL_BLOCKED: [
+        // Ejemplo — eliminar cuando se conecte la hoja:
+        // { start: '2024-04-10', end: '2024-04-15' },
+      ]
+    };
+    // ══════════════════════════════════════════════
+
+    // ─── State ───
+    let currentYear  = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+    let selectedStart = null;
+    let selectedEnd   = null;
+    let selecting     = 'start'; // 'start' | 'end'
+    let blockedRanges = [];
+    let currentLang   = 'es';
+
+    // ─── Month names ───
+    const MONTHS = {
+      es: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+      en: ['January','February','March','April','May','June','July','August','September','October','November','December']
+    };
+
+    const WEEKDAYS = {
+      es: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+      en: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+    };
+
+    // ─── Date helpers ───
+    function dateStr(d) {
+      // Returns YYYY-MM-DD
+      return d.toISOString().split('T')[0];
+    }
+
+    function parseDate(s) {
+      const [y, m, d] = s.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function isBlocked(date) {
+      const ds = dateStr(date);
+      return blockedRanges.some(r => ds >= r.start && ds <= r.end);
+    }
+
+    function isInRange(date) {
+      if (!selectedStart || !selectedEnd) return false;
+      const ds = dateStr(date);
+      return ds > dateStr(selectedStart) && ds < dateStr(selectedEnd);
+    }
+
+    function isSelectedStart(date) {
+      return selectedStart && dateStr(date) === dateStr(selectedStart);
+    }
+
+    function isSelectedEnd(date) {
+      return selectedEnd && dateStr(date) === dateStr(selectedEnd);
+    }
+
+    function isPast(date) {
+      const today = new Date(); today.setHours(0,0,0,0);
+      return date < today;
+    }
+
+    function isToday(date) {
+      const today = new Date();
+      return dateStr(date) === dateStr(today);
+    }
+
+    function diffDays(a, b) {
+      return Math.round((b - a) / (1000 * 60 * 60 * 24));
+    }
+
+    function formatDate(date, lang) {
+      const months = MONTHS[lang];
+      return `${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    // ─── Load blocked dates from Google Sheet ───
+    async function loadBlockedDates() {
+      // Start with manual blocked dates
+      blockedRanges = [...CONFIG.MANUAL_BLOCKED];
+
+      if (!CONFIG.SHEET_ID) {
+        renderCalendar();
+        return;
+      }
+
+      try {
+        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+        const res  = await fetch(url);
+        const text = await res.text();
+
+        const rows = text.trim().split('\n').slice(1); // skip header row
+        for (const row of rows) {
+          const cols = row.split(',').map(v => v.replace(/^"|"$/g, '').trim());
+          const start = cols[0];
+          const end   = cols[1];
+          if (start && end && /^\d{4}-\d{2}-\d{2}$/.test(start) && /^\d{4}-\d{2}-\d{2}$/.test(end)) {
+            blockedRanges.push({ start, end });
+          }
+        }
+      } catch (e) {
+        console.warn('No se pudo cargar el calendario remoto:', e);
+      }
+
+      renderCalendar();
+    }
+
+    // ─── Render calendar ───
+    function renderCalendar() {
+      const grid  = document.getElementById('cal-grid');
+      const label = document.getElementById('cal-month-label');
+      const loading = document.getElementById('cal-loading');
+      if (loading) loading.remove();
+
+      label.textContent = `${MONTHS[currentLang][currentMonth]} ${currentYear}`;
+
+      // Weekday headers
+      WEEKDAYS[currentLang].forEach((wd, i) => {
+        const el = document.getElementById('wd-' + i);
+        if (el) el.textContent = wd;
+      });
+
+      grid.innerHTML = '';
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      // Empty cells
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day empty';
+        grid.appendChild(empty);
+      }
+
+      // Day cells
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(currentYear, currentMonth, d);
+        const cell = document.createElement('div');
+        cell.className = 'cal-day';
+
+        const past    = isPast(date);
+        const blocked = isBlocked(date);
+        const today   = isToday(date);
+        const start   = isSelectedStart(date);
+        const end     = isSelectedEnd(date);
+        const inRange = isInRange(date);
+
+        if (past)    cell.classList.add('past');
+        else if (blocked) cell.classList.add('blocked');
+        else         cell.classList.add('available');
+        if (today)   cell.classList.add('today');
+        if (start)   cell.classList.add('selected-start');
+        if (end)     cell.classList.add('selected-end');
+        if (inRange) cell.classList.add('in-range');
+
+        cell.textContent = d;
+
+        if (!past && !blocked) {
+          cell.addEventListener('click', () => onDayClick(date));
+        }
+
+        grid.appendChild(cell);
+      }
+    }
+
+    // ─── Day click ───
+    function onDayClick(date) {
+      if (selecting === 'start') {
+        selectedStart = date;
+        selectedEnd   = null;
+        selecting     = 'end';
+      } else {
+        if (date < selectedStart) {
+          // Clicked before start — swap
+          selectedEnd   = selectedStart;
+          selectedStart = date;
+        } else {
+          selectedEnd = date;
+        }
+        // Check no blocked dates in range
+        if (rangeHasBlocked(selectedStart, selectedEnd)) {
+          showNotice(
+            currentLang === 'es'
+              ? '⚠️ El rango seleccionado incluye fechas no disponibles. Por favor elige otro período.'
+              : '⚠️ The selected range includes unavailable dates. Please choose a different period.',
+            'warning'
+          );
+          selectedEnd = null;
+          selecting   = 'end';
+          renderCalendar();
+          updateSummary();
+          return;
+        }
+        selecting = 'start';
+        hideNotice();
+      }
+      renderCalendar();
+      updateSummary();
+    }
+
+    function rangeHasBlocked(start, end) {
+      let d = new Date(start);
+      d.setDate(d.getDate() + 1); // don't check start itself
+      while (d < end) {
+        if (isBlocked(d)) return true;
+        d.setDate(d.getDate() + 1);
+      }
+      return false;
+    }
+
+    // ─── Update summary ───
+    function updateSummary() {
+      const summary  = document.getElementById('selection-summary');
+      const sumStart = document.getElementById('sum-start');
+      const sumEnd   = document.getElementById('sum-end');
+      const sumDur   = document.getElementById('sum-duration');
+      const dbStart  = document.getElementById('db-start');
+      const dbEnd    = document.getElementById('db-end');
+      const dbDur    = document.getElementById('db-duration');
+
+      if (selectedStart) {
+        const startFmt = formatDate(selectedStart, currentLang);
+        sumStart.textContent = startFmt;
+        dbStart.textContent  = startFmt;
+        dbStart.classList.remove('empty');
+      } else {
+        const ph = currentLang === 'es' ? '← Selecciona en el calendario' : '← Select on the calendar';
+        sumStart.textContent = '—';
+        dbStart.textContent  = ph;
+        dbStart.classList.add('empty');
+      }
+
+      if (selectedEnd) {
+        const endFmt = formatDate(selectedEnd, currentLang);
+        const days   = diffDays(selectedStart, selectedEnd);
+        const durTxt = currentLang === 'es'
+          ? `${days} día${days !== 1 ? 's' : ''} de servicio`
+          : `${days} day${days !== 1 ? 's' : ''} of service`;
+
+        sumEnd.textContent  = endFmt;
+        sumDur.textContent  = durTxt;
+        dbEnd.textContent   = endFmt;
+        dbEnd.classList.remove('empty');
+        dbDur.textContent   = durTxt;
+        dbDur.classList.add('visible');
+        summary.classList.add('visible');
+      } else {
+        const ph = currentLang === 'es' ? '← Selecciona en el calendario' : '← Select on the calendar';
+        sumEnd.textContent = '—';
+        sumDur.textContent = '';
+        dbEnd.textContent  = ph;
+        dbEnd.classList.add('empty');
+        dbDur.classList.remove('visible');
+        if (!selectedStart) summary.classList.remove('visible');
+      }
+    }
+
+    function clearSelection() {
+      selectedStart = null;
+      selectedEnd   = null;
+      selecting     = 'start';
+      renderCalendar();
+      updateSummary();
+      document.getElementById('selection-summary').classList.remove('visible');
+      hideNotice();
+    }
+
+    // ─── Month navigation ───
+    function changeMonth(dir) {
+      currentMonth += dir;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    }
+
+    // ─── Service selector ───
+    function selectService(label) {
+      document.querySelectorAll('.service-option').forEach(el => el.classList.remove('selected'));
+      label.classList.add('selected');
+      label.querySelector('input').checked = true;
+    }
+
+    // ─── Notices ───
+    function showNotice(msg, type) {
+      const el = document.getElementById('form-notice');
+      el.textContent = msg;
+      el.className   = 'form-notice ' + type;
+    }
+
+    function hideNotice() {
+      const el = document.getElementById('form-notice');
+      el.className = 'form-notice';
+    }
+
+    // ─── Submit → WhatsApp ───
+    function submitBooking() {
+      const name     = document.getElementById('inp-name').value.trim();
+      const email    = document.getElementById('inp-email').value.trim();
+      const phone    = document.getElementById('inp-phone').value.trim();
+      const people   = document.getElementById('inp-people').value.trim();
+      const location = document.getElementById('inp-location').value.trim();
+      const message  = document.getElementById('inp-message').value.trim();
+      const service  = document.querySelector('input[name="service"]:checked');
+
+      const es = currentLang === 'es';
+
+      // Validation
+      const errors = [];
+      if (!name)    errors.push(es ? 'nombre' : 'name');
+      if (!email)   errors.push(es ? 'email' : 'email');
+      if (!phone)   errors.push(es ? 'WhatsApp' : 'WhatsApp');
+      if (!service) errors.push(es ? 'servicio' : 'service');
+      if (!selectedStart || !selectedEnd) errors.push(es ? 'fechas' : 'dates');
+
+      if (errors.length) {
+        showNotice(
+          es ? `Por favor completa: ${errors.join(', ')}.`
+             : `Please complete: ${errors.join(', ')}.`,
+          'error'
+        );
+        return;
+      }
+
+      hideNotice();
+
+      const startFmt = formatDate(selectedStart, currentLang);
+      const endFmt   = formatDate(selectedEnd, currentLang);
+      const days     = diffDays(selectedStart, selectedEnd);
+
+      let msg;
+      if (es) {
+        msg =
+`Hola Pedro 👋
+
+Quiero hacer una reserva en *ShivaDrops*:
+
+📋 *Servicio:* ${service.value}
+📅 *Inicio:* ${startFmt}
+📅 *Fin:* ${endFmt}
+⏱ *Duración:* ${days} día${days !== 1 ? 's' : ''}
+${people ? `👥 *Personas:* ${people}` : ''}
+${location ? `📍 *Lugar:* ${location}` : ''}
+
+👤 *Nombre:* ${name}
+📧 *Email:* ${email}
+📱 *WhatsApp:* ${phone}
+${message ? `\n💬 *Mensaje:*\n${message}` : ''}
+
+_Enviado desde shivadrops.com_`;
+      } else {
+        msg =
+`Hello Pedro 👋
+
+I'd like to make a booking at *ShivaDrops*:
+
+📋 *Service:* ${service.value}
+📅 *Start:* ${startFmt}
+📅 *End:* ${endFmt}
+⏱ *Duration:* ${days} day${days !== 1 ? 's' : ''}
+${people ? `👥 *People:* ${people}` : ''}
+${location ? `📍 *Location:* ${location}` : ''}
+
+👤 *Name:* ${name}
+📧 *Email:* ${email}
+📱 *WhatsApp:* ${phone}
+${message ? `\n💬 *Message:*\n${message}` : ''}
+
+_Sent from shivadrops.com_`;
+      }
+
+      const encoded = encodeURIComponent(msg);
+      const waNum   = CONFIG.PEDRO_WHATSAPP.replace(/\D/g, '');
+      window.open(`https://wa.me/${waNum}?text=${encoded}`, '_blank');
+    }
+
+    // ─── Language ───
+    const T = {
+      es: {
+        'hero-label': 'ShivaDrops',
+        'hero-title': 'Reserva tu <span>experiencia</span>',
+        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro se pondrá en contacto contigo para confirmar los detalles.',
+        'leg-available':'Disponible','leg-blocked':'No disponible','leg-selected':'Seleccionado','leg-range':'Tu período',
+        'sum-start-lbl':'Inicio','sum-end-lbl':'Fin',
+        'step1-title':'01 · Elige tu servicio',
+        'step2-title':'02 · Fechas seleccionadas',
+        'step3-title':'03 · Tus datos',
+        's1n':'Cocinero Holístico','s1s':'Retiros y Eventos',
+        's2n':'Coach Alimentación','s2s':'Coaching Individual',
+        's3n':'Breathwork','s3s':'Rebirthing',
+        's4n':'Yoga','s4s':'Individual o Grupal',
+        'db-start-lbl':'Inicio','db-end-lbl':'Fin',
+        'lbl-name':'Nombre completo *','lbl-email':'Email *',
+        'lbl-phone':'WhatsApp *','lbl-people':'Número de personas',
+        'lbl-location':'Lugar del evento / retiro',
+        'lbl-message':'Mensaje o detalles adicionales',
+        'btn-reservar-text':'Reservar por WhatsApp',
+        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro revisará la disponibilidad y confirmará tu reserva personalmente.',
+        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro revisa la disponibilidad y confirma tu reserva directamente con vos.',
+        'i2-title':'Tiempo de respuesta','i2-text':'Pedro responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
+        'i3-title':'Disponibilidad mundial','i3-text':'Pedro asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
+      },
+      en: {
+        'hero-label': 'ShivaDrops',
+        'hero-title': 'Book your <span>experience</span>',
+        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Pedro will get in touch with you to confirm the details.',
+        'leg-available':'Available','leg-blocked':'Not available','leg-selected':'Selected','leg-range':'Your period',
+        'sum-start-lbl':'Start','sum-end-lbl':'End',
+        'step1-title':'01 · Choose your service',
+        'step2-title':'02 · Selected dates',
+        'step3-title':'03 · Your details',
+        's1n':'Holistic Chef','s1s':'Retreats & Events',
+        's2n':'Nutrition Coach','s2s':'Individual Coaching',
+        's3n':'Breathwork','s3s':'Rebirthing',
+        's4n':'Yoga','s4s':'Individual or Group',
+        'db-start-lbl':'Start','db-end-lbl':'End',
+        'lbl-name':'Full name *','lbl-email':'Email *',
+        'lbl-phone':'WhatsApp *','lbl-people':'Number of people',
+        'lbl-location':'Event / retreat location',
+        'lbl-message':'Message or additional details',
+        'btn-reservar-text':'Book via WhatsApp',
+        'submit-note':'Clicking will open WhatsApp with your request pre-filled. Pedro will review availability and confirm your booking personally.',
+        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Pedro reviews availability and confirms your booking directly with you.',
+        'i2-title':'Response time','i2-text':'Pedro responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
+        'i3-title':'Worldwide availability','i3-text':'Pedro assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      Object.keys(T[lang]).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = T[lang][id];
+      });
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.documentElement.lang = lang;
+      ['btn-es','btn-en','mob-btn-es','mob-btn-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active',
+          (lang === 'es' && id.includes('es')) || (lang === 'en' && id.includes('en'))
+        );
+      });
+      // Re-render calendar labels in new language
+      renderCalendar();
+      updateSummary();
+      localStorage.setItem('sd-lang', lang);
+    }
+
+    // ─── Nav scroll ───
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+
+    // ─── Init ───
+    loadBlockedDates();
+    const saved = localStorage.getItem('sd-lang');
+    if (saved && saved !== 'es') setLang(saved);
+  </script>
+</body>
+</html>
