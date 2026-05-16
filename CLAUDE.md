@@ -1,5 +1,15 @@
 # ShivaDrops — Project Brief
 
+## Target Audience — CRITICAL FRAMING
+**The website is for retreat facilitators and event organizers who want to HIRE Pedro.**
+- Primary visitors: yoga teachers, wellness center operators, retreat organizers, event planners — people who run their own retreats and are looking for a holistic chef/facilitator to bring in
+- Secondary visitors: private individuals wanting a personalized session or bespoke event (e.g., private yoga, breathwork, or nutrition coaching)
+- NOT for retreat participants looking to attend a retreat where Pedro happens to work
+- Tone must speak to the decision-maker who is evaluating Pedro as a professional service provider — position him as an expert they bring in, not as a retreat host they sign up with
+- Think: "hire a caterer / specialist for your event" not "join our retreat"
+
+---
+
 ## The Person
 **Pedro Miguel Ormaechea Riera** — founder of ShivaDrops.
 - Natural and holistic cook, conscious nutrition coach, yoga teacher, and breathwork facilitator
@@ -14,7 +24,7 @@
 - **Logo**: Water drop containing the Flower of Life (sacred geometry) — represents purity, spiritual nourishment, the sacred in the everyday
 - **Colors**: Deep navy blue, warm gold/amber, cream/off-white
 - **Language**: Bilingual — Spanish default, English toggle via flag icons in corner
-- **Tone**: Spiritual, grounded, holistic wellness — not clinical, warm and personal
+- **Tone**: Spiritual, grounded, holistic wellness — warm and personal, but also professional enough to win trust from a retreat organizer or event planner evaluating Pedro as a hire
 
 ## Site Structure
 
@@ -22,10 +32,10 @@
 | File | Page | Description |
 |------|------|-------------|
 | `index.html` | **Landing (Splash)** | Entry page — logo, brand description, "Ingresar" button → goes to `home.html` |
-| `home.html` | **Home** | What ShivaDrops is — brand intro, Pedro's story, philosophy |
-| `servicios.html` | **Servicios** | The 4 services Pedro offers |
-| `recetas.html` | **Menús** | Sample menus for different retreat types — positions Pedro as top culinary expert |
-| `reservas.html` | **Reservas** | Booking system — calendar, service selector, form → WhatsApp |
+| `home.html` | **Home** | What ShivaDrops is — brand intro, Pedro's story, philosophy; speaks to facilitators/organizers considering him as a hire |
+| `servicios.html` | **Servicios** | The 4 services Pedro offers to retreats/events — framed as "what I bring to your retreat" |
+| `recetas.html` | **Menús** | Sample menus for different retreat types — positions Pedro as a top culinary expert that organizers want for their event |
+| `reservas.html` | **Reservas** | Booking system — calendar, service selector, form → WhatsApp; used by organizers or private clients to request Pedro |
 | `productos.html` | **Productos** | Shop — recipe books, courses, physical products |
 | `descargas.html` | **Descargas** | Free digital downloads |
 | `contacto.html` | **Contacto** | Pedro's contact information |
@@ -37,21 +47,25 @@ Home · Servicios · Menús · Reservas · Productos · Descargas · Contacto
 ---
 
 ## Services (Servicios page)
-Four services Pedro sells:
+Four services Pedro offers — framed as what he brings TO a retreat or event, or to a private client:
 
-1. **Cocinero Holístico** — Retiros y Eventos Privados o Particulares
-2. **Coach de Alimentación Consciente** — conscious nutrition coaching
-3. **Facilitador de Breathwork** — Rebirthing Breathwork sessions
-4. **Instructor de Yoga** — yoga sessions (individual and group)
+1. **Cocinero Holístico** — Holistic chef for private retreats and events (the primary service; most retreat organizers hire him for this)
+2. **Coach de Alimentación Consciente** — Conscious nutrition coaching (can be a standalone session or integrated into a retreat program)
+3. **Facilitador de Breathwork** — Rebirthing Breathwork sessions (offered as an add-on to retreats or standalone for private clients)
+4. **Instructor de Yoga** — Yoga sessions, individual and group (can be included in a retreat program or booked privately)
+
+Pedro can be hired for ONE service or a combination — make this flexibility clear on the site.
 
 ---
 
 ## Reservas (Booking) — Full Flow
-1. **Description** — short text explaining how the booking process works
+The booking page is used by retreat organizers or private clients who want to hire Pedro. Copy should acknowledge this — e.g., "¿Querés sumar a Pedro a tu retiro o evento?" (Want to bring Pedro into your retreat or event?).
+
+1. **Description** — short text explaining how the booking process works; written for someone hiring a professional, not signing up for a class
 2. **Calendar** — shows already-booked days as unavailable; user picks a start date and end date (system shows how many days it lasts)
-3. **Service selector** — dropdown or cards to choose one of the 4 services above
-4. **Personal data form** — name, contact info, etc.
-5. **"Reservar" button** — sends the entire form to Pedro via **WhatsApp** (wa.me link with pre-filled message); Pedro closes the sale manually
+3. **Service selector** — dropdown or cards to choose one or more of the 4 services above
+4. **Personal data form** — name, contact info, event/retreat details (type of event, expected number of participants, location, etc.)
+5. **"Consultar / Reservar" button** — sends the entire form to Pedro via **WhatsApp** (wa.me link with pre-filled message); Pedro closes the sale manually
 
 ---
 

@@ -39,7 +39,7 @@
     }
 
     /* ══ NAV ══ */
-    nav {
+        nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
@@ -47,16 +47,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
       background: rgba(21, 11, 0, 0.92);
       backdrop-filter: blur(12px);
+      padding: 0.65rem 3rem;
       border-bottom: 1px solid rgba(232, 184, 75, 0.1);
-      transition: padding 0.3s;
     }
-    nav.scrolled { padding: 0.65rem 3rem; }
-    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3)); }
+    .nav-logo img { height: 109px; width: auto; filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3)); }
     .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
     .nav-links a {
-      font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400;
+      font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 400;
       letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim);
       text-decoration: none; transition: color 0.3s; position: relative;
     }
@@ -64,12 +67,25 @@
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--gold); }
-    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
-    .nav-cta:hover { background: var(--blue-light) !important; }
+        .nav-cta {
+      background: transparent !important;
+      color: var(--blue-light) !important;
+      padding: 0.55rem 1.6rem;
+      border-radius: 50px;
+      border: 1px solid rgba(74, 125, 224, 0.5) !important;
+      box-shadow: 0 0 12px rgba(74, 125, 224, 0.3), inset 0 0 12px rgba(74, 125, 224, 0.08);
+      transition: all 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: rgba(74, 125, 224, 0.1) !important;
+      border-color: var(--blue-light) !important;
+      box-shadow: 0 0 22px rgba(74, 125, 224, 0.55), inset 0 0 18px rgba(74, 125, 224, 0.12) !important;
+      color: #fff !important;
+    }
     .nav-cta::after { display: none !important; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .lang-toggle { display: flex; gap: 0.4rem; }
-    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 1.2rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
     .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
@@ -168,7 +184,7 @@
 
     .cal-weekday {
       text-align: center;
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -271,7 +287,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.65rem;
+      font-size: 0.91rem;
       color: var(--cream-faint);
     }
 
@@ -328,7 +344,7 @@
       background: none;
       border: none;
       color: var(--cream-faint);
-      font-size: 0.65rem;
+      font-size: 0.91rem;
       cursor: pointer;
       text-decoration: underline;
       font-family: 'Raleway', sans-serif;
@@ -456,7 +472,7 @@
     }
 
     .date-box-label {
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -493,7 +509,7 @@
     .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
 
     .form-label {
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -605,12 +621,12 @@
     /* ══ FOOTER ══ */
     footer { background: #0d0700; padding: 4rem 5rem 2rem; border-top: 1px solid rgba(232,184,75,0.08); }
     .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-    .footer-brand img { height: 36px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201,135,10,0.25)); }
+    .footer-brand img { height: 108px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201,135,10,0.25)); }
     .footer-tagline { font-family: 'Cinzel', serif; font-size: 0.7rem; font-style: italic; color: var(--cream-faint); margin-bottom: 1.5rem; }
     .footer-social { display: flex; gap: 0.8rem; }
     .social-link { width: 34px; height: 34px; border: 1px solid rgba(232,184,75,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
     .social-link:hover { border-color: var(--gold); background: rgba(232,184,75,0.08); }
-    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
     .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); text-decoration: none; transition: color 0.3s; }
     .footer-links a:hover { color: var(--cream); }
@@ -668,16 +684,13 @@
 
   <!-- ══ NAV ══ -->
   <nav id="navbar">
-    <a href="home.html" class="nav-logo"><img src="assets/logo_hires.png" alt="ShivaDrops"></a>
+    <a href="home.html" class="nav-logo"><img src="assets/logobig_t.png" alt="ShivaDrops"></a>
     <ul class="nav-links">
       <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
       <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
       <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
       <li><a href="reservas.html" class="active" data-es="Reservas" data-en="Bookings">Reservas</a></li>
-      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
       <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
-      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -694,8 +707,6 @@
     <a href="servicios.html" onclick="toggleMenu()">Servicios</a>
     <a href="recetas.html" onclick="toggleMenu()">Menús</a>
     <a href="reservas.html" onclick="toggleMenu()">Reservas</a>
-    <a href="productos.html" onclick="toggleMenu()">Productos</a>
-    <a href="descargas.html" onclick="toggleMenu()">Descargas</a>
     <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem;">
       <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
@@ -895,7 +906,7 @@
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="assets/logo_hires.png" alt="ShivaDrops">
+        <img src="assets/logobig_t.png" alt="ShivaDrops">
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
           <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
@@ -910,8 +921,6 @@
           <li><a href="servicios.html">Servicios</a></li>
           <li><a href="recetas.html">Menús</a></li>
           <li><a href="reservas.html">Reservas</a></li>
-          <li><a href="productos.html">Productos</a></li>
-          <li><a href="descargas.html">Descargas</a></li>
           <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>

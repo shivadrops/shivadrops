@@ -35,7 +35,7 @@
     }
 
     /* ══ NAV ══ */
-    nav {
+        nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
@@ -43,16 +43,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(21, 11, 0, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
-      transition: padding 0.3s;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
     }
 
-    nav.scrolled { padding: 0.65rem 3rem; }
+    nav.scrolled {
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.65rem 3rem;
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+    }
 
     .nav-logo img {
-      height: 40px;
+      height: 109px;
       width: auto;
       filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3));
     }
@@ -66,7 +68,7 @@
 
     .nav-links a {
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
+      font-size: 0.91rem;
       font-weight: 400;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -90,15 +92,21 @@
     .nav-links a.active { color: var(--gold); }
     .nav-links a.active::after { width: 100%; }
 
-    .nav-cta {
-      background: var(--blue) !important;
-      color: #fff !important;
-      padding: 0.55rem 1.4rem;
-      border-radius: 2px;
-      box-shadow: 0 0 14px rgba(42, 84, 196, 0.35);
-      transition: background 0.3s, box-shadow 0.3s !important;
+        .nav-cta {
+      background: transparent !important;
+      color: var(--blue-light) !important;
+      padding: 0.55rem 1.6rem;
+      border-radius: 50px;
+      border: 1px solid rgba(74, 125, 224, 0.5) !important;
+      box-shadow: 0 0 12px rgba(74, 125, 224, 0.3), inset 0 0 12px rgba(74, 125, 224, 0.08);
+      transition: all 0.3s !important;
     }
-    .nav-cta:hover { background: var(--blue-light) !important; box-shadow: 0 0 22px rgba(42, 84, 196, 0.55) !important; }
+    .nav-cta:hover {
+      background: rgba(74, 125, 224, 0.1) !important;
+      border-color: var(--blue-light) !important;
+      box-shadow: 0 0 22px rgba(74, 125, 224, 0.55), inset 0 0 18px rgba(74, 125, 224, 0.12) !important;
+      color: #fff !important;
+    }
     .nav-cta::after { display: none !important; }
 
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
@@ -109,10 +117,10 @@
       background: none;
       border: 1px solid rgba(42, 84, 196, 0.35);
       border-radius: 4px;
-      padding: 0.2rem 0.5rem;
+      padding: 0.4rem 1rem;
       cursor: pointer;
       font-family: 'Raleway', sans-serif;
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       color: var(--cream-dim);
       transition: all 0.3s;
       display: flex;
@@ -239,7 +247,7 @@
     /* ══ SHARED ══ */
     .section-label {
       font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--blue-light);
@@ -432,7 +440,7 @@
     }
 
     .tag {
-      font-size: 0.65rem;
+      font-size: 0.91rem;
       font-weight: 400;
       letter-spacing: 0.1em;
       color: var(--blue-light);
@@ -526,14 +534,14 @@
       margin-bottom: 3rem;
     }
 
-    .footer-brand img { height: 36px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201, 135, 10, 0.25)); }
+    .footer-brand img { height: 108px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201, 135, 10, 0.25)); }
     .footer-tagline { font-family: 'Cinzel', serif; font-size: 0.7rem; font-style: italic; color: var(--cream-faint); letter-spacing: 0.08em; margin-bottom: 1.5rem; }
 
     .footer-social { display: flex; gap: 0.8rem; }
     .social-link { width: 34px; height: 34px; border: 1px solid rgba(232, 184, 75, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
     .social-link:hover { border-color: var(--gold); background: rgba(232, 184, 75, 0.08); }
 
-    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
 
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
     .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); text-decoration: none; transition: color 0.3s; }
@@ -579,16 +587,13 @@
 
   <!-- ══ NAV ══ -->
   <nav id="navbar">
-    <a href="home.html" class="nav-logo"><img src="assets/logo_hires.png" alt="ShivaDrops"></a>
+    <a href="home.html" class="nav-logo"><img src="assets/logobig_t.png" alt="ShivaDrops"></a>
     <ul class="nav-links">
       <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
       <li><a href="servicios.html" class="active" data-es="Servicios" data-en="Services">Servicios</a></li>
       <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
       <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
-      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
       <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
-      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -607,8 +612,6 @@
     <a href="servicios.html" onclick="toggleMenu()">Servicios</a>
     <a href="recetas.html" onclick="toggleMenu()">Menús</a>
     <a href="reservas.html" onclick="toggleMenu()">Reservas</a>
-    <a href="productos.html" onclick="toggleMenu()">Productos</a>
-    <a href="descargas.html" onclick="toggleMenu()">Descargas</a>
     <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem;">
       <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
@@ -619,8 +622,8 @@
   <!-- ══ PAGE HERO ══ -->
   <div class="page-hero">
     <span class="page-hero-label" id="hero-label">Pedro Miguel Ormaechea Riera</span>
-    <h1 class="page-hero-title" id="hero-title">Servicios para tu <span>transformación</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Cuatro disciplinas, un camino. Cada servicio es una puerta hacia una versión más consciente, vital y alineada de ti mismo.</p>
+    <h1 class="page-hero-title" id="hero-title">Disciplinas de <span>Servicio</span></h1>
+    <p class="page-hero-sub" id="hero-sub">Ya organices un retiro colectivo o busques una experiencia individual, Pedro Miguel adapta cada disciplina a tu contexto — combinadas o por separado, siempre desde la intención de servir.</p>
     <div class="service-anchors">
       <a href="#cocina" class="anchor-pill" id="a1">🍲 Cocinero Holístico</a>
       <a href="#coach" class="anchor-pill" id="a2">🌿 Coach Alimentación</a>
@@ -646,7 +649,7 @@
         <span class="tag" id="s1-t4">Plant-Based</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s1-body1">
-        La cocina de Pedro es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.
+        La cocina de Pedro Miguel es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s1-body2">
         Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.
@@ -679,10 +682,10 @@
         <span class="tag" id="s2-t4">Online y Presencial</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s2-body1">
-        Más allá de lo que comemos, está la manera en que nos relacionamos con el alimento. Pedro trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sustentable y gozoso.
+        Más allá de lo que comemos, está la manera en que el grupo se relaciona con el alimento. Pedro Miguel ofrece talleres y sesiones de coaching nutricional que pueden integrarse al programa de tu retiro — individuales o grupales, presenciales u online.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s2-body2">
-        El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.
+        Integra principios ayurvédicos, alimentación intuitiva y herramientas de autoconocimiento para que la nutrición sea parte viva de la transformación que tu retiro propone.
       </p>
       <div class="includes-grid reveal reveal-delay-2">
         <div class="include-item"><div class="include-dot"></div><span id="s2-i1">Consulta inicial gratuita</span></div>
@@ -723,7 +726,7 @@
         El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s3-body2">
-        Pedro acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.
+        Pedro Miguel acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.
       </p>
       <div class="includes-grid reveal reveal-delay-2">
         <div class="include-item"><div class="include-dot"></div><span id="s3-i1">Sesiones individuales</span></div>
@@ -753,7 +756,7 @@
         <span class="tag" id="s4-t4">Meditación</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s4-body1">
-        Las clases de yoga de Pedro integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.
+        Las clases de yoga de Pedro Miguel integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s4-body2">
         Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.
@@ -772,7 +775,7 @@
       </div>
     </div>
     <div class="service-visual reveal">
-      <img class="service-photo" src="assets/pics/IMG_6159.jpeg" alt="Pedro Miguel — Instructor de Yoga">
+      <img class="service-photo" src="assets/pics/sun.JPG" alt="Pedro Miguel — Instructor de Yoga">
       <span class="service-number">04</span>
     </div>
   </section>
@@ -792,17 +795,17 @@
     <div class="info-card reveal reveal-delay-2">
       <span class="info-icon">💬</span>
       <h3 class="info-title" id="info3-title">Primera Consulta</h3>
-      <p class="info-text" id="info3-text">La consulta inicial es gratuita para todos los servicios. Pedro evalúa tus necesidades y propone el enfoque más adecuado para ti.</p>
+      <p class="info-text" id="info3-text">La consulta inicial es gratuita. Pedro Miguel evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.</p>
     </div>
   </div>
 
   <!-- ══ CTA ══ -->
   <div class="cta-section">
-    <h2 class="cta-title reveal" id="cta-title">¿Cuál es tu próximo <span>paso</span>?</h2>
-    <p class="cta-sub reveal reveal-delay-1" id="cta-sub">Elige el servicio que resuena contigo y da el primer paso hacia tu transformación.</p>
+    <h2 class="cta-title reveal" id="cta-title">¿Querés a Pedro Miguel en tu próximo <span>retiro</span>?</h2>
+    <p class="cta-sub reveal reveal-delay-1" id="cta-sub">Contanos sobre tu proyecto y coordinamos juntos el servicio que mejor se adapta a tu grupo.</p>
     <div class="cta-actions reveal reveal-delay-2">
-      <a href="reservas.html" class="btn-primary" id="cta-btn1">Hacer una Reserva</a>
-      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Hablar con Pedro</a>
+      <a href="reservas.html" class="btn-primary" id="cta-btn1">Consultar Disponibilidad</a>
+      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Hablar con Pedro Miguel</a>
     </div>
   </div>
 
@@ -810,7 +813,7 @@
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="assets/logo_hires.png" alt="ShivaDrops">
+        <img src="assets/logobig_t.png" alt="ShivaDrops">
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
           <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
@@ -825,8 +828,6 @@
           <li><a href="servicios.html">Servicios</a></li>
           <li><a href="recetas.html">Menús</a></li>
           <li><a href="reservas.html">Reservas</a></li>
-          <li><a href="productos.html">Productos</a></li>
-          <li><a href="descargas.html">Descargas</a></li>
           <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </div>
@@ -864,43 +865,43 @@
     const T = {
       es: {
         'hero-label': 'Pedro Miguel Ormaechea Riera',
-        'hero-title': 'Servicios para tu <span>transformación</span>',
-        'hero-sub':   'Cuatro disciplinas, un camino. Cada servicio es una puerta hacia una versión más consciente, vital y alineada de ti mismo.',
+        'hero-title': 'Disciplinas de <span>Servicio</span>',
+        'hero-sub':   'Ya organices un retiro colectivo o busques una experiencia individual, Pedro Miguel adapta cada disciplina a tu contexto — combinadas o por separado, siempre desde la intención de servir.',
         'a1': '🍲 Cocinero Holístico', 'a2': '🌿 Coach Alimentación', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
         's1-label': 'Servicio 01', 's1-title': 'Cocinero <span>Holístico</span>',
         's1-t1':'Retiros de Yoga','s1-t2':'Eventos Privados','s1-t3':'Cocina Ayurvédica','s1-t4':'Plant-Based',
-        's1-body1': 'La cocina de Pedro es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.',
+        's1-body1': 'La cocina de Pedro Miguel es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.',
         's1-body2': 'Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.',
         's1-i1':'Menú personalizado al grupo','s1-i2':'Adaptación a restricciones dietarias','s1-i3':'Ingredientes orgánicos y locales','s1-i4':'Cocina in situ o catering externo','s1-i5':'Retiros de 1 a 14+ días','s1-i6':'Eventos privados y particulares',
         's1-cta1':'Reservar Servicio','s1-cta2':'Consultar Disponibilidad',
         's2-label': 'Servicio 02', 's2-title': 'Coach de <span>Alimentación Consciente</span>',
         's2-t1':'Coaching Individual','s2-t2':'Planes Personalizados','s2-t3':'Ayurveda','s2-t4':'Online y Presencial',
-        's2-body1': 'Más allá de lo que comemos, está la manera en que nos relacionamos con el alimento. Pedro trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sustentable y gozoso.',
-        's2-body2': 'El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.',
+        's2-body1': 'Más allá de lo que comemos, está la manera en que el grupo se relaciona con el alimento. Pedro Miguel ofrece talleres y sesiones de coaching nutricional que pueden integrarse al programa de tu retiro — individuales o grupales, presenciales u online.',
+        's2-body2': 'Integra principios ayurvédicos, alimentación intuitiva y herramientas de autoconocimiento para que la nutrición sea parte viva de la transformación que tu retiro propone.',
         's2-i1':'Consulta inicial gratuita','s2-i2':'Plan nutricional personalizado','s2-i3':'Seguimiento continuo','s2-i4':'Recetarios y recursos digitales','s2-i5':'Sesiones online y presenciales','s2-i6':'Talleres grupales disponibles',
         's2-cta1':'Reservar Sesión','s2-cta2':'Consulta Gratuita',
         's3-label': 'Servicio 03', 's3-title': 'Facilitador de <span>Breathwork</span>',
         's3-t1':'Rebirthing Breathwork','s3-t2':'Sanación Holística','s3-t3':'Individual y Grupal','s3-t4':'Presencial',
         's3-body1': 'El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.',
-        's3-body2': 'Pedro acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.',
+        's3-body2': 'Pedro Miguel acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.',
         's3-i1':'Sesiones individuales','s3-i2':'Círculos grupales','s3-i3':'Integración post-sesión','s3-i4':'Disponible en retiros','s3-i5':'Primera consulta gratuita','s3-i6':'Duración: 90–120 minutos',
         's3-cta1':'Reservar Sesión','s3-cta2':'Más Información',
         's4-label': 'Servicio 04', 's4-title': 'Instructor de <span>Yoga</span>',
         's4-t1':'Clases Individuales','s4-t2':'Grupos','s4-t3':'Movimiento Consciente','s4-t4':'Meditación',
-        's4-body1': 'Las clases de yoga de Pedro integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.',
+        's4-body1': 'Las clases de yoga de Pedro Miguel integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.',
         's4-body2': 'Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.',
         's4-i1':'Clases individuales','s4-i2':'Clases grupales','s4-i3':'Todos los niveles','s4-i4':'Integración con breathwork','s4-i5':'Disponible en retiros','s4-i6':'Online y presencial',
         's4-cta1':'Reservar Clase','s4-cta2':'Consultar Horarios',
         'info1-title':'Ubicación','info1-text':'Basado en Punta del Este, Uruguay. Disponible para asistir a retiros y eventos en cualquier parte del mundo.',
         'info2-title':'Disponibilidad','info2-text':'Agenda con al menos 2 semanas de anticipación. Para retiros de varios días se recomienda reservar con 1 mes o más de antelación.',
-        'info3-title':'Primera Consulta','info3-text':'La consulta inicial es gratuita para todos los servicios. Pedro evalúa tus necesidades y propone el enfoque más adecuado para ti.',
-        'cta-title':'¿Cuál es tu próximo <span>paso</span>?','cta-sub':'Elige el servicio que resuena contigo y da el primer paso hacia tu transformación.',
-        'cta-btn1':'Hacer una Reserva','cta-btn2':'Hablar con Pedro',
+        'info3-title':'Primera Consulta','info3-text':'La consulta inicial es gratuita. Pedro Miguel evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.',
+        'cta-title':'¿Querés a Pedro Miguel en tu próximo <span>retiro</span>?','cta-sub':'Contanos sobre tu proyecto y coordinamos juntos el servicio que mejor se adapta a tu grupo.',
+        'cta-btn1':'Consultar Disponibilidad','cta-btn2':'Hablar con Pedro Miguel',
       },
       en: {
         'hero-label': 'Pedro Miguel Ormaechea Riera',
-        'hero-title': 'Services for your <span>transformation</span>',
-        'hero-sub':   'Four disciplines, one path. Each service is a doorway toward a more conscious, vital and aligned version of yourself.',
+        'hero-title': 'Disciplines of <span>Service</span>',
+        'hero-sub':   'Whether you are organising a group retreat or seeking an individual experience, Pedro Miguel adapts each discipline to your context — combined or separately, always in service of your intention.',
         'a1': '🍲 Holistic Chef', 'a2': '🌿 Nutrition Coach', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
         's1-label': 'Service 01', 's1-title': 'Holistic <span>Chef</span>',
         's1-t1':'Yoga Retreats','s1-t2':'Private Events','s1-t3':'Ayurvedic Cuisine','s1-t4':'Plant-Based',
@@ -910,14 +911,14 @@
         's1-cta1':'Book Service','s1-cta2':'Check Availability',
         's2-label': 'Service 02', 's2-title': '<span>Conscious Nutrition</span> Coach',
         's2-t1':'Individual Coaching','s2-t2':'Personalized Plans','s2-t3':'Ayurveda','s2-t4':'Online & In-Person',
-        's2-body1': 'Beyond what we eat, it is the way we relate to food. Pedro works with you to understand your patterns, heal your relationship with food and build a nourishing lifestyle that is sustainable and joyful.',
-        's2-body2': 'The process integrates Ayurvedic principles, intuitive eating techniques and self-knowledge tools so that nutrition becomes an act of love toward oneself.',
+        's2-body1': 'Beyond what we eat, it is the way a group relates to food. Pedro Miguel offers nutrition coaching workshops and sessions that can be integrated into your retreat program — individual or group, in-person or online.',
+        's2-body2': 'Integrating Ayurvedic principles, intuitive eating and self-knowledge tools so that nutrition becomes a living part of the transformation your retreat offers.',
         's2-i1':'Free initial consultation','s2-i2':'Personalized nutrition plan','s2-i3':'Ongoing follow-up','s2-i4':'Recipe books & digital resources','s2-i5':'Online and in-person sessions','s2-i6':'Group workshops available',
         's2-cta1':'Book Session','s2-cta2':'Free Consultation',
         's3-label': 'Service 03', 's3-title': '<span>Breathwork</span> Facilitator',
         's3-t1':'Rebirthing Breathwork','s3-t2':'Holistic Healing','s3-t3':'Individual & Group','s3-t4':'In-Person',
         's3-body1': 'Rebirthing Breathwork is a continuous conscious breathing technique that allows access to memories, emotions and patterns stored in the body — releasing what no longer serves and activating vital energy in its purest expression.',
-        's3-body2': 'Pedro accompanies each process with presence and care, creating a safe space where breathing becomes the key to accessing deeper layers of consciousness and wellbeing.',
+        's3-body2': 'Pedro Miguel accompanies each process with presence and care, creating a safe space where breathing becomes the key to accessing deeper layers of consciousness and wellbeing.',
         's3-i1':'Individual sessions','s3-i2':'Group circles','s3-i3':'Post-session integration','s3-i4':'Available at retreats','s3-i5':'Free first consultation','s3-i6':'Duration: 90–120 minutes',
         's3-cta1':'Book Session','s3-cta2':'More Information',
         's4-label': 'Service 04', 's4-title': 'Yoga <span>Instructor</span>',
@@ -928,9 +929,9 @@
         's4-cta1':'Book Class','s4-cta2':'Check Schedule',
         'info1-title':'Location','info1-text':'Based in Punta del Este, Uruguay. Available to assist retreats and events anywhere in the world.',
         'info2-title':'Availability','info2-text':'Book at least 2 weeks in advance. For multi-day retreats, booking 1 month or more ahead is recommended.',
-        'info3-title':'First Consultation','info3-text':'The initial consultation is free for all services. Pedro assesses your needs and proposes the most suitable approach for you.',
-        'cta-title':'What is your next <span>step</span>?','cta-sub':'Choose the service that resonates with you and take the first step toward your transformation.',
-        'cta-btn1':'Make a Booking','cta-btn2':'Talk to Pedro',
+        'info3-title':'First Consultation','info3-text':'The initial consultation is free. Pedro Miguel assesses the needs of your retreat or event and proposes the best combination of services for your group.',
+        'cta-title':'Want Pedro Miguel at your next <span>retreat</span>?','cta-sub':'Tell us about your project and we\'ll put together the service that best fits your group.',
+        'cta-btn1':'Check Availability','cta-btn2':'Talk to Pedro Miguel',
       }
     };
 

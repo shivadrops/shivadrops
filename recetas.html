@@ -30,27 +30,55 @@
     body { font-family: 'Raleway', sans-serif; background: var(--bg-dark); color: var(--cream); overflow-x: hidden; }
 
     /* ══ NAV ══ */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(21,11,0,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,184,75,0.1); transition: padding 0.3s; }
-    nav.scrolled { padding: 0.65rem 3rem; }
-    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
+        nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.65rem 3rem;
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+    }
+    .nav-logo img { height: 109px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--gold); }
-    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
-    .nav-cta:hover { background: var(--blue-light) !important; }
+        .nav-cta {
+      background: transparent !important;
+      color: var(--blue-light) !important;
+      padding: 0.55rem 1.6rem;
+      border-radius: 50px;
+      border: 1px solid rgba(74, 125, 224, 0.5) !important;
+      box-shadow: 0 0 12px rgba(74, 125, 224, 0.3), inset 0 0 12px rgba(74, 125, 224, 0.08);
+      transition: all 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: rgba(74, 125, 224, 0.1) !important;
+      border-color: var(--blue-light) !important;
+      box-shadow: 0 0 22px rgba(74, 125, 224, 0.55), inset 0 0 18px rgba(74, 125, 224, 0.12) !important;
+      color: #fff !important;
+    }
     .nav-cta::after { display: none !important; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .lang-toggle { display: flex; gap: 0.4rem; }
-    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 1.2rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
     .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
     .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
     .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
     .mobile-nav a:hover { color: var(--gold); }
     .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
 
@@ -87,7 +115,7 @@
     /* FOL */
     .hero-fol { position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); width: 560px; height: 560px; opacity: 0.03; pointer-events: none; animation: slowSpin 100s linear infinite; }
 
-    .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sage-light); display: block; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+    .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sage-light); display: block; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
     .hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5.5vw, 4.2rem); font-weight: 400; line-height: 1.1; color: var(--cream); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
     .hero-title em { font-style: italic; color: var(--gold); }
     .hero-sub { font-size: 0.92rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); max-width: 600px; text-align: center; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
@@ -197,7 +225,7 @@
     .day-btn {
       padding: 0.5rem 1.2rem;
       font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
+      font-size: 1.2rem;
       letter-spacing: 0.12em;
       background: rgba(240,228,204,0.04);
       border: 1px solid rgba(240,228,204,0.1);
@@ -280,7 +308,7 @@
     }
 
     /* ══ RECIPE HIGHLIGHTS ══ */
-    .highlights-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1.5rem; }
+    .highlights-title { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1.5rem; }
 
     .highlights-grid {
       display: grid;
@@ -361,7 +389,7 @@
       text-align: center;
     }
 
-    .cred-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .cred-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
     .cred-title { font-family: 'Cinzel', serif; font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
     .cred-title span { color: var(--gold); }
     .cred-desc { font-size: 0.9rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); max-width: 680px; margin: 0 auto 3rem; }
@@ -374,7 +402,7 @@
     /* ══ FOOTER ══ */
     footer { background: var(--bg-section); border-top: 1px solid rgba(232,184,75,0.1); padding: 4rem 5rem 2rem; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-logo img { height: 52px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
+    .footer-logo img { height: 156px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
     .footer-tagline { font-style: italic; font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); margin-bottom: 1.2rem; }
     .footer-social { display: flex; gap: 1rem; }
     .social-link { font-size: 1.1rem; text-decoration: none; opacity: 0.6; transition: opacity 0.3s; }
@@ -410,7 +438,9 @@
 
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links, .nav-right { display: none; }
+      nav.scrolled { padding: 0.65rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-right .lang-toggle { display: none; }
       .hamburger { display: flex; }
       .page-hero { padding: 8rem 2rem 3rem; min-height: auto; }
       .philo-strip { padding: 2.5rem 2rem; gap: 2rem; }
@@ -438,17 +468,14 @@
   <!-- ══ NAV ══ -->
   <nav id="main-nav">
     <a href="home.html" class="nav-logo">
-      <img src="assets/logo_hires.png" alt="ShivaDrops">
+      <img src="assets/logobig_t.png" alt="ShivaDrops">
     </a>
     <ul class="nav-links">
       <li><a href="home.html"      data-es="Inicio"    data-en="Home">Inicio</a></li>
       <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
       <li><a href="recetas.html"   class="active" data-es="Menús" data-en="Menus">Menús</a></li>
       <li><a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a></li>
-      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
       <li><a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a></li>
-      <li><a href="reservas.html"  class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -468,8 +495,6 @@
     <a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a>
     <a href="recetas.html"   data-es="Menús"     data-en="Menus">Menús</a>
     <a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a>
-    <a href="productos.html" data-es="Productos" data-en="Products">Productos</a>
-    <a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a>
     <a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem">
       <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
@@ -564,6 +589,10 @@
     <button class="retreat-tab" onclick="showMenu('privado')" id="tab-privado">
       <span class="tab-icon">✦</span>
       <span id="tab-privado-label">Evento Privado</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('swarupa')" id="tab-swarupa">
+      <span class="tab-icon">🌴</span>
+      <span id="tab-swarupa-label">Swarupa · CR</span>
     </button>
   </div>
 
@@ -1239,6 +1268,268 @@
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════
+       MENU: SWARUPA CR (CASO REAL)
+  ════════════════════════════════════════ -->
+  <div class="menu-section" id="menu-swarupa">
+    <div class="menu-header reveal">
+      <div class="menu-header-text">
+        <p class="menu-type-label">Menú Real · Costa Rica · Julio 2025</p>
+        <h2 class="menu-title">Retiro <span>Swarupa CR</span></h2>
+        <p class="menu-subtitle">"17 — 24 de julio · 7 días"</p>
+        <p class="menu-desc">Menú real diseñado y ejecutado por Pedro Miguel en Costa Rica. Siete días de cocina consciente, sin gluten, con ingredientes frescos y locales, integrando los principios del Ayurveda y el alimento medicina. Del Kichari de bienvenida al brunch de despedida, cada plato acompañó el proceso del grupo.</p>
+        <div class="menu-tags">
+          <span class="menu-tag gold">Menú Real</span>
+          <span class="menu-tag sage">7 días</span>
+          <span class="menu-tag gold">Sin gluten</span>
+          <span class="menu-tag blue">Costa Rica</span>
+          <span class="menu-tag cream">Ayurvédico</span>
+        </div>
+      </div>
+      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(106,170,122,0.2), rgba(232,184,75,0.1));">
+        🌴
+      </div>
+    </div>
+
+    <div class="day-selector">
+      <button class="day-btn active" onclick="showDay('swarupa','1')" id="swarupa-day1">Jue 17</button>
+      <button class="day-btn" onclick="showDay('swarupa','2')" id="swarupa-day2">Vie 18</button>
+      <button class="day-btn" onclick="showDay('swarupa','3')" id="swarupa-day3">Sáb 19</button>
+      <button class="day-btn" onclick="showDay('swarupa','4')" id="swarupa-day4">Dom 20</button>
+      <button class="day-btn" onclick="showDay('swarupa','5')" id="swarupa-day5">Lun 21</button>
+      <button class="day-btn" onclick="showDay('swarupa','6')" id="swarupa-day6">Mar 22</button>
+      <button class="day-btn" onclick="showDay('swarupa','7')" id="swarupa-day7">Mié 23</button>
+    </div>
+
+    <!-- Jueves 17 -->
+    <div class="meals-grid" id="swarupa-meals-1" style="grid-template-columns: repeat(3, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Bienvenida</span>
+        <span class="meal-icon">🥥</span>
+        <p class="meal-name">Pipas</p>
+        <p class="meal-desc">Recepción con pipas de coco frescas. El primer alimento del retiro, directo de la naturaleza: hidratante, nutritivo y ceremonial.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Apertura</span><span class="meal-prop">Hidratante</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🍲</span>
+        <p class="meal-name">Kichari</p>
+        <p class="meal-desc">Arroz basmati, lentejas coral, zanahoria, calabaza y boniato. El plato insignia del Ayurveda: nutritivo, fácil de digerir y equilibrador de los tres doshas.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Plato insignia Ayurveda</span><span class="meal-prop">Tri-dóshico</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Postre & Cierre</span>
+        <span class="meal-icon">🍫</span>
+        <p class="meal-name">Trufas · Infusión digestiva</p>
+        <p class="meal-desc">Trufas de cacao crudo. Infusión digestiva de hierbas para cerrar la primera noche y favorecer el descanso profundo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Cacao crudo</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Viernes 18 -->
+    <div class="meals-grid" id="swarupa-meals-2" style="display:none; grid-template-columns: repeat(4, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <span class="meal-icon">🥣</span>
+        <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
+        <p class="meal-desc">Smoothie bowl colorido, fruta cortada de estación, chia pudding y granola artesanal. Base energizante y liviana para el primer día completo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <span class="meal-icon">🥗</span>
+        <p class="meal-name">Ensalada de Quinoa con Almendras Especiadas</p>
+        <p class="meal-desc">Mix de quinoa, brócoli, almendras especiadas, pasas y perejil con huevitos. Cuñas de cabutiá, hojas verdes y hummus artesanal.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Alta proteína</span><span class="meal-prop">Vegetariano</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🍜</span>
+        <p class="meal-name">Fideos de Arroz al Wok · Rawmesan</p>
+        <p class="meal-desc">Fideos de arroz con vegetales salteados al wok, leche de coco, hierbas frescas y rawmesan. Plato reconfortante sin gluten con profundidad de sabores.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Plant-based</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cierre</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name">"Wow" · Infusión digestiva</p>
+        <p class="meal-desc">Sorpresa dulce de cierre para el grupo. Infusión digestiva de hierbas para acompañar el final del día y favorecer el descanso.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sorpresa</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Sábado 19 -->
+    <div class="meals-grid" id="swarupa-meals-3" style="display:none; grid-template-columns: repeat(4, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <span class="meal-icon">☕</span>
+        <p class="meal-name">Golden Milk · Pan sin Gluten · Huevos & Guacamole</p>
+        <p class="meal-desc">Leche dorada con cúrcuma y especias. Pan sin gluten artesanal, huevos revueltos, guacamole fresco y rúcula. Desayuno nutritivo y completo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Antiinflamatorio</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <span class="meal-icon">🥗</span>
+        <p class="meal-name">Buddha Bowl</p>
+        <p class="meal-desc">Arroz integral, tartare de atún, zanahoria, pepino, palta, tomate, albahaca, hojas verdes, repollo encurtido y dressing de tahini.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Completo</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🍛</span>
+        <p class="meal-name">Curry de Vegetales · Triffle Tropical</p>
+        <p class="meal-desc">Curry de brócoli, calabaza, zanahoria y boniato con maní tostado, cilantro y lima. De postre: triffle de banana, coco y mango con base de frutos secos.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Plant-based</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cierre</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name">Infusión digestiva</p>
+        <p class="meal-desc">Infusión de hierbas medicinales para cerrar el día y favorecer la digestión y el descanso profundo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Domingo 20 -->
+    <div class="meals-grid" id="swarupa-meals-4" style="display:none; grid-template-columns: repeat(4, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <span class="meal-icon">🥣</span>
+        <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
+        <p class="meal-desc">Smoothie bowl, fruta cortada, chia pudding y granola artesanal. Comienzo liviano y energizante para el cuarto día.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <span class="meal-icon">🫓</span>
+        <p class="meal-name">Arepas · Frijoles · Guacamole</p>
+        <p class="meal-desc">Arepas artesanales con frijoles, guacamole fresco, hojas verdes, cherries, zanahoria y pepino. Toque latinoamericano con frescura tropical.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Vegetariano</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🐟</span>
+        <p class="meal-name">Atún a la Plancha · Brownie con Frutos Rojos</p>
+        <p class="meal-desc">Atún a la plancha con puré de papas y ensalada fresca de cherries, pepino, rabanitos y piña, con aderezo de mango y mostaza. Brownie de postre.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Proteína</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cierre</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name">Infusión digestiva</p>
+        <p class="meal-desc">Infusión de hierbas para favorecer la digestión y el descanso profundo al final del día.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Lunes 21 -->
+    <div class="meals-grid" id="swarupa-meals-5" style="display:none; grid-template-columns: repeat(4, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <span class="meal-icon">🥞</span>
+        <p class="meal-name">Pancakes · Tahini · Jugo de Papaya</p>
+        <p class="meal-desc">Pancakes sin gluten con fruta cortada, salsa de tahini, granola artesanal y jugo fresco de papaya. Desayuno festivo a mitad de retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Energizante</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <span class="meal-icon">🌿</span>
+        <p class="meal-name">Libre</p>
+        <p class="meal-desc">Espacio de almuerzo libre para que el grupo explore, descanse o comparta fuera del programa. Pausa intencional en la mitad del retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Libre</span><span class="meal-prop">Integración</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🫕</span>
+        <p class="meal-name">Lasagna Sin Gluten · Carrot Cake</p>
+        <p class="meal-desc">Lasagna sin gluten con calabaza asada, brócoli, espinacas y queso gratinado, con salsa de tomate y pesto. Carrot cake de postre.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Comfort food</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cierre</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name">Infusión digestiva</p>
+        <p class="meal-desc">Infusión de hierbas medicinales para preparar el cuerpo para el descanso nocturno.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Martes 22 -->
+    <div class="meals-grid" id="swarupa-meals-6" style="display:none; grid-template-columns: repeat(4, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <span class="meal-icon">🥣</span>
+        <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
+        <p class="meal-desc">Smoothie bowl, fruta cortada, chia pudding y granola. Fresco y nutritivo para el penúltimo día de retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <span class="meal-icon">🍔</span>
+        <p class="meal-name">Veggie Burgers · Coleslaw · Papas & Boniatos</p>
+        <p class="meal-desc">Hamburguesas vegetales con tomate, verdes, pepino y coleslaw. Papas y boniatos al horno con mayo casera. Comfort food consciente.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Vegetariano</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <span class="meal-icon">🍚</span>
+        <p class="meal-name">Risotto de Remolacha · Snicker Raw</p>
+        <p class="meal-desc">Risotto de remolacha con hongos salteados y castañas tostadas. Postre Snicker raw: base de granola, dulce de dátiles y chocolate crudo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Cacao crudo</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cierre</span>
+        <span class="meal-icon">🍵</span>
+        <p class="meal-name">Infusión digestiva</p>
+        <p class="meal-desc">Infusión de hierbas para cerrar la última noche del retiro con calma y presencia.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
+      </div>
+    </div>
+
+    <!-- Miércoles 23 — Brunch de despedida -->
+    <div class="meals-grid" id="swarupa-meals-7" style="display:none; grid-template-columns: repeat(3, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Despedida</span>
+        <span class="meal-icon">☀️</span>
+        <p class="meal-name">Smoothie · Mandala de Frutas</p>
+        <p class="meal-desc">Smoothie fresco y mandala de frutas de temporada. El cierre visual del retiro: una ofrenda de color y abundancia para despedir el proceso juntos.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Despedida</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Salado</span>
+        <span class="meal-icon">🍳</span>
+        <p class="meal-name">Huevos Revueltos · Guacamole · Granola</p>
+        <p class="meal-desc">Huevos revueltos, guacamole fresco y granola artesanal para completar el brunch. Nutritivo y festivo para el último día compartido.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Completo</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Especial</span>
+        <span class="meal-icon">🧆</span>
+        <p class="meal-name">Chipá de Mandioca</p>
+        <p class="meal-desc">Pan tradicional paraguayo de mandioca y queso, sin gluten, horneado al momento. Cierre cálido y artesanal para el último desayuno del retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Artesanal</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note">✦ Menú real ejecutado por Pedro Miguel en Costa Rica, julio 2025. Cada día adaptado al ritmo, la energía y las necesidades del grupo Swarupa CR.</p>
+
+    <div class="principles-bar">
+      <p class="principles-label">Del cocinero</p>
+      <p class="principles-text">"Cocinar para un retiro es una práctica espiritual. Cada plato es una ofrenda: a los participantes, al proceso que están viviendo, a la tierra que nos da el alimento. El Kichari de bienvenida y el Chipá de despedida enmarcan siete días de presencia, servicio y alquimia vibracional."</p>
+    </div>
+
+    <div class="menu-cta reveal">
+      <div class="menu-cta-text">
+        <p class="menu-cta-title">¿Querés un menú así para tu retiro?</p>
+        <p class="menu-cta-sub">Pedro diseña el menú completo según la duración, la disciplina y la energía de tu grupo — desde el primer desayuno hasta el brunch de cierre.</p>
+      </div>
+      <div class="menu-cta-btns">
+        <a href="reservas.html" class="btn-reserve">Consultar disponibilidad</a>
+        <a href="contacto.html" class="btn-consult">Escribirle a Pedro</a>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ CREDENTIALS STRIP ══ -->
   <section class="credentials">
     <p class="cred-eyebrow" id="cred-eyebrow">Por qué elegir a Pedro</p>
@@ -1269,7 +1560,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <img src="assets/logo_hires.png" alt="ShivaDrops">
+          <img src="assets/logobig_t.png" alt="ShivaDrops">
         </div>
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
@@ -1285,8 +1576,6 @@
           <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
           <li><a href="recetas.html"   data-es="Menús"     data-en="Menus">Menús</a></li>
           <li><a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a></li>
-          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
           <li><a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a></li>
         </ul>
       </div>
@@ -1329,7 +1618,7 @@
 
     // ══ DAY TABS (yoga only) ══
     function showDay(menu, day) {
-      [1,2,3].forEach(d => {
+      [1,2,3,4,5,6,7].forEach(d => {
         const el = document.getElementById(`${menu}-meals-${d}`);
         if (el) el.style.display = d == day ? 'grid' : 'none';
         const btn = document.getElementById(`${menu}-day${d}`);
@@ -1352,7 +1641,7 @@
 
     // ══ NAV SCROLL ══
     window.addEventListener('scroll', () => {
-      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 50);
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
     });
 
     // ══ LANGUAGE ══

@@ -28,21 +28,49 @@
     body { font-family: 'Raleway', sans-serif; background: var(--bg-dark); color: var(--cream); overflow-x: hidden; }
 
     /* ══ NAV ══ */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(21,11,0,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(232,184,75,0.1); transition: padding 0.3s; }
-    nav.scrolled { padding: 0.65rem 3rem; }
-    .nav-logo img { height: 40px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+        nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(21, 11, 0, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.65rem 3rem;
+      border-bottom: 1px solid rgba(232, 184, 75, 0.1);
+    }
+    .nav-logo img { height: 109px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
     .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
-    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
+    .nav-links a { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--gold); }
-    .nav-cta { background: var(--blue) !important; color: #fff !important; padding: 0.55rem 1.4rem; border-radius: 2px; box-shadow: 0 0 14px rgba(42,84,196,0.35); }
-    .nav-cta:hover { background: var(--blue-light) !important; }
+        .nav-cta {
+      background: transparent !important;
+      color: var(--blue-light) !important;
+      padding: 0.55rem 1.6rem;
+      border-radius: 50px;
+      border: 1px solid rgba(74, 125, 224, 0.5) !important;
+      box-shadow: 0 0 12px rgba(74, 125, 224, 0.3), inset 0 0 12px rgba(74, 125, 224, 0.08);
+      transition: all 0.3s !important;
+    }
+    .nav-cta:hover {
+      background: rgba(74, 125, 224, 0.1) !important;
+      border-color: var(--blue-light) !important;
+      box-shadow: 0 0 22px rgba(74, 125, 224, 0.55), inset 0 0 18px rgba(74, 125, 224, 0.12) !important;
+      color: #fff !important;
+    }
     .nav-cta::after { display: none !important; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .lang-toggle { display: flex; gap: 0.4rem; }
-    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.6rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 1.2rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
     .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
@@ -86,7 +114,7 @@
     .contact-info.visible { opacity: 1; transform: translateY(0); }
 
 
-    .info-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
+    .info-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; }
 
     .info-name { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 400; color: var(--cream); line-height: 1.25; margin-bottom: 0.5rem; }
     .info-role { font-size: 0.82rem; font-weight: 300; font-style: italic; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 2rem; }
@@ -116,7 +144,7 @@
     .contact-item-value a:hover { color: var(--gold); }
 
     /* Social grid */
-    .socials-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
+    .socials-title { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
 
     .social-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; }
 
@@ -138,15 +166,15 @@
 
     /* Disciplines */
     .disciplines { margin-top: 2.5rem; }
-    .disciplines-title { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
+    .disciplines-title { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 1rem; }
     .discipline-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .discipline-chip { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.3rem 0.8rem; border: 1px solid rgba(232,184,75,0.2); color: var(--gold); }
+    .discipline-chip { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.1em; padding: 0.3rem 0.8rem; border: 1px solid rgba(232,184,75,0.2); color: var(--gold); }
 
     /* ══ RIGHT — FORM ══ */
     .contact-form-wrap { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s; }
     .contact-form-wrap.visible { opacity: 1; transform: translateY(0); }
 
-    .form-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 1.4rem; }
+    .form-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 1.4rem; }
     .form-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 400; color: var(--cream); margin-bottom: 2rem; }
     .form-title span { color: var(--gold); }
 
@@ -220,7 +248,7 @@
     }
 
     .location-text {}
-    .location-eyebrow { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .location-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
     .location-title { font-family: 'Cinzel', serif; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 400; color: var(--cream); margin-bottom: 1rem; }
     .location-title span { color: var(--gold); }
     .location-desc { font-size: 0.88rem; font-weight: 300; line-height: 1.9; color: var(--cream-dim); margin-bottom: 1.5rem; }
@@ -282,7 +310,7 @@
     /* ══ FOOTER ══ */
     footer { background: var(--bg-section); border-top: 1px solid rgba(232,184,75,0.1); padding: 4rem 5rem 2rem; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-logo img { height: 52px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
+    .footer-logo img { height: 156px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 8px rgba(201,135,10,0.2)); }
     .footer-tagline { font-style: italic; font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); margin-bottom: 1.2rem; }
     .footer-social { display: flex; gap: 1rem; }
     .social-link { font-size: 1.1rem; text-decoration: none; opacity: 0.6; transition: opacity 0.3s; }
@@ -309,7 +337,9 @@
 
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links, .nav-right { display: none; }
+      nav.scrolled { padding: 0.65rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-right .lang-toggle { display: none; }
       .hamburger { display: flex; }
       .page-hero { padding: 8rem 2rem 3rem; }
       .contact-section { padding: 3rem 1.5rem 4rem; }
@@ -327,16 +357,14 @@
   <!-- ══ NAV ══ -->
   <nav id="main-nav">
     <a href="home.html" class="nav-logo">
-      <img src="assets/logo_hires.png" alt="ShivaDrops">
+      <img src="assets/logobig_t.png" alt="ShivaDrops">
     </a>
     <ul class="nav-links">
       <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
       <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+      <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
       <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
-      <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-      <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
       <li><a href="contacto.html" class="active" data-es="Contacto" data-en="Contact">Contacto</a></li>
-      <li><a href="reservas.html" class="nav-cta" data-es="Reservar" data-en="Book Now">Reservar</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
@@ -354,9 +382,8 @@
     <button class="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">✕</button>
     <a href="home.html" data-es="Inicio" data-en="Home">Inicio</a>
     <a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a>
     <a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a>
-    <a href="productos.html" data-es="Productos" data-en="Products">Productos</a>
-    <a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a>
     <a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem">
       <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
@@ -379,11 +406,11 @@
 
     <span class="page-hero-label" id="hero-label">Hablemos</span>
     <h1 class="page-hero-title" id="hero-title">
-      <span>Conecta</span> con Pedro
+      <span>Conecta</span> con Pedro Miguel
     </h1>
     <p class="page-hero-sub" id="hero-sub">
       ¿Tienes una consulta, un proyecto o simplemente quieres saber más?
-      Pedro responde personalmente a cada mensaje.
+      Pedro Miguel responde personalmente a cada mensaje.
     </p>
   </section>
 
@@ -392,12 +419,12 @@
 
     <!-- LEFT — PEDRO INFO -->
     <div class="contact-info" id="contact-info">
-      <p class="info-eyebrow" id="info-eyebrow">Sobre Pedro</p>
-      <h2 class="info-name">Pedro Miguel<br>Ormaechea Riera</h2>
+      <p class="info-eyebrow" id="info-eyebrow">Sobre Pedro Miguel</p>
+      <h2 class="info-name">Pedro Miguel Miguel<br>Ormaechea Riera</h2>
       <p class="info-role" id="info-role">Cocinero Holístico · Coach · Breathwork · Yoga</p>
 
       <p class="info-bio" id="info-bio">
-        Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento.
+        Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro Miguel lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento.
         Basado en Punta del Este, trabaja con retiros y eventos en todo el mundo.
       </p>
 
@@ -525,7 +552,7 @@
           <span id="btn-submit-text">Enviar por WhatsApp</span>
         </button>
 
-        <p class="form-note" id="form-note">El mensaje se enviará directamente por WhatsApp. Pedro te responde personalmente.</p>
+        <p class="form-note" id="form-note">El mensaje se enviará directamente por WhatsApp. Pedro Miguel te responde personalmente.</p>
       </form>
     </div>
   </section>
@@ -536,7 +563,7 @@
       <p class="location-eyebrow" id="loc-eyebrow">Base de Operaciones</p>
       <h2 class="location-title" id="loc-title">Punta del Este, <span>Uruguay</span></h2>
       <p class="location-desc" id="loc-desc">
-        Aunque Pedro está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.
+        Aunque Pedro Miguel está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.
       </p>
       <div class="location-detail">
         <div class="loc-item"><span class="loc-item-icon">📍</span><span id="loc-detail-1">Punta del Este, Maldonado, Uruguay</span></div>
@@ -554,7 +581,7 @@
   <!-- ══ AVAILABILITY ══ -->
   <section class="availability-strip">
     <h2 class="avail-title" id="avail-title">¿Listo para <span>comenzar?</span></h2>
-    <p class="avail-sub" id="avail-sub">Consulta disponibilidad y reserva tu experiencia con Pedro</p>
+    <p class="avail-sub" id="avail-sub">Consulta disponibilidad y reserva tu experiencia con Pedro Miguel</p>
     <div class="avail-cards">
       <div class="avail-card">
         <span class="avail-card-num">10+</span>
@@ -581,7 +608,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <img src="assets/logo_hires.png" alt="ShivaDrops">
+          <img src="assets/logobig_t.png" alt="ShivaDrops">
         </div>
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
@@ -595,9 +622,8 @@
         <ul class="footer-links">
           <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
           <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
+          <li><a href="recetas.html" data-es="Menús" data-en="Menus">Menús</a></li>
           <li><a href="reservas.html" data-es="Reservas" data-en="Bookings">Reservas</a></li>
-          <li><a href="productos.html" data-es="Productos" data-en="Products">Productos</a></li>
-          <li><a href="descargas.html" data-es="Descargas" data-en="Downloads">Descargas</a></li>
           <li><a href="contacto.html" data-es="Contacto" data-en="Contact">Contacto</a></li>
         </ul>
       </div>
@@ -611,7 +637,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Miguel Ormaechea Riera</span>
       <span class="footer-copy" id="ft-rights">Todos los derechos reservados</span>
     </div>
   </footer>
@@ -621,7 +647,7 @@
     // CONFIGURACIÓN
     // ══════════════════════════════════════════════
     const CONFIG = {
-      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro (sin + ni espacios)
+      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro Miguel (sin + ni espacios)
     };
 
     // Set WhatsApp direct link
@@ -633,12 +659,12 @@
     const T = {
       es: {
         'hero-label':      'Hablemos',
-        'hero-title':      '<span>Conecta</span> con Pedro',
-        'hero-sub':        '¿Tienes una consulta, un proyecto o simplemente quieres saber más? Pedro responde personalmente a cada mensaje.',
+        'hero-title':      '<span>Conecta</span> con Pedro Miguel',
+        'hero-sub':        '¿Tienes una consulta, un proyecto o simplemente quieres saber más? Pedro Miguel responde personalmente a cada mensaje.',
         // Info block
-        'info-eyebrow':    'Sobre Pedro',
+        'info-eyebrow':    'Sobre Pedro Miguel',
         'info-role':       'Cocinero Holístico · Coach · Breathwork · Yoga',
-        'info-bio':        'Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento. Basado en Punta del Este, trabaja con retiros y eventos en todo el mundo.',
+        'info-bio':        'Fundador de ShivaDrops y apasionado por el bienestar integral. Pedro Miguel lleva más de 10 años trabajando en la intersección entre alimentación consciente, prácticas ancestrales y el poder transformador de la respiración y el movimiento. Basado en Punta del Este, trabaja con retiros y eventos en todo el mundo.',
         // Contact item labels
         'label-email':     'Email',
         'label-location':  'Ubicación',
@@ -675,11 +701,11 @@
         'topic-colaboracion': 'Colaboración / medios',
         'topic-otro':      'Otro',
         'btn-submit-text': 'Enviar por WhatsApp',
-        'form-note':       'El mensaje se enviará directamente por WhatsApp. Pedro te responde personalmente.',
+        'form-note':       'El mensaje se enviará directamente por WhatsApp. Pedro Miguel te responde personalmente.',
         // Location
         'loc-eyebrow':     'Base de Operaciones',
         'loc-title':       'Punta del Este, <span>Uruguay</span>',
-        'loc-desc':        'Aunque Pedro está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.',
+        'loc-desc':        'Aunque Pedro Miguel está basado en Punta del Este, su trabajo lleva el bienestar a retiros y eventos en todo el mundo. Si tu proyecto es fuera de Uruguay, no dudes en contactarlo — la distancia no es un obstáculo.',
         'loc-detail-1':    'Punta del Este, Maldonado, Uruguay',
         'loc-detail-2':    'Viajes a retiros internacionales disponibles',
         'loc-detail-3':    'Zona horaria: UTC -3 (Uruguay Standard Time)',
@@ -687,7 +713,7 @@
         'map-sub':         'Uruguay, Sudamérica',
         // Availability
         'avail-title':     '¿Listo para <span>comenzar?</span>',
-        'avail-sub':       'Consulta disponibilidad y reserva tu experiencia con Pedro',
+        'avail-sub':       'Consulta disponibilidad y reserva tu experiencia con Pedro Miguel',
         'stat-1':          'Años de experiencia',
         'stat-2':          'Disciplinas de bienestar',
         'stat-3':          'Disponible en todo el mundo',
@@ -698,15 +724,15 @@
         'ft-contact-title': 'Contacto',
         'ft-rights':        'Todos los derechos reservados',
         // WhatsApp message builder
-        waMsg: (data) => `Hola Pedro! Te escribo desde tu sitio web.\n\n*Nombre:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Tema:* ' + data.topic : ''}\n\n*Mensaje:*\n${data.msg}`,
+        waMsg: (data) => `Hola Pedro Miguel! Te escribo desde tu sitio web.\n\n*Nombre:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Tema:* ' + data.topic : ''}\n\n*Mensaje:*\n${data.msg}`,
       },
       en: {
         'hero-label':      'Let\'s Talk',
-        'hero-title':      '<span>Connect</span> with Pedro',
-        'hero-sub':        'Have a question, a project, or simply want to learn more? Pedro personally replies to every message.',
-        'info-eyebrow':    'About Pedro',
+        'hero-title':      '<span>Connect</span> with Pedro Miguel',
+        'hero-sub':        'Have a question, a project, or simply want to learn more? Pedro Miguel personally replies to every message.',
+        'info-eyebrow':    'About Pedro Miguel',
         'info-role':       'Holistic Chef · Coach · Breathwork · Yoga',
-        'info-bio':        'Founder of ShivaDrops and passionate about integral wellness. Pedro has been working for over 10 years at the intersection of conscious nutrition, ancestral practices and the transformative power of breathing and movement. Based in Punta del Este, he works with retreats and events worldwide.',
+        'info-bio':        'Founder of ShivaDrops and passionate about integral wellness. Pedro Miguel has been working for over 10 years at the intersection of conscious nutrition, ancestral practices and the transformative power of breathing and movement. Based in Punta del Este, he works with retreats and events worldwide.',
         'label-email':     'Email',
         'label-location':  'Location',
         'label-availability': 'Availability',
@@ -740,17 +766,17 @@
         'topic-colaboracion': 'Collaboration / media',
         'topic-otro':      'Other',
         'btn-submit-text': 'Send via WhatsApp',
-        'form-note':       'Your message will be sent directly via WhatsApp. Pedro replies personally.',
+        'form-note':       'Your message will be sent directly via WhatsApp. Pedro Miguel replies personally.',
         'loc-eyebrow':     'Home Base',
         'loc-title':       'Punta del Este, <span>Uruguay</span>',
-        'loc-desc':        'Although Pedro is based in Punta del Este, his work brings wellness to retreats and events across the world. If your project is outside Uruguay, don\'t hesitate to reach out — distance is not an obstacle.',
+        'loc-desc':        'Although Pedro Miguel is based in Punta del Este, his work brings wellness to retreats and events across the world. If your project is outside Uruguay, don\'t hesitate to reach out — distance is not an obstacle.',
         'loc-detail-1':    'Punta del Este, Maldonado, Uruguay',
         'loc-detail-2':    'International retreat travel available',
         'loc-detail-3':    'Timezone: UTC -3 (Uruguay Standard Time)',
         'map-text':        'Punta del Este',
         'map-sub':         'Uruguay, South America',
         'avail-title':     'Ready to <span>begin?</span>',
-        'avail-sub':       'Check availability and book your experience with Pedro',
+        'avail-sub':       'Check availability and book your experience with Pedro Miguel',
         'stat-1':          'Years of experience',
         'stat-2':          'Wellness disciplines',
         'stat-3':          'Available worldwide',
@@ -759,7 +785,7 @@
         'ft-nav-title':     'Navigation',
         'ft-contact-title': 'Contact',
         'ft-rights':        'All rights reserved',
-        waMsg: (data) => `Hi Pedro! I'm writing to you from your website.\n\n*Name:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Topic:* ' + data.topic : ''}\n\n*Message:*\n${data.msg}`,
+        waMsg: (data) => `Hi Pedro Miguel! I'm writing to you from your website.\n\n*Name:* ${data.name}\n*Email:* ${data.email}${data.wp ? '\n*WhatsApp:* ' + data.wp : ''}${data.topic ? '\n*Topic:* ' + data.topic : ''}\n\n*Message:*\n${data.msg}`,
       }
     };
 
@@ -840,7 +866,7 @@
     // NAV SCROLL
     // ══════════════════════════════════════════════
     window.addEventListener('scroll', () => {
-      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 50);
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
     });
 
     // ══════════════════════════════════════════════
