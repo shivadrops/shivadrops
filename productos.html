@@ -70,8 +70,9 @@
     .nav-cta::after { display: none !important; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .lang-toggle { display: flex; gap: 0.4rem; }
-    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 1.2rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.25rem 0.55rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.35rem; }
     .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .lang-flag { font-size: 0.9rem; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
     .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
@@ -513,8 +514,8 @@
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
-        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es"><span class="lang-flag">🇪🇸</span> ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en"><span class="lang-flag">🇬🇧</span> EN</button>
       </div>
       <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
     </div>
@@ -528,8 +529,8 @@
     <a href="reservas.html" onclick="toggleMenu()">Reservas</a>
     <a href="contacto.html" onclick="toggleMenu()">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem;">
-      <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es">🇪🇸 ES</button>
-      <button class="lang-btn" onclick="setLang('en')" id="mob-btn-en">🇬🇧 EN</button>
+      <button class="lang-btn active" onclick="setLang('es')" id="mob-btn-es"><span class="lang-flag">🇪🇸</span> ES</button>
+      <button class="lang-btn" onclick="setLang('en')" id="mob-btn-en"><span class="lang-flag">🇬🇧</span> EN</button>
     </div>
   </div>
 

@@ -72,8 +72,9 @@
     .nav-cta::after { display: none !important; }
     .nav-right { display: flex; align-items: center; gap: 1.5rem; }
     .lang-toggle { display: flex; gap: 0.4rem; }
-    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 1.2rem; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.3rem; }
+    .lang-btn { background: none; border: 1px solid rgba(42,84,196,0.35); border-radius: 4px; padding: 0.25rem 0.55rem; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em; color: var(--cream-dim); transition: all 0.3s; display: flex; align-items: center; gap: 0.35rem; }
     .lang-btn.active, .lang-btn:hover { border-color: var(--blue-light); color: var(--blue-light); }
+    .lang-flag { font-size: 0.9rem; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
     .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
@@ -95,25 +96,11 @@
       justify-content: flex-end;
     }
 
-    /* Animated ingredient particles */
-    .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .particle {
-      position: absolute;
-      font-size: 1.2rem;
-      opacity: 0;
-      animation: drift var(--dur, 12s) ease-in-out var(--delay, 0s) infinite;
-    }
-    @keyframes drift {
-      0%   { opacity: 0; transform: translateY(20px) rotate(0deg); }
-      15%  { opacity: 0.3; }
-      85%  { opacity: 0.15; }
-      100% { opacity: 0; transform: translateY(-80px) rotate(30deg); }
-    }
 
     .hero-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 65% 60% at 50% 80%, rgba(201,135,10,0.12) 0%, transparent 65%); pointer-events: none; }
 
     /* FOL */
-    .hero-fol { position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); width: 560px; height: 560px; opacity: 0.03; pointer-events: none; animation: slowSpin 100s linear infinite; }
+    .hero-fol { position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; opacity: 0.09; pointer-events: none; animation: slowSpin 60s linear infinite; }
 
     .hero-eyebrow { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sage-light); display: block; margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
     .hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5.5vw, 4.2rem); font-weight: 400; line-height: 1.1; color: var(--cream); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
@@ -140,7 +127,6 @@
       flex-wrap: wrap;
     }
     .philo-item { text-align: center; }
-    .philo-icon { font-size: 2rem; display: block; margin-bottom: 0.6rem; }
     .philo-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
     .philo-desc { font-size: 0.78rem; font-weight: 300; color: var(--cream-faint); max-width: 160px; line-height: 1.5; }
 
@@ -155,16 +141,16 @@
     }
 
     .retreat-tab {
-      padding: 1rem 1.6rem;
+      padding: 1.2rem 2rem;
       font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
+      font-size: 0.78rem;
       font-weight: 400;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
-      color: var(--cream-faint);
+      color: var(--cream-dim);
       cursor: pointer;
       transition: all 0.3s;
       white-space: nowrap;
@@ -173,13 +159,30 @@
       gap: 0.5rem;
       margin-bottom: -1px;
     }
-    .retreat-tab:hover { color: var(--cream-dim); }
+    .retreat-tab:hover { color: var(--cream); border-bottom-color: rgba(232,184,75,0.3); }
     .retreat-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .retreat-tab .tab-icon { font-size: 1rem; }
 
     /* ══ MENU SECTION ══ */
     .menu-section { display: none; padding: 4rem 5rem 6rem; max-width: 1400px; margin: 0 auto; }
     .menu-section.active { display: block; }
+
+    /* Photo gallery */
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-auto-rows: 280px;
+      gap: 3px;
+    }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.88);
+      transition: filter 0.5s;
+    }
+    .gallery-img:hover { filter: brightness(0.97) saturate(1.05); }
+    .gallery-img:first-child { grid-row: span 2; }
 
     /* Menu header */
     .menu-header {
@@ -191,6 +194,15 @@
       padding-bottom: 3rem;
       border-bottom: 1px solid rgba(232,184,75,0.1);
     }
+    .menu-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border: 1px solid rgba(232,184,75,0.08);
+      filter: brightness(0.82) saturate(0.88);
+      transition: filter 0.5s;
+    }
+    .menu-photo:hover { filter: brightness(0.95) saturate(1); }
 
     .menu-header-text {}
     .menu-type-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 1rem; }
@@ -207,17 +219,6 @@
     .menu-tag.blue   { background: rgba(74,125,224,0.12); border: 1px solid rgba(74,125,224,0.25); color: var(--blue-light); }
     .menu-tag.cream  { background: rgba(240,228,204,0.06); border: 1px solid rgba(240,228,204,0.15); color: var(--cream-dim); }
 
-    /* Menu visual */
-    .menu-visual {
-      aspect-ratio: 4/3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 6rem;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(232,184,75,0.1);
-    }
 
 
     /* Day selector */
@@ -264,8 +265,6 @@
       color: var(--gold);
       opacity: 0.8;
     }
-
-    .meal-icon { font-size: 2rem; }
 
     .meal-name {
       font-family: 'Cinzel', serif;
@@ -329,7 +328,6 @@
     .highlight-card.blue::before { background: linear-gradient(90deg, transparent, var(--blue-light), transparent); }
 
     .highlight-card:hover { border-color: rgba(232,184,75,0.2); }
-    .hl-emoji { font-size: 1.8rem; display: block; margin-bottom: 0.8rem; }
     .hl-name { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
     .hl-desc { font-size: 0.75rem; font-weight: 300; line-height: 1.65; color: var(--cream-dim); }
 
@@ -433,7 +431,9 @@
 
     @media (max-width: 900px) {
       .menu-header { grid-template-columns: 1fr; gap: 2rem; }
-      .menu-visual { display: none; }
+      .menu-photo { display: none; }
+      .photo-gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+      .gallery-img:first-child { grid-row: span 1; }
     }
 
     @media (max-width: 768px) {
@@ -479,8 +479,8 @@
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('es')" id="btn-es">🇪🇸 ES</button>
-        <button class="lang-btn" onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+        <button class="lang-btn active" onclick="setLang('es')" id="btn-es"><span class="lang-flag">🇪🇸</span> ES</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en"><span class="lang-flag">🇬🇧</span> EN</button>
       </div>
       <div class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')">
         <span></span><span></span><span></span>
@@ -497,24 +497,40 @@
     <a href="reservas.html"  data-es="Reservas"  data-en="Bookings">Reservas</a>
     <a href="contacto.html"  data-es="Contacto"  data-en="Contact">Contacto</a>
     <div class="lang-toggle" style="margin-top:1rem">
-      <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es">🇪🇸 ES</button>
-      <button class="lang-btn" onclick="setLang('en');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-en">🇬🇧 EN</button>
+      <button class="lang-btn active" onclick="setLang('es');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-es"><span class="lang-flag">🇪🇸</span> ES</button>
+      <button class="lang-btn" onclick="setLang('en');document.getElementById('mobile-nav').classList.remove('open')" id="mbtn-en"><span class="lang-flag">🇬🇧</span> EN</button>
     </div>
   </div>
 
   <!-- ══ HERO ══ -->
   <section class="page-hero">
-    <!-- floating ingredient particles -->
-    <div class="hero-particles" id="particles"></div>
     <div class="hero-glow"></div>
     <svg class="hero-fol" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- outer bounding rings -->
       <circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.5"/>
-      <circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.4"/>
-      <circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200" cy="200" r="140" stroke="#e8b84b" stroke-width="0.4"/>
+      <!-- ring 3 — distance 2r = 140 -->
+      <circle cx="200" cy="60"  r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <circle cx="200" cy="340" r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <circle cx="78.8" cy="130" r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <circle cx="321.2" cy="130" r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <circle cx="78.8" cy="270" r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <circle cx="321.2" cy="270" r="70" stroke="#e8b84b" stroke-width="0.3"/>
+      <!-- ring 2 — distance r√3 ≈ 121.2 -->
+      <circle cx="321.2" cy="200" r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <circle cx="260.6" cy="305" r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <circle cx="139.4" cy="305" r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <circle cx="78.8"  cy="200" r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <circle cx="139.4" cy="95"  r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <circle cx="260.6" cy="95"  r="70" stroke="#e8b84b" stroke-width="0.35"/>
+      <!-- ring 1 — distance r = 70 -->
+      <circle cx="200"   cy="130" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <circle cx="200"   cy="270" r="70" stroke="#e8b84b" stroke-width="0.4"/>
       <circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
       <circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.4"/>
       <circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
       <circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.4"/>
+      <!-- center -->
       <circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.5"/>
     </svg>
 
@@ -538,60 +554,57 @@
   <!-- ══ PHILOSOPHY STRIP ══ -->
   <div class="philo-strip">
     <div class="philo-item reveal">
-      <span class="philo-icon">🌱</span>
       <p class="philo-label" id="ph1-label">Intención</p>
       <p class="philo-desc" id="ph1-desc">Cada plato diseñado para sostener la práctica del día</p>
     </div>
     <div class="philo-item reveal">
-      <span class="philo-icon">⚖️</span>
       <p class="philo-label" id="ph2-label">Equilibrio</p>
       <p class="philo-desc" id="ph2-desc">Doshas y energía en balance a lo largo del día</p>
     </div>
     <div class="philo-item reveal">
-      <span class="philo-icon">🔥</span>
       <p class="philo-label" id="ph3-label">Agni</p>
       <p class="philo-desc" id="ph3-desc">Fuego digestivo respetado en cada preparación</p>
     </div>
     <div class="philo-item reveal">
-      <span class="philo-icon">🌍</span>
       <p class="philo-label" id="ph4-label">Terroir</p>
       <p class="philo-desc" id="ph4-desc">Ingredientes locales y estacionales, donde sea posible</p>
     </div>
     <div class="philo-item reveal">
-      <span class="philo-icon">✨</span>
       <p class="philo-label" id="ph5-label">Vibración</p>
       <p class="philo-desc" id="ph5-desc">Cocina preparada con amor, presencia y gratitud</p>
     </div>
   </div>
 
+  <!-- ══ PHOTO GALLERY ══ -->
+  <div class="photo-gallery">
+    <img class="gallery-img" src="assets/pics/Fotos_Tessa_Pedris_Feb2024_99.jpeg" alt="">
+    <img class="gallery-img" src="assets/pics/dsc_0135.jpg" alt="">
+    <img class="gallery-img" src="assets/pics/dsc_0130.jpg" alt="">
+    <img class="gallery-img" src="assets/pics/IMG_4309.jpeg" alt="">
+    <img class="gallery-img" src="assets/pics/IMG_0241.jpeg" alt="">
+  </div>
+
   <!-- ══ RETREAT TABS ══ -->
   <div class="retreat-nav" id="retreat-nav">
     <button class="retreat-tab active" onclick="showMenu('yoga')" id="tab-yoga">
-      <span class="tab-icon">🧘</span>
       <span id="tab-yoga-label">Yoga</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('detox')" id="tab-detox">
-      <span class="tab-icon">🌿</span>
       <span id="tab-detox-label">Detox</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('breathwork')" id="tab-breathwork">
-      <span class="tab-icon">🌬️</span>
       <span id="tab-breathwork-label">Breathwork</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('ayurveda')" id="tab-ayurveda">
-      <span class="tab-icon">🪷</span>
       <span id="tab-ayurveda-label">Ayurveda</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('medicina')" id="tab-medicina">
-      <span class="tab-icon">🌙</span>
       <span id="tab-medicina-label">Plantas & Medicina</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('privado')" id="tab-privado">
-      <span class="tab-icon">✦</span>
       <span id="tab-privado-label">Evento Privado</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('swarupa')" id="tab-swarupa">
-      <span class="tab-icon">🌴</span>
       <span id="tab-swarupa-label">Swarupa · CR</span>
     </button>
   </div>
@@ -614,9 +627,7 @@
           <span class="menu-tag cream">Digestión ligera</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.2), rgba(232,184,75,0.1));">
-        🧘
-      </div>
+      <img class="menu-photo" src="assets/pics/IMG_2063.jpeg" alt="">
     </div>
 
     <!-- Day tabs -->
@@ -630,7 +641,6 @@
     <div class="meals-grid" id="yoga-meals-1">
       <div class="meal-card">
         <span class="meal-time" id="y1-t1">Amanecer · 6:00</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name" id="y1-n1">Agua de Cúrcuma & Jengibre</p>
         <p class="meal-desc" id="y1-d1">Elixir de bienvenida: agua caliente con cúrcuma fresca, jengibre, pimienta negra y limón. Activa el fuego digestivo y despierta el sistema inmune antes de la práctica.</p>
         <div class="meal-props">
@@ -640,7 +650,6 @@
       </div>
       <div class="meal-card">
         <span class="meal-time" id="y1-t2">Desayuno · 8:30</span>
-        <span class="meal-icon">🫐</span>
         <p class="meal-name" id="y1-n2">Bowl de Kichari Blanco & Frutas Estacionales</p>
         <p class="meal-desc" id="y1-d2">Arroz basmati con mung dal, ghee y especias suaves (comino, cilantro, hinojo). Acompañado de frutas frescas de temporada y miel cruda local.</p>
         <div class="meal-props">
@@ -650,7 +659,6 @@
       </div>
       <div class="meal-card">
         <span class="meal-time" id="y1-t3">Almuerzo · 12:30</span>
-        <span class="meal-icon">🥗</span>
         <p class="meal-name" id="y1-n3">Curry Verde de Vegetales & Arroz Rojo</p>
         <p class="meal-desc" id="y1-d3">Leche de coco con albahaca sagrada (tulsi), cúrcuma, espinaca y calabaza. Arroz rojo integral con semillas de sésamo negro. Chutneys artesanales de mango y menta.</p>
         <div class="meal-props">
@@ -661,7 +669,6 @@
       </div>
       <div class="meal-card">
         <span class="meal-time" id="y1-t4">Merienda · 16:00</span>
-        <span class="meal-icon">🍯</span>
         <p class="meal-name" id="y1-n4">Dátiles Rellenos & Leche Dorada</p>
         <p class="meal-desc" id="y1-d4">Dátiles medjool rellenos de mantequilla de almendra y cardamomo. Golden milk con leche de avena, cúrcuma, canela, jengibre y pimienta.</p>
         <div class="meal-props">
@@ -671,7 +678,6 @@
       </div>
       <div class="meal-card">
         <span class="meal-time" id="y1-t5">Cena · 19:00</span>
-        <span class="meal-icon">🌙</span>
         <p class="meal-name" id="y1-n5">Sopa de Lentejas Rojas & Pan de Avena</p>
         <p class="meal-desc" id="y1-d5">Sopa liviana de lentejas rojas con comino, laurel y limón. Pan de avena sin gluten. Ensalada tibia de rúcula con aceite de oliva infusionado con romero. Digestión suave para el descanso.</p>
         <div class="meal-props">
@@ -683,35 +689,30 @@
     <div class="meals-grid" id="yoga-meals-2" style="display:none">
       <div class="meal-card">
         <span class="meal-time">Amanecer · 6:00</span>
-        <span class="meal-icon">🌅</span>
         <p class="meal-name" id="y2-n1">Pranayama Tea & Tónico de Adaptógenos</p>
         <p class="meal-desc" id="y2-d1">Infusión de ashwagandha, tulsi y amalaki. Tónico de rhodiola y maca para sostener la energía nerviosa durante la práctica intensa del día central.</p>
         <div class="meal-props"><span class="meal-prop highlight">Adaptógeno</span><span class="meal-prop">Nervino</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Desayuno · 8:00</span>
-        <span class="meal-icon">🥣</span>
         <p class="meal-name" id="y2-n2">Porridge de Amaranto & Compota de Frutas</p>
         <p class="meal-desc" id="y2-d2">Amaranto cocido con leche de almendra, vainilla y cardamomo. Compota caliente de manzana, pera y pasas de uva. Granola artesanal de quinoa inflada y coco.</p>
         <div class="meal-props"><span class="meal-prop highlight">Alta proteína vegetal</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo · 13:00</span>
-        <span class="meal-icon">🍲</span>
         <p class="meal-name" id="y2-n3">Thali Ayurvédico del Día</p>
         <p class="meal-desc" id="y2-d3">Bandeja con 5 preparaciones: dal de mung, sabji de estación, arroz basmati, chutney de coco, raita de pepino. Equilibra los 6 sabores (dulce, ácido, salado, picante, amargo, astringente).</p>
         <div class="meal-props"><span class="meal-prop highlight">Menú completo</span><span class="meal-prop">6 sabores</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Merienda · 15:30</span>
-        <span class="meal-icon">🫙</span>
         <p class="meal-name" id="y2-n4">Smoothie de Batata Morada & Espirulina</p>
         <p class="meal-desc" id="y2-d4">Batata morada asada, espirulina, jengibre fresco, limón y miel de caña. Potente combinación antioxidante y alcalinizante para el punto de mayor intensidad del retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Antioxidante</span><span class="meal-prop">Alcalinizante</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena · 18:30</span>
-        <span class="meal-icon">🕯️</span>
         <p class="meal-name" id="y2-n5">Cena Ceremonial de Fuego</p>
         <p class="meal-desc" id="y2-d5">Hummus de remolacha, pan de semillas artesanal, falafel al horno con tahini de sésamo negro, ensalada de hierbas frescas. Servida en silencio como práctica de consciencia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Compartido</span></div>
@@ -720,35 +721,30 @@
     <div class="meals-grid" id="yoga-meals-3" style="display:none">
       <div class="meal-card">
         <span class="meal-time">Amanecer · 6:30</span>
-        <span class="meal-icon">🌸</span>
         <p class="meal-name" id="y3-n1">Té de Cierre & Oración al Sol</p>
         <p class="meal-desc" id="y3-d1">Infusión de flores (rosa, manzanilla, hibisco) con miel y limón. Ritual de apertura consciente para el último amanecer del retiro. Acción de gracias a Pachamama.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Floral</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Desayuno · 9:00</span>
-        <span class="meal-icon">🥞</span>
         <p class="meal-name" id="y3-n2">Panqueques de Avena & Frutas del Bosque</p>
         <p class="meal-desc" id="y3-d2">Panqueques de avena y banana, frutas del bosque frescas, jarabe de arce puro y crema de coco. Desayuno festivo para celebrar el cierre del retiro con alegría y abundancia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Festivo</span><span class="meal-prop">Sin lácteos</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo · 13:00</span>
-        <span class="meal-icon">🎉</span>
         <p class="meal-name" id="y3-n3">Gran Banquete de Despedida</p>
         <p class="meal-desc" id="y3-d3">Buffet completo de las mejores preparaciones del retiro. Ensaladas vivas, curries, arroces aromáticos, panes artesanales, salsas y chutneys. Mesa de gratitud compartida.</p>
         <div class="meal-props"><span class="meal-prop highlight">Banquete</span><span class="meal-prop">Mesa compartida</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Tarde · 15:00</span>
-        <span class="meal-icon">🫖</span>
         <p class="meal-name" id="y3-n4">Ceremonia del Té de Cierre</p>
         <p class="meal-desc" id="y3-d4">Espacio íntimo de té ceremonial con infusiones selectas, chocolates crudos y mantras de gratitud. Cierre energético del contenedor del retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Cacao crudo</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Para el camino · 16:30</span>
-        <span class="meal-icon">🎁</span>
         <p class="meal-name" id="y3-n5">Kit de Integración para Llevar</p>
         <p class="meal-desc" id="y3-d5">Canasta de despedida: recetario artesanal, mezcla de especias curadas, adaptógenos en polvo, tarjeta con recomendaciones personalizadas y semillas para continuar el viaje en casa.</p>
         <div class="meal-props"><span class="meal-prop highlight">Regalo</span><span class="meal-prop">Personalizado</span></div>
@@ -761,17 +757,14 @@
     <p class="highlights-title" id="yoga-hl-title">Platos Estrella del Retiro de Yoga</p>
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
-        <span class="hl-emoji">🍛</span>
         <p class="hl-name" id="hl-y1-name">Kichari Dorado</p>
         <p class="hl-desc" id="hl-y1-desc">El plato maestro del Ayurveda. Arroz basmati y mung dal cocinados con ghee y 9 especias sagradas. La comida más nutritiva y fácil de digerir de la tradición india.</p>
       </div>
       <div class="highlight-card sage">
-        <span class="hl-emoji">🥬</span>
         <p class="hl-name" id="hl-y2-name">Ensalada Prāṇa Viva</p>
         <p class="hl-desc" id="hl-y2-desc">Mezcla de brotes vivos, hierbas aromáticas frescas, flores comestibles y semillas activadas. Aderezo de limón, tahini y hierbas andinas. Máxima energía vital en cada bocado.</p>
       </div>
       <div class="highlight-card blue">
-        <span class="hl-emoji">🍮</span>
         <p class="hl-name" id="hl-y3-name">Kheer de Arroz & Azafrán</p>
         <p class="hl-desc" id="hl-y3-desc">Postre sagrado ayurvédico. Arroz de grano corto cocinado lentamente en leche de almendra con azafrán, rosas, cardamomo y pistachos. Ofrenda dulce al final del día.</p>
       </div>
@@ -812,43 +805,36 @@
           <span class="menu-tag blue">Crudo 60%</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.25), rgba(42,84,196,0.1));">
-        🌿
-      </div>
+      <img class="menu-photo" src="assets/pics/Fotos_Tessa_Pedris_Feb2024_65.jpeg" alt="">
     </div>
 
     <div class="meals-grid" id="detox-meals">
       <div class="meal-card">
         <span class="meal-time" id="d-t1">Despertar · 6:00</span>
-        <span class="meal-icon">💧</span>
         <p class="meal-name" id="d-n1">Agua Mineral & Arcilla Blanca</p>
         <p class="meal-desc" id="d-d1">Vaso de agua tibia con unas gotas de jugo de limón, una pizca de arcilla blanca comestible y spirulina. Protocolo de limpieza intestinal profunda para el inicio del día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Limpieza intestinal</span><span class="meal-prop">Alcalinizante</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="d-t2">Jugo Verde · 7:30</span>
-        <span class="meal-icon">🥤</span>
         <p class="meal-name" id="d-n2">Jugo Maestro Detox</p>
         <p class="meal-desc" id="d-d2">Pepino, apio, manzana verde, jengibre, limón, cilantro y una hoja de aloe vera. Extracción en frío para máxima biodisponibilidad enzimática. Suministra clorofila en forma directa.</p>
         <div class="meal-props"><span class="meal-prop highlight">Cold pressed</span><span class="meal-prop">Clorofila</span><span class="meal-prop">Enzimático</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="d-t3">Desayuno · 9:00</span>
-        <span class="meal-icon">🫙</span>
         <p class="meal-name" id="d-n3">Chia Pudding & Frutas de Bajo IG</p>
         <p class="meal-desc" id="d-d3">Semillas de chía activadas en leche de almendra con vainilla. Coronado con berries, granada y semillas de cáñamo. Sin azúcar añadido. Índice glucémico ultra bajo para estabilizar la energía.</p>
         <div class="meal-props"><span class="meal-prop highlight">Omega 3</span><span class="meal-prop">Bajo IG</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="d-t4">Almuerzo · 12:30</span>
-        <span class="meal-icon">🥗</span>
         <p class="meal-name" id="d-n4">Bowl Raw de Zoodles & Pesto Crudo</p>
         <p class="meal-desc" id="d-d3b">Zucchini en espiral, brotes de alfalfa, tomates cherry, aguacate y pesto fresco de albahaca y nueces de macadamia. 100% sin cocción para preservar enzimas y nutrientes.</p>
         <div class="meal-props"><span class="meal-prop highlight">Raw Food</span><span class="meal-prop">Enzimas vivas</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="d-t5">Cena · 18:00</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name" id="d-n5">Caldo Mineral de 12 Horas</p>
         <p class="meal-desc" id="d-d5">Caldo largo de huesos de vegetales (cebolla, zanahoria, apio, perejil, kombu) cocinado 12 horas. Rico en minerales, silicio y glutamina para reparar la mucosa intestinal. Cierre suave del día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Intestino permeable</span><span class="meal-prop">Mineral</span></div>
@@ -859,17 +845,14 @@
 
     <div class="highlights-grid reveal">
       <div class="highlight-card sage">
-        <span class="hl-emoji">🥬</span>
         <p class="hl-name" id="hl-d1-name">Shot de Wheatgrass & Jengibre</p>
         <p class="hl-desc" id="hl-d1-desc">Shot de pasto de trigo recién extraído con jengibre fresco. Concentrado máximo de clorofila, vitamina K y enzimas vivas. Ritual diario de cada mañana.</p>
       </div>
       <div class="highlight-card gold">
-        <span class="hl-emoji">🍋</span>
         <p class="hl-name" id="hl-d2-name">Limonada con Cayena & Maple</p>
         <p class="hl-desc" id="hl-d2-desc">La bebida de limpieza clásica renovada: limón fresco, cayena, sirope de maple puro y agua de manantial. Activa el metabolismo y la circulación linfática.</p>
       </div>
       <div class="highlight-card blue">
-        <span class="hl-emoji">🫐</span>
         <p class="hl-name" id="hl-d3-name">Açaí Bowl Antioxidante</p>
         <p class="hl-desc" id="hl-d3-desc">Puré de açaí salvaje con maqui berry, banana congelada y leche de coco. Topping de goji, cacao crudo, coco rallado y semillas activadas. El desayuno más antioxidante del mundo.</p>
       </div>
@@ -910,43 +893,36 @@
           <span class="menu-tag cream">Sin azúcar refinado</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(42,84,196,0.2), rgba(74,122,90,0.1));">
-        🌬️
-      </div>
+      <img class="menu-photo" src="assets/pics/HDLT-198.jpeg" alt="">
     </div>
 
     <div class="meals-grid" id="bw-meals">
       <div class="meal-card">
         <span class="meal-time" id="bw-t1">Pre-sesión · 7:00</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name" id="bw-n1">Té de Cacao Ceremonial Suave</p>
         <p class="meal-desc" id="bw-d1">Cacao crudo de baja dosis (20g) con leche de avena, miel, canela y una pizca de sal marina. El cacao abre el corazón y eleva la energía sin la disrupción de la cafeína.</p>
         <div class="meal-props"><span class="meal-prop highlight">Abre-corazones</span><span class="meal-prop">Sin cafeína</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t2">Desayuno · 8:30</span>
-        <span class="meal-icon">🍌</span>
         <p class="meal-name" id="bw-n2">Banana & Semillas — Desayuno Mínimo</p>
         <p class="meal-desc" id="bw-d2">Banana madura, un puñado de semillas de calabaza activadas y una cucharada de mantequilla de almendra. Simple, liviano, sin elaborar. El cuerpo lo agradece antes de una sesión profunda.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ultra liviano</span><span class="meal-prop">Serotonina</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t3">Post-sesión · 13:00</span>
-        <span class="meal-icon">🌍</span>
         <p class="meal-name" id="bw-n3">Bowl de Integración — Raíces Asadas</p>
         <p class="meal-desc" id="bw-d3">Batatas, remolachas y zanahorias asadas lentamente con ghee, tomillo y sal del Himalaya. Granos integrales. El calor y el peso de las raíces ayudan al sistema nervioso a aterrizar después de la expansión.</p>
         <div class="meal-props"><span class="meal-prop highlight">Grounding potente</span><span class="meal-prop">Sistema nervioso</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t4">Tarde · 16:00</span>
-        <span class="meal-icon">🫙</span>
         <p class="meal-name" id="bw-n4">Caldo de Miso & Wakame</p>
         <p class="meal-desc" id="bw-d4">Caldo de miso blanco con alga wakame, tofu, cebollín y sésamo. Fermentado vivo. Los probióticos del miso calman el sistema digestivo y el mineral del wakame equilibra el sistema nervioso.</p>
         <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Mineral marino</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t5">Cena · 19:00</span>
-        <span class="meal-icon">🌕</span>
         <p class="meal-name" id="bw-n5">Sopa de Avena & Hierbas de Integración</p>
         <p class="meal-desc" id="bw-d5">Avena cocinada con caldo de verduras, tomillo, sage, laurel y aceite de oliva. Con pan de masa madre. Cena sencilla y amorosa que cierra el ciclo del día con calidez y simplicidad.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sedante suave</span><span class="meal-prop">Calor integrador</span></div>
@@ -957,17 +933,14 @@
 
     <div class="highlights-grid reveal">
       <div class="highlight-card blue">
-        <span class="hl-emoji">🍫</span>
         <p class="hl-name">Cacao Ceremonial Completo</p>
         <p class="hl-desc">Para ceremonias de mayor profundidad, Pedro prepara cacao ceremonial de origen (Guatemala o Perú) en dosis completa con rezos, intención y especias sagradas.</p>
       </div>
       <div class="highlight-card gold">
-        <span class="hl-emoji">🥔</span>
         <p class="hl-name">Papas Rellenas al Fuego</p>
         <p class="hl-desc">Papas enteras cocinadas sobre brasas, rellenas de puré de aguacate, cebollín y sal ahumada. El alimento más ancestral y grounding para noches de integración.</p>
       </div>
       <div class="highlight-card sage">
-        <span class="hl-emoji">🌾</span>
         <p class="hl-name">Congee de Arroz Medicinal</p>
         <p class="hl-desc">Arroz blanco cocinado 2 horas hasta formar una sopa espesa. Con jengibre, miso y algas. Alimento de máxima digestibilidad y profundo descanso celular.</p>
       </div>
@@ -1008,43 +981,36 @@
           <span class="menu-tag cream">6 sabores</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(201,135,10,0.2), rgba(74,122,90,0.1));">
-        🪷
-      </div>
+      <img class="menu-photo" src="assets/pics/0G0A9982.jpeg" alt="">
     </div>
 
     <div class="meals-grid" id="ay-meals">
       <div class="meal-card">
         <span class="meal-time" id="ay-t1">Dinacharya · 6:00</span>
-        <span class="meal-icon">🌅</span>
         <p class="meal-name" id="ay-n1">Rasayana Matutino</p>
         <p class="meal-desc" id="ay-d1">Chyawanprash (mermelada ayurvédica de amla) con ghee y leche caliente de vaca. Rasayana clásico para rejuvenecer el tejido profundo (ojas). 5 minutos de práctica de respiración antes de tomarlo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Rasayana</span><span class="meal-prop">Ojas builder</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="ay-t2">Desayuno · 8:00</span>
-        <span class="meal-icon">🫕</span>
         <p class="meal-name" id="ay-n2">Kichari Tridóshico con Ghee & 9 Especias</p>
         <p class="meal-desc" id="ay-d2">El plato más sagrado del Ayurveda. Arroz basmati y mung dal dorado cocinados juntos con ghee clarificado artesanal y la trinidad especiada: cúrcuma, comino, cilantro, jengibre, hinojo, cardamomo, canela, clavo y pimienta negra.</p>
         <div class="meal-props"><span class="meal-prop highlight">Satmya universal</span><span class="meal-prop">9 especias</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="ay-t3">Almuerzo · 12:00</span>
-        <span class="meal-icon">🍱</span>
         <p class="meal-name" id="ay-n3">Thali de Estación — Los 6 Sabores</p>
         <p class="meal-desc" id="ay-d3">Banquete completo con 6 a 8 preparaciones que cubren todos los sabores ayurvédicos: dulce (dal), ácido (chutney de tamarindo), salado (pickle), picante (curry), amargo (karela), astringente (ensalada de lentejas).</p>
         <div class="meal-props"><span class="meal-prop highlight">6 rasas</span><span class="meal-prop">Digestión óptima</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="ay-t4">Merienda · 15:30</span>
-        <span class="meal-icon">🫖</span>
         <p class="meal-name" id="ay-n4">Tridoshic Tea & Ladoos de Sésamo</p>
         <p class="meal-desc" id="ay-d4">Infusión de las 3 hierbas sagradas: ashwagandha, tulsi y amalaki. Ladoos artesanales de sésamo negro, dátiles, cardamomo y ghee. Confitería medicinal de la tradición india.</p>
         <div class="meal-props"><span class="meal-prop highlight">Adaptógenos</span><span class="meal-prop">Dulce medicinal</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="ay-t5">Cena · 18:30</span>
-        <span class="meal-icon">🌙</span>
         <p class="meal-name" id="ay-n5">Sopa de Masoor Dal & Chapati Artesanal</p>
         <p class="meal-desc" id="ay-d5">Sopa liviana de lentejas rojas (masoor) con tarka de semillas de mostaza, hojas de curry y ghee. Pan chapati hecho a mano con harina integral. Cena antes del sunset, como prescribe el Ayurveda.</p>
         <div class="meal-props"><span class="meal-prop highlight">Cena temprana</span><span class="meal-prop">Pan artesanal</span></div>
@@ -1055,17 +1021,14 @@
 
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
-        <span class="hl-emoji">🧈</span>
         <p class="hl-name">Ghee Clarificado Artesanal</p>
         <p class="hl-desc">Pedro elabora su propio ghee clarificando mantequilla orgánica a fuego lento con mantras. El ghee es considerado el alimento más sáttvico y el principal rasayana en la tradición ayurvédica.</p>
       </div>
       <div class="highlight-card sage">
-        <span class="hl-emoji">🌿</span>
         <p class="hl-name">Pasta de Especias Masala Propia</p>
         <p class="hl-desc">Blend personalizado de 15 especias tostadas y molidas en el momento. Adaptado a la estación y al dosha predominante del grupo. La columna vertebral aromática de toda la cocina del retiro.</p>
       </div>
       <div class="highlight-card blue">
-        <span class="hl-emoji">🍮</span>
         <p class="hl-name">Payasam de Luna Llena</p>
         <p class="hl-desc">Postre ceremonial de luna llena: arroz de grano fino, leche entera, azafrán iraní, rosas secas, pistachos y pétalos de flores comestibles. Se cocina bajo la luna como práctica de gratitud.</p>
       </div>
@@ -1108,43 +1071,36 @@
           <span class="menu-tag sage">Alimentos puros</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(74,122,90,0.2), rgba(155,110,204,0.15));">
-        🌙
-      </div>
+      <img class="menu-photo" src="assets/pics/IMG_0475.jpeg" alt="">
     </div>
 
     <div class="meals-grid" id="med-meals">
       <div class="meal-card">
         <span class="meal-time" id="med-t1">Preparación — Día previo</span>
-        <span class="meal-icon">🌱</span>
         <p class="meal-name" id="med-n1">Caldo Purificador de 7 Plantas</p>
         <p class="meal-desc" id="med-d1">Caldo medicinal con ortiga, diente de león, bardana, romero, salvia, tomillo y perejil. Sin sal, sin aceite. Purifica el hígado y los riñones para potenciar la apertura de la noche ceremonial.</p>
         <div class="meal-props"><span class="meal-prop highlight">Purificación hepática</span><span class="meal-prop">Sin sal</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="med-t2">Día de ceremonia</span>
-        <span class="meal-icon">🍚</span>
         <p class="meal-name" id="med-n2">Arroz Blanco & Verduras al Vapor</p>
         <p class="meal-desc" id="med-d2">La comida más pura: arroz blanco de grano largo sin condimentar, verduras verdes al vapor (brócoli, espinaca, zapallito). Con mínima sal marina. Máxima simpleza para honrar el espacio ceremonial.</p>
         <div class="meal-props"><span class="meal-prop highlight">Dieta maestra</span><span class="meal-prop">Mínimo proceso</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="med-t3">Post-ceremonia · Mañana</span>
-        <span class="meal-icon">🌅</span>
         <p class="meal-name" id="med-n3">Sopa de Integración & Fruta Dulce</p>
         <p class="meal-desc" id="med-d3">Sopa liviana con fideos de arroz, zanahorias, apio y hierbas suaves. Frutas dulces y maduras: mango, papaya, sandía. El dulce ayuda a integrar y cerrar suavemente la energía de la noche.</p>
         <div class="meal-props"><span class="meal-prop highlight">Integrador</span><span class="meal-prop">Suave al estómago</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="med-t4">Día de integración</span>
-        <span class="meal-icon">🫶</span>
         <p class="meal-name" id="med-n4">Kichari Blanco de Retorno</p>
         <p class="meal-desc" id="med-d4">Kichari preparado sin especias picantes: arroz, mung, comino suave, cúrcuma y ghee. El alimento más fácil de digerir que existe. Permite al sistema digestivo descansar mientras el ser procesa la experiencia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ultra digestible</span><span class="meal-prop">Integración</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="med-t5">Cierre — Banquete sagrado</span>
-        <span class="meal-icon">🎊</span>
         <p class="meal-name" id="med-n5">Banquete de Gratitud</p>
         <p class="meal-desc" id="med-d5">Al finalizar el período de dieta, mesa comunitaria abundante con los sabores de la tierra: sopas ricas, panes artesanales, ensaladas vivas, postres de fruta. Celebración del retorno al mundo ordinario con gratitud.</p>
         <div class="meal-props"><span class="meal-prop highlight">Celebratorio</span><span class="meal-prop">Mesa comunitaria</span></div>
@@ -1188,43 +1144,36 @@
           <span class="menu-tag gold">Presentación premium</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(232,184,75,0.2), rgba(201,135,10,0.08));">
-        ✦
-      </div>
+      <img class="menu-photo" src="assets/pics/dsc_0855.jpg" alt="">
     </div>
 
     <div class="meals-grid" id="priv-meals">
       <div class="meal-card">
         <span class="meal-time" id="priv-t1">Aperitivo</span>
-        <span class="meal-icon">🍾</span>
         <p class="meal-name" id="priv-n1">Bienvenida — Kefir de Coco & Canapes Vivos</p>
         <p class="meal-desc" id="priv-d1">Kefir artesanal de leche de coco con frutos rojos. Tabla de canapés crudos: crackers de semillas, hummus de remolacha, tartare de aguacate, láminas de nabo marinado y flores comestibles.</p>
         <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Fermentado artesanal</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t2">Entrada</span>
-        <span class="meal-icon">🍜</span>
         <p class="meal-name" id="priv-n2">Sopa de Miso Negro con Oro Comestible</p>
         <p class="meal-desc" id="priv-d2">Miso de cebada envejecido 2 años, dashi de kombu, nameko, tofu sedoso y cebollino. Terminada con aceite de sésamo negro y láminas de oro comestible. Profundidad umami con elegancia minimalista.</p>
         <div class="meal-props"><span class="meal-prop highlight">Umami profundo</span><span class="meal-prop">Oro comestible</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t3">Plato principal</span>
-        <span class="meal-icon">🌺</span>
         <p class="meal-name" id="priv-n3">Risotto de Quinoa Negra & Trufa</p>
         <p class="meal-desc" id="priv-d3">Quinoa negra cocinada al estilo risotto con vino blanco, caldo de hongos shiitake, mantequilla de caju y láminas de trufa negra fresca. Terminado con aceite de trufa y parmesano de macadamia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Plato estrella</span><span class="meal-prop">Vegan</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t4">Pre-postre</span>
-        <span class="meal-icon">🍋</span>
         <p class="meal-name" id="priv-n4">Sorbet de Yuzu & Cardamomo</p>
         <p class="meal-desc" id="priv-d4">Sorbet de yuzu japonés, cardamomo verde y jengibre fresco. Sirve como palate cleanser entre el plato principal y el postre. Presentado en cáscara de limón con polvo de matcha y menta fresca.</p>
         <div class="meal-props"><span class="meal-prop highlight">Palate cleanser</span><span class="meal-prop">Digestivo</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t5">Postre</span>
-        <span class="meal-icon">🍫</span>
         <p class="meal-name" id="priv-n5">Tarta de Cacao Crudo & Sal de Mar</p>
         <p class="meal-desc" id="priv-d5">Base de dátiles y nueces. Ganache de cacao crudo peruano 100%, crema de coco y vainilla. Terminada con sal de Fleur de Sel y micro hierbas. Servida a temperatura ambiente para máxima expresión del cacao.</p>
         <div class="meal-props"><span class="meal-prop highlight">Raw</span><span class="meal-prop">Sin azúcar refinado</span></div>
@@ -1235,17 +1184,14 @@
 
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
-        <span class="hl-emoji">🌹</span>
         <p class="hl-name">Mise en Place Ceremonial</p>
         <p class="hl-desc">Pedro no solo cocina: diseña la experiencia completa. Mesa, flores, vajilla, música y ambiente. Cada detalle al servicio de la memoria que se quiere crear.</p>
       </div>
       <div class="highlight-card sage">
-        <span class="hl-emoji">🍵</span>
         <p class="hl-name">Maridaje de Infusiones</p>
         <p class="hl-desc">En lugar de vinos, Pedro diseña una carta de infusiones medicinales maridadas con cada plato. Kombucha artesanal, kefir de agua, aguas de flores y tónicos de adaptógenos.</p>
       </div>
       <div class="highlight-card blue">
-        <span class="hl-emoji">👨‍🍳</span>
         <p class="hl-name">Taller de Cocina Privado</p>
         <p class="hl-desc">La cena puede incorporar un taller participativo: los invitados aprenden a preparar uno o dos platos del menú junto a Pedro. Una experiencia transformadora que va más allá de comer.</p>
       </div>
@@ -1286,9 +1232,7 @@
           <span class="menu-tag cream">Ayurvédico</span>
         </div>
       </div>
-      <div class="menu-visual" style="background: linear-gradient(135deg, rgba(106,170,122,0.2), rgba(232,184,75,0.1));">
-        🌴
-      </div>
+      <img class="menu-photo" src="assets/pics/IMG_7580.jpeg" alt="">
     </div>
 
     <div class="day-selector">
@@ -1305,21 +1249,18 @@
     <div class="meals-grid" id="swarupa-meals-1" style="grid-template-columns: repeat(3, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Bienvenida</span>
-        <span class="meal-icon">🥥</span>
         <p class="meal-name">Pipas</p>
         <p class="meal-desc">Recepción con pipas de coco frescas. El primer alimento del retiro, directo de la naturaleza: hidratante, nutritivo y ceremonial.</p>
         <div class="meal-props"><span class="meal-prop highlight">Apertura</span><span class="meal-prop">Hidratante</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🍲</span>
         <p class="meal-name">Kichari</p>
         <p class="meal-desc">Arroz basmati, lentejas coral, zanahoria, calabaza y boniato. El plato insignia del Ayurveda: nutritivo, fácil de digerir y equilibrador de los tres doshas.</p>
         <div class="meal-props"><span class="meal-prop highlight">Plato insignia Ayurveda</span><span class="meal-prop">Tri-dóshico</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Postre & Cierre</span>
-        <span class="meal-icon">🍫</span>
         <p class="meal-name">Trufas · Infusión digestiva</p>
         <p class="meal-desc">Trufas de cacao crudo. Infusión digestiva de hierbas para cerrar la primera noche y favorecer el descanso profundo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Cacao crudo</span><span class="meal-prop">Digestivo</span></div>
@@ -1330,28 +1271,24 @@
     <div class="meals-grid" id="swarupa-meals-2" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
-        <span class="meal-icon">🥣</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
         <p class="meal-desc">Smoothie bowl colorido, fruta cortada de estación, chia pudding y granola artesanal. Base energizante y liviana para el primer día completo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
-        <span class="meal-icon">🥗</span>
         <p class="meal-name">Ensalada de Quinoa con Almendras Especiadas</p>
         <p class="meal-desc">Mix de quinoa, brócoli, almendras especiadas, pasas y perejil con huevitos. Cuñas de cabutiá, hojas verdes y hummus artesanal.</p>
         <div class="meal-props"><span class="meal-prop highlight">Alta proteína</span><span class="meal-prop">Vegetariano</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🍜</span>
         <p class="meal-name">Fideos de Arroz al Wok · Rawmesan</p>
         <p class="meal-desc">Fideos de arroz con vegetales salteados al wok, leche de coco, hierbas frescas y rawmesan. Plato reconfortante sin gluten con profundidad de sabores.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Plant-based</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name">"Wow" · Infusión digestiva</p>
         <p class="meal-desc">Sorpresa dulce de cierre para el grupo. Infusión digestiva de hierbas para acompañar el final del día y favorecer el descanso.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sorpresa</span><span class="meal-prop">Digestivo</span></div>
@@ -1362,28 +1299,24 @@
     <div class="meals-grid" id="swarupa-meals-3" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
-        <span class="meal-icon">☕</span>
         <p class="meal-name">Golden Milk · Pan sin Gluten · Huevos & Guacamole</p>
         <p class="meal-desc">Leche dorada con cúrcuma y especias. Pan sin gluten artesanal, huevos revueltos, guacamole fresco y rúcula. Desayuno nutritivo y completo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Antiinflamatorio</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
-        <span class="meal-icon">🥗</span>
         <p class="meal-name">Buddha Bowl</p>
         <p class="meal-desc">Arroz integral, tartare de atún, zanahoria, pepino, palta, tomate, albahaca, hojas verdes, repollo encurtido y dressing de tahini.</p>
         <div class="meal-props"><span class="meal-prop highlight">Completo</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🍛</span>
         <p class="meal-name">Curry de Vegetales · Triffle Tropical</p>
         <p class="meal-desc">Curry de brócoli, calabaza, zanahoria y boniato con maní tostado, cilantro y lima. De postre: triffle de banana, coco y mango con base de frutos secos.</p>
         <div class="meal-props"><span class="meal-prop highlight">Plant-based</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name">Infusión digestiva</p>
         <p class="meal-desc">Infusión de hierbas medicinales para cerrar el día y favorecer la digestión y el descanso profundo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
@@ -1394,28 +1327,24 @@
     <div class="meals-grid" id="swarupa-meals-4" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
-        <span class="meal-icon">🥣</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
         <p class="meal-desc">Smoothie bowl, fruta cortada, chia pudding y granola artesanal. Comienzo liviano y energizante para el cuarto día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
-        <span class="meal-icon">🫓</span>
         <p class="meal-name">Arepas · Frijoles · Guacamole</p>
         <p class="meal-desc">Arepas artesanales con frijoles, guacamole fresco, hojas verdes, cherries, zanahoria y pepino. Toque latinoamericano con frescura tropical.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Vegetariano</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🐟</span>
         <p class="meal-name">Atún a la Plancha · Brownie con Frutos Rojos</p>
         <p class="meal-desc">Atún a la plancha con puré de papas y ensalada fresca de cherries, pepino, rabanitos y piña, con aderezo de mango y mostaza. Brownie de postre.</p>
         <div class="meal-props"><span class="meal-prop highlight">Proteína</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name">Infusión digestiva</p>
         <p class="meal-desc">Infusión de hierbas para favorecer la digestión y el descanso profundo al final del día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
@@ -1426,28 +1355,24 @@
     <div class="meals-grid" id="swarupa-meals-5" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
-        <span class="meal-icon">🥞</span>
         <p class="meal-name">Pancakes · Tahini · Jugo de Papaya</p>
         <p class="meal-desc">Pancakes sin gluten con fruta cortada, salsa de tahini, granola artesanal y jugo fresco de papaya. Desayuno festivo a mitad de retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Energizante</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
-        <span class="meal-icon">🌿</span>
         <p class="meal-name">Libre</p>
         <p class="meal-desc">Espacio de almuerzo libre para que el grupo explore, descanse o comparta fuera del programa. Pausa intencional en la mitad del retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Libre</span><span class="meal-prop">Integración</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🫕</span>
         <p class="meal-name">Lasagna Sin Gluten · Carrot Cake</p>
         <p class="meal-desc">Lasagna sin gluten con calabaza asada, brócoli, espinacas y queso gratinado, con salsa de tomate y pesto. Carrot cake de postre.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Comfort food</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name">Infusión digestiva</p>
         <p class="meal-desc">Infusión de hierbas medicinales para preparar el cuerpo para el descanso nocturno.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
@@ -1458,28 +1383,24 @@
     <div class="meals-grid" id="swarupa-meals-6" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
-        <span class="meal-icon">🥣</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
         <p class="meal-desc">Smoothie bowl, fruta cortada, chia pudding y granola. Fresco y nutritivo para el penúltimo día de retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Energizante</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
-        <span class="meal-icon">🍔</span>
         <p class="meal-name">Veggie Burgers · Coleslaw · Papas & Boniatos</p>
         <p class="meal-desc">Hamburguesas vegetales con tomate, verdes, pepino y coleslaw. Papas y boniatos al horno con mayo casera. Comfort food consciente.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Vegetariano</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <span class="meal-icon">🍚</span>
         <p class="meal-name">Risotto de Remolacha · Snicker Raw</p>
         <p class="meal-desc">Risotto de remolacha con hongos salteados y castañas tostadas. Postre Snicker raw: base de granola, dulce de dátiles y chocolate crudo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Cacao crudo</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <span class="meal-icon">🍵</span>
         <p class="meal-name">Infusión digestiva</p>
         <p class="meal-desc">Infusión de hierbas para cerrar la última noche del retiro con calma y presencia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
@@ -1490,21 +1411,18 @@
     <div class="meals-grid" id="swarupa-meals-7" style="display:none; grid-template-columns: repeat(3, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Brunch · Despedida</span>
-        <span class="meal-icon">☀️</span>
         <p class="meal-name">Smoothie · Mandala de Frutas</p>
         <p class="meal-desc">Smoothie fresco y mandala de frutas de temporada. El cierre visual del retiro: una ofrenda de color y abundancia para despedir el proceso juntos.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Despedida</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Brunch · Salado</span>
-        <span class="meal-icon">🍳</span>
         <p class="meal-name">Huevos Revueltos · Guacamole · Granola</p>
         <p class="meal-desc">Huevos revueltos, guacamole fresco y granola artesanal para completar el brunch. Nutritivo y festivo para el último día compartido.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Completo</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Brunch · Especial</span>
-        <span class="meal-icon">🧆</span>
         <p class="meal-name">Chipá de Mandioca</p>
         <p class="meal-desc">Pan tradicional paraguayo de mandioca y queso, sin gluten, horneado al momento. Cierre cálido y artesanal para el último desayuno del retiro.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Artesanal</span></div>
@@ -1595,16 +1513,6 @@
   </footer>
 
   <script>
-    // ══ PARTICLES ══
-    const PARTICLES = ['🌿','🌱','✦','🍃','🌸','🔥','🌾','🫚','🌺','⚡'];
-    const pContainer = document.getElementById('particles');
-    for (let i = 0; i < 14; i++) {
-      const p = document.createElement('span');
-      p.className = 'particle';
-      p.textContent = PARTICLES[i % PARTICLES.length];
-      p.style.cssText = `left:${Math.random()*100}%; top:${20+Math.random()*70}%; --dur:${10+Math.random()*14}s; --delay:${Math.random()*8}s;`;
-      pContainer.appendChild(p);
-    }
 
     // ══ RETREAT TABS ══
     function showMenu(id) {
