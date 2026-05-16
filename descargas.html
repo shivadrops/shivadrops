@@ -567,7 +567,7 @@
     // CONFIGURACIÓN
     // ══════════════════════════════════════════════
     const CONFIG = {
-      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro (sin + ni espacios)
+      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro Miguel (sin + ni espacios)
     };
 
     // ══════════════════════════════════════════════
@@ -739,7 +739,7 @@
         'format-label':  'Formato',
         'size-label':    'Tamaño',
         // WhatsApp message
-        'wa-msg': (name) => `Hola Pedro! Quisiera recibir el recurso gratuito: "${name}". ¡Gracias!`,
+        'wa-msg': (name) => `Hola Pedro Miguel! Quisiera recibir el recurso gratuito: "${name}". ¡Gracias!`,
       },
       en: {
         'hero-label':  'Free Resources',
@@ -772,7 +772,7 @@
         'ft-rights':        'All rights reserved',
         'format-label':  'Format',
         'size-label':    'Size',
-        'wa-msg': (name) => `Hi Pedro! I'd like to receive the free resource: "${name}". Thank you!`,
+        'wa-msg': (name) => `Hi Pedro Miguel! I'd like to receive the free resource: "${name}". Thank you!`,
       }
     };
 
@@ -927,8 +927,8 @@
       e.preventDefault();
       const email = document.getElementById('nl-email').value;
       const msg = currentLang === 'es'
-        ? `Hola Pedro! Me gustaría unirme a la comunidad ShivaDrops y recibir recursos gratuitos. Mi email: ${email}`
-        : `Hi Pedro! I'd like to join the ShivaDrops community and receive free resources. My email: ${email}`;
+        ? `Hola Pedro Miguel! Me gustaría unirme a la comunidad ShivaDrops y recibir recursos gratuitos. Mi email: ${email}`
+        : `Hi Pedro Miguel! I'd like to join the ShivaDrops community and receive free resources. My email: ${email}`;
       window.open(`https://wa.me/${CONFIG.PEDRO_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 

@@ -611,7 +611,7 @@
     // CONFIGURACIÓN
     // ══════════════════════════════════════════════
     const CONFIG = {
-      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro (sin + ni espacios)
+      PEDRO_WHATSAPP: '598XXXXXXXXX', // WhatsApp de Pedro Miguel (sin + ni espacios)
     };
 
     // ══════════════════════════════════════════════
@@ -821,8 +821,8 @@
       const lang = currentLang;
       const name = lang === 'es' ? product.name_es : product.name_en;
       const msg = lang === 'es'
-        ? `Hola Pedro 👋\n\nMe interesa comprar:\n\n📦 *${name}*\n💰 $${product.price} ${product.currency}\n\n¿Cómo procedo con el pago?\n\n_Desde shivadrops.com_`
-        : `Hello Pedro 👋\n\nI'm interested in buying:\n\n📦 *${name}*\n💰 $${product.price} ${product.currency}\n\nHow do I proceed with payment?\n\n_From shivadrops.com_`;
+        ? `Hola Pedro Miguel 👋\n\nMe interesa comprar:\n\n📦 *${name}*\n💰 $${product.price} ${product.currency}\n\n¿Cómo procedo con el pago?\n\n_Desde shivadrops.com_`
+        : `Hello Pedro Miguel 👋\n\nI'm interested in buying:\n\n📦 *${name}*\n💰 $${product.price} ${product.currency}\n\nHow do I proceed with payment?\n\n_From shivadrops.com_`;
       const waNum = CONFIG.PEDRO_WHATSAPP.replace(/\D/g, '');
       window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
     }

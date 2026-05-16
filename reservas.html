@@ -666,7 +666,7 @@
   ══════════════════════════════════════════════════════════════
   CONFIGURACIÓN — Leer antes de publicar
   ══════════════════════════════════════════════════════════════
-  1. WhatsApp de Pedro:
+  1. WhatsApp de Pedro Miguel:
      Editar PEDRO_WHATSAPP en el CONFIG de abajo (con código de país, sin +)
      Ej: Uruguay = 598XXXXXXXX
 
@@ -676,7 +676,7 @@
         (fechas en formato YYYY-MM-DD, ej: 2024-03-15)
      b) Publicar la hoja: Archivo → Compartir → Publicar en la web → CSV
      c) Copiar el ID de la hoja (la parte larga de la URL) y pegarlo en SHEET_ID
-     d) Cada vez que Pedro cierre una reserva, solo agrega una fila con las fechas
+     d) Cada vez que Pedro Miguel cierre una reserva, solo agrega una fila con las fechas
 
   3. Para bloquear fechas temporalmente sin la hoja, agregar al array DEMO_BLOCKED:
      { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
@@ -719,7 +719,7 @@
   <div class="page-hero">
     <span class="page-hero-label" id="hero-label">ShivaDrops</span>
     <h1 class="page-hero-title" id="hero-title">Reserva tu <span>experiencia</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro se pondrá en contacto contigo para confirmar los detalles.</p>
+    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro Miguel se pondrá en contacto contigo para confirmar los detalles.</p>
   </div>
 
   <!-- ══ BOOKING ══ -->
@@ -862,7 +862,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" id="lbl-message">Mensaje o detalles adicionales</label>
-            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Pedro sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
+            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Pedro Miguel sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
           </div>
         </div>
       </div>
@@ -877,7 +877,7 @@
           <span id="btn-reservar-text">Reservar por WhatsApp</span>
         </button>
         <p class="submit-note" id="submit-note">
-          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro revisará la disponibilidad y confirmará tu reserva personalmente.
+          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro Miguel revisará la disponibilidad y confirmará tu reserva personalmente.
         </p>
       </div>
 
@@ -889,17 +889,17 @@
     <div class="info-card">
       <span class="info-icon">📋</span>
       <h3 class="info-title" id="i1-title">¿Cómo funciona?</h3>
-      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
+      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro Miguel revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">⏱️</span>
       <h3 class="info-title" id="i2-title">Tiempo de respuesta</h3>
-      <p class="info-text" id="i2-text">Pedro responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
+      <p class="info-text" id="i2-text">Pedro Miguel responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">🌍</span>
       <h3 class="info-title" id="i3-title">Disponibilidad mundial</h3>
-      <p class="info-text" id="i3-text">Pedro asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
+      <p class="info-text" id="i3-text">Pedro Miguel asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
     </div>
   </div>
 
@@ -945,7 +945,7 @@
     // CONFIGURACIÓN — EDITAR ANTES DE PUBLICAR
     // ══════════════════════════════════════════════
     const CONFIG = {
-      // WhatsApp de Pedro (código de país + número, sin + ni espacios)
+      // WhatsApp de Pedro Miguel (código de país + número, sin + ni espacios)
       // Uruguay: 598XXXXXXXXX
       PEDRO_WHATSAPP: '598XXXXXXXXX',
 
@@ -1290,7 +1290,7 @@
       let msg;
       if (es) {
         msg =
-`Hola Pedro 👋
+`Hola Pedro Miguel 👋
 
 Quiero hacer una reserva en *ShivaDrops*:
 
@@ -1309,7 +1309,7 @@ ${message ? `\n💬 *Mensaje:*\n${message}` : ''}
 _Enviado desde shivadrops.com_`;
       } else {
         msg =
-`Hello Pedro 👋
+`Hello Pedro Miguel 👋
 
 I'd like to make a booking at *ShivaDrops*:
 
@@ -1338,7 +1338,7 @@ _Sent from shivadrops.com_`;
       es: {
         'hero-label': 'ShivaDrops',
         'hero-title': 'Reserva tu <span>experiencia</span>',
-        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro se pondrá en contacto contigo para confirmar los detalles.',
+        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro Miguel se pondrá en contacto contigo para confirmar los detalles.',
         'leg-available':'Disponible','leg-blocked':'No disponible','leg-selected':'Seleccionado','leg-range':'Tu período',
         'sum-start-lbl':'Inicio','sum-end-lbl':'Fin',
         'step1-title':'01 · Elige tu servicio',
@@ -1354,15 +1354,15 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Lugar del evento / retiro',
         'lbl-message':'Mensaje o detalles adicionales',
         'btn-reservar-text':'Reservar por WhatsApp',
-        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro revisará la disponibilidad y confirmará tu reserva personalmente.',
-        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro revisa la disponibilidad y confirma tu reserva directamente con vos.',
-        'i2-title':'Tiempo de respuesta','i2-text':'Pedro responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
-        'i3-title':'Disponibilidad mundial','i3-text':'Pedro asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
+        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro Miguel revisará la disponibilidad y confirmará tu reserva personalmente.',
+        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro Miguel revisa la disponibilidad y confirma tu reserva directamente con vos.',
+        'i2-title':'Tiempo de respuesta','i2-text':'Pedro Miguel responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
+        'i3-title':'Disponibilidad mundial','i3-text':'Pedro Miguel asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
       },
       en: {
         'hero-label': 'ShivaDrops',
         'hero-title': 'Book your <span>experience</span>',
-        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Pedro will get in touch with you to confirm the details.',
+        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Pedro Miguel will get in touch with you to confirm the details.',
         'leg-available':'Available','leg-blocked':'Not available','leg-selected':'Selected','leg-range':'Your period',
         'sum-start-lbl':'Start','sum-end-lbl':'End',
         'step1-title':'01 · Choose your service',
@@ -1378,10 +1378,10 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Event / retreat location',
         'lbl-message':'Message or additional details',
         'btn-reservar-text':'Book via WhatsApp',
-        'submit-note':'Clicking will open WhatsApp with your request pre-filled. Pedro will review availability and confirm your booking personally.',
-        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Pedro reviews availability and confirms your booking directly with you.',
-        'i2-title':'Response time','i2-text':'Pedro responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
-        'i3-title':'Worldwide availability','i3-text':'Pedro assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
+        'submit-note':'Clicking will open WhatsApp with your request pre-filled. Pedro Miguel will review availability and confirm your booking personally.',
+        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Pedro Miguel reviews availability and confirms your booking directly with you.',
+        'i2-title':'Response time','i2-text':'Pedro Miguel responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
+        'i3-title':'Worldwide availability','i3-text':'Pedro Miguel assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
       }
     };
 
