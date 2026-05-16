@@ -146,16 +146,26 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      background: var(--bg-dark);
+      background-color: var(--bg-dark);
+      background-image: url('assets/pics/HDLT-237.jpeg');
+      background-size: cover;
+      background-position: center 55%;
     }
 
     .page-hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201, 135, 10, 0.1) 0%, transparent 65%);
       pointer-events: none;
+      background:
+        linear-gradient(to bottom,
+          rgba(21,11,0,0.80) 0%,
+          rgba(21,11,0,0.62) 50%,
+          rgba(21,11,0,0.88) 100%),
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201, 135, 10, 0.12) 0%, transparent 65%);
     }
+
+    .page-hero > * { position: relative; z-index: 1; }
 
     .page-hero-label {
       font-family: 'Cinzel', serif;
@@ -331,50 +341,52 @@
     /* Visual box */
     .service-visual {
       position: relative;
-      height: 480px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(232, 184, 75, 0.08);
+      height: 520px;
+      border: 1px solid rgba(232, 184, 75, 0.14);
       overflow: hidden;
+    }
+
+    .service-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.9s ease;
+    }
+
+    .service-visual:hover .service-photo { transform: scale(1.045); }
+
+    /* Standing portrait — fill frame, favour the upper part */
+    #cocina .service-photo {
+      object-position: center 18%;
     }
 
     .service-visual::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 50%, rgba(201, 135, 10, 0.1) 0%, transparent 65%);
-    }
-
-    .visual-bg-fol {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.07;
-    }
-
-    .visual-bg-fol svg { width: 90%; height: 90%; }
-
-    .service-emoji {
-      font-size: 7rem;
-      position: relative;
       z-index: 1;
-      filter: drop-shadow(0 0 24px rgba(232, 184, 75, 0.3));
-      animation: floatEmoji 4s ease-in-out infinite;
+      pointer-events: none;
+      background: linear-gradient(to top,
+        rgba(21,11,0,0.55) 0%,
+        rgba(21,11,0,0.10) 38%,
+        rgba(21,11,0,0.16) 100%);
     }
 
     .service-number {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 1.4rem;
       right: 2rem;
+      z-index: 2;
       font-family: 'Cinzel', serif;
       font-size: 5rem;
       font-weight: 600;
-      color: rgba(232, 184, 75, 0.06);
+      color: rgba(245, 208, 122, 0.5);
       line-height: 1;
       pointer-events: none;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.55);
     }
 
     /* Includes list */
@@ -535,10 +547,6 @@
 
     /* ══ ANIMATIONS ══ */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes floatEmoji {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-12px); }
-    }
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1024px) {
@@ -624,10 +632,7 @@
   <!-- ══ SERVICE 1: COCINERO HOLÍSTICO ══ -->
   <section class="service-section" id="cocina">
     <div class="service-visual reveal">
-      <div class="visual-bg-fol">
-        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.6"/></svg>
-      </div>
-      <span class="service-emoji">🍲</span>
+      <img class="service-photo" src="assets/pics/IMG_7790.JPG" alt="Pedro Miguel — Cocinero Holístico">
       <span class="service-number">01</span>
     </div>
     <div class="service-content">
@@ -693,10 +698,7 @@
       </div>
     </div>
     <div class="service-visual reveal">
-      <div class="visual-bg-fol">
-        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.6"/></svg>
-      </div>
-      <span class="service-emoji">🌿</span>
+      <img class="service-photo" src="assets/pics/_TES0235-2.jpeg" alt="Pedro Miguel — Coach de Alimentación Consciente">
       <span class="service-number">02</span>
     </div>
   </section>
@@ -704,10 +706,7 @@
   <!-- ══ SERVICE 3: BREATHWORK ══ -->
   <section class="service-section" id="breathwork">
     <div class="service-visual reveal">
-      <div class="visual-bg-fol">
-        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#e8b84b" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#e8b84b" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.6"/></svg>
-      </div>
-      <span class="service-emoji">🌬️</span>
+      <img class="service-photo" src="assets/pics/IMG_4558.JPG" alt="Pedro Miguel — Facilitador de Breathwork">
       <span class="service-number">03</span>
     </div>
     <div class="service-content">
@@ -773,10 +772,7 @@
       </div>
     </div>
     <div class="service-visual reveal">
-      <div class="visual-bg-fol">
-        <svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="190" stroke="#4a7de0" stroke-width="0.8"/><circle cx="200" cy="130" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="270" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="165" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="139.4" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="260.6" cy="235" r="70" stroke="#4a7de0" stroke-width="0.6"/><circle cx="200" cy="200" r="70" stroke="#4a7de0" stroke-width="0.6"/></svg>
-      </div>
-      <span class="service-emoji">🧘</span>
+      <img class="service-photo" src="assets/pics/IMG_6159.jpeg" alt="Pedro Miguel — Instructor de Yoga">
       <span class="service-number">04</span>
     </div>
   </section>

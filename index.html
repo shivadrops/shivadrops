@@ -118,7 +118,7 @@
     /* ── Logo ── */
     .logo-wrap {
       margin-bottom: 0.6rem;
-      animation: floatUp 1.6s ease both;
+      animation: floatUp 1.6s ease both, logoFloat 5s ease-in-out 1.6s infinite;
     }
 
     .logo-wrap img {
@@ -126,6 +126,7 @@
       height: auto;
       filter: drop-shadow(0 0 32px rgba(201, 135, 10, 0.25))
               drop-shadow(0 0 10px rgba(232, 184, 75, 0.2));
+      animation: logoGlow 4s ease-in-out 1.6s infinite;
     }
 
     /* ── Divider ── */
@@ -200,6 +201,23 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-9px); }
+    }
+
+    @keyframes logoGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 32px rgba(201, 135, 10, 0.25))
+                drop-shadow(0 0 10px rgba(232, 184, 75, 0.20));
+      }
+      50% {
+        filter: drop-shadow(0 0 55px rgba(201, 135, 10, 0.55))
+                drop-shadow(0 0 22px rgba(232, 184, 75, 0.45))
+                drop-shadow(0 0 80px rgba(232, 184, 75, 0.18));
+      }
+    }
+
     @keyframes slowSpin {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
@@ -257,7 +275,7 @@
   <!-- Landing content -->
   <main class="landing">
     <div class="logo-wrap">
-      <img src="assets/logo_hires.png" alt="ShivaDrops">
+      <img src="assets/logobig_t.png" alt="ShivaDrops">
     </div>
 
     <div class="divider"></div>
@@ -302,6 +320,7 @@
     // Restore last language choice
     const saved = localStorage.getItem('sd-lang');
     if (saved && saved !== 'es') setLang(saved);
+
   </script>
 </body>
 </html>
