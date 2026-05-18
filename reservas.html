@@ -43,10 +43,12 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1rem 3rem;
+      padding: 0.4rem 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
       transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
     }
 
@@ -56,7 +58,7 @@
       padding: 0.65rem 3rem;
       border-bottom: 1px solid rgba(232, 184, 75, 0.1);
     }
-    .nav-logo img { height: 109px; width: auto; filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3)); }
+    .nav-logo img { height: 72px; width: auto; }
     .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
     .nav-links a {
       font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 400;
@@ -90,11 +92,14 @@
     .lang-flag { font-size: 0.9rem; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
-    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
-    .mobile-nav a:hover { color: var(--gold); }
-    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(15,8,0,0.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .mobile-nav.open { display: flex; animation: mnavFade 0.35s ease forwards; }
+    @keyframes mnavFade { from { opacity: 0; } to { opacity: 1; } }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.3rem; letter-spacing: 0.18em; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; padding: 0.7rem 2rem; }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--gold); }
+    .mobile-nav .lang-toggle { display: flex; gap: 0.6rem; margin-top: 1.5rem; padding-top: 1.8rem; border-top: 1px solid rgba(232,184,75,0.12); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.75rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+    .mobile-close:hover { color: var(--gold); }
 
     /* ══ PAGE HERO ══ */
     .page-hero {
@@ -624,9 +629,9 @@
     .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
     .footer-brand img { height: 108px; width: auto; margin-bottom: 1rem; filter: drop-shadow(0 0 6px rgba(201,135,10,0.25)); }
     .footer-tagline { font-family: 'Cinzel', serif; font-size: 0.7rem; font-style: italic; color: var(--cream-faint); margin-bottom: 1.5rem; }
-    .footer-social { display: flex; gap: 0.8rem; }
-    .social-link { width: 34px; height: 34px; border: 1px solid rgba(232,184,75,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
-    .social-link:hover { border-color: var(--gold); background: rgba(232,184,75,0.08); }
+    .footer-social { display: flex; gap: 0.75rem; }
+    .social-link { width: 38px; height: 38px; border: 1px solid rgba(232,184,75,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgba(240,228,204,0.55); transition: all 0.3s; }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(232,184,75,0.08); transform: translateY(-2px); }
     .footer-col-title { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
     .footer-links a { font-size: 0.8rem; font-weight: 300; color: var(--cream-faint); text-decoration: none; transition: color 0.3s; }
@@ -640,23 +645,62 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ══ RESPONSIVE ══ */
+    /* ── Tablet ── */
     @media (max-width: 1024px) {
-      .booking-wrapper { grid-template-columns: 1fr; padding: 3rem 2rem 5rem; }
+      .booking-wrapper { grid-template-columns: 1fr; padding: 3.5rem 3rem 5rem; gap: 3.5rem; max-width: 640px; }
       .calendar-panel { position: static; }
-      .info-strip { grid-template-columns: 1fr; padding: 3rem; }
+      .info-strip { grid-template-columns: 1fr; padding: 3.5rem 3rem; gap: 2px; }
+      .page-hero { padding: 9rem 3rem 3.5rem; }
+      footer { padding: 4rem 3rem 2rem; }
     }
+
+    /* ── Large phone / small tablet ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+      nav { padding: 0.5rem 1.25rem; }
+      nav.scrolled { padding: 0.5rem 1.25rem; }
+      .nav-logo img { height: 58px; }
       .nav-links, .nav-right .lang-toggle { display: none; }
       .hamburger { display: flex; }
-      .page-hero { padding: 8rem 1.5rem 3rem; }
-      .booking-wrapper { padding: 2rem 1.5rem 4rem; }
+
+      .page-hero { padding: 7rem 1.5rem 2.5rem; }
+      .page-hero-title { font-size: clamp(1.9rem, 8vw, 2.8rem); }
+      .page-hero-sub { font-size: 0.9rem; max-width: 100%; }
+
+      .booking-wrapper { padding: 2.5rem 1.25rem 4rem; gap: 3rem; }
+      .calendar-panel { padding: 1.4rem 1.1rem; }
+      .calendar-header { margin-bottom: 1.2rem; }
+      .cal-weekday { font-size: 0.95rem; padding: 0.3rem 0; }
+      .cal-grid { gap: 4px; }
+      .cal-day { font-size: 0.9rem; }
+      .cal-nav-btn { width: 40px; height: 40px; }
+
       .service-cards { grid-template-columns: 1fr; }
+      .service-option { padding: 1.1rem; }
       .form-row { grid-template-columns: 1fr; }
+      .form-input, .form-textarea { font-size: 16px; }
+
       .info-strip { padding: 3rem 1.5rem; }
-      footer { padding: 3rem 1.5rem 1.5rem; }
-      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      footer { padding: 3.5rem 1.5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .footer-social { justify-content: center; }
+      .footer-links { align-items: center; }
       .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+
+    /* ── Phone ── */
+    @media (max-width: 480px) {
+      .page-hero { padding: 6.5rem 1.25rem 2rem; }
+      .page-hero-title { font-size: clamp(1.75rem, 9vw, 2.3rem); }
+      .page-hero-label { font-size: 0.58rem; letter-spacing: 0.28em; }
+      .booking-wrapper { padding: 2rem 1rem 3.5rem; }
+      .calendar-panel { padding: 1.2rem 0.85rem; }
+      .cal-grid { gap: 3px; }
+      .cal-day { font-size: 0.85rem; }
+      .cal-weekday { font-size: 0.82rem; }
+      .cal-month-label { font-size: 0.92rem; }
+      .info-strip { padding: 2.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+      .footer-bottom { font-size: 0.62rem; }
     }
   </style>
 </head>
@@ -719,7 +763,7 @@
   <div class="page-hero">
     <span class="page-hero-label" id="hero-label">ShivaDrops</span>
     <h1 class="page-hero-title" id="hero-title">Reserva tu <span>experiencia</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro Miguel se pondrá en contacto contigo para confirmar los detalles.</p>
+    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. ShivaDrops se pondrá en contacto contigo para confirmar los detalles.</p>
   </div>
 
   <!-- ══ BOOKING ══ -->
@@ -862,7 +906,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" id="lbl-message">Mensaje o detalles adicionales</label>
-            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Pedro Miguel sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
+            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a ShivaDrops sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
           </div>
         </div>
       </div>
@@ -877,7 +921,7 @@
           <span id="btn-reservar-text">Reservar por WhatsApp</span>
         </button>
         <p class="submit-note" id="submit-note">
-          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro Miguel revisará la disponibilidad y confirmará tu reserva personalmente.
+          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. ShivaDrops revisará la disponibilidad y confirmará tu reserva personalmente.
         </p>
       </div>
 
@@ -889,17 +933,17 @@
     <div class="info-card">
       <span class="info-icon">📋</span>
       <h3 class="info-title" id="i1-title">¿Cómo funciona?</h3>
-      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro Miguel revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
+      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. ShivaDrops revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">⏱️</span>
       <h3 class="info-title" id="i2-title">Tiempo de respuesta</h3>
-      <p class="info-text" id="i2-text">Pedro Miguel responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
+      <p class="info-text" id="i2-text">ShivaDrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">🌍</span>
       <h3 class="info-title" id="i3-title">Disponibilidad mundial</h3>
-      <p class="info-text" id="i3-text">Pedro Miguel asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
+      <p class="info-text" id="i3-text">ShivaDrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
     </div>
   </div>
 
@@ -910,9 +954,29 @@
         <img src="assets/logobig_t.png" alt="ShivaDrops">
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
-          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank">📷</a>
-          <a href="https://facebook.com/pormariera" class="social-link" target="_blank">👤</a>
-          <a href="mailto:shivadropsu@gmail.com" class="social-link">✉️</a>
+          <a href="https://instagram.com/shivadrops" class="social-link" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="17" height="17">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://facebook.com/pormariera" class="social-link" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/598" class="social-link" target="_blank" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+          </a>
+          <a href="mailto:shivadropsu@gmail.com" class="social-link" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="17" height="17">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
         </div>
       </div>
       <div>
@@ -1032,6 +1096,7 @@
 
     function formatDate(date, lang) {
       const months = MONTHS[lang];
+      if (lang === 'en') return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
       return `${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
     }
 
@@ -1338,7 +1403,7 @@ _Sent from shivadrops.com_`;
       es: {
         'hero-label': 'ShivaDrops',
         'hero-title': 'Reserva tu <span>experiencia</span>',
-        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Pedro Miguel se pondrá en contacto contigo para confirmar los detalles.',
+        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. ShivaDrops se pondrá en contacto contigo para confirmar los detalles.',
         'leg-available':'Disponible','leg-blocked':'No disponible','leg-selected':'Seleccionado','leg-range':'Tu período',
         'sum-start-lbl':'Inicio','sum-end-lbl':'Fin',
         'step1-title':'01 · Elige tu servicio',
@@ -1354,15 +1419,15 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Lugar del evento / retiro',
         'lbl-message':'Mensaje o detalles adicionales',
         'btn-reservar-text':'Reservar por WhatsApp',
-        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. Pedro Miguel revisará la disponibilidad y confirmará tu reserva personalmente.',
-        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Pedro Miguel revisa la disponibilidad y confirma tu reserva directamente con vos.',
-        'i2-title':'Tiempo de respuesta','i2-text':'Pedro Miguel responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
-        'i3-title':'Disponibilidad mundial','i3-text':'Pedro Miguel asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
+        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. ShivaDrops revisará la disponibilidad y confirmará tu reserva personalmente.',
+        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. ShivaDrops revisa la disponibilidad y confirma tu reserva directamente con vos.',
+        'i2-title':'Tiempo de respuesta','i2-text':'ShivaDrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
+        'i3-title':'Disponibilidad mundial','i3-text':'ShivaDrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
       },
       en: {
         'hero-label': 'ShivaDrops',
         'hero-title': 'Book your <span>experience</span>',
-        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Pedro Miguel will get in touch with you to confirm the details.',
+        'hero-sub':   'Select dates on the calendar, choose your service and send your request. ShivaDrops will get in touch with you to confirm the details.',
         'leg-available':'Available','leg-blocked':'Not available','leg-selected':'Selected','leg-range':'Your period',
         'sum-start-lbl':'Start','sum-end-lbl':'End',
         'step1-title':'01 · Choose your service',
@@ -1378,10 +1443,10 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Event / retreat location',
         'lbl-message':'Message or additional details',
         'btn-reservar-text':'Book via WhatsApp',
-        'submit-note':'Clicking will open WhatsApp with your request pre-filled. Pedro Miguel will review availability and confirm your booking personally.',
-        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Pedro Miguel reviews availability and confirms your booking directly with you.',
-        'i2-title':'Response time','i2-text':'Pedro Miguel responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
-        'i3-title':'Worldwide availability','i3-text':'Pedro Miguel assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
+        'submit-note':'Clicking will open WhatsApp with your request pre-filled. ShivaDrops will review availability and confirm your booking personally.',
+        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. ShivaDrops reviews availability and confirms your booking directly with you.',
+        'i2-title':'Response time','i2-text':'ShivaDrops responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
+        'i3-title':'Worldwide availability','i3-text':'ShivaDrops assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
       }
     };
 

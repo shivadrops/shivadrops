@@ -39,10 +39,12 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1rem 3rem;
+      padding: 0.4rem 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
       transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
     }
 
@@ -54,9 +56,8 @@
     }
 
     .nav-logo img {
-      height: 109px;
+      height: 72px;
       width: auto;
-      filter: drop-shadow(0 0 8px rgba(201, 135, 10, 0.3));
     }
 
     .nav-links {
@@ -139,17 +140,22 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(21, 11, 0, 0.98);
+      background: rgba(15, 8, 0, 0.97);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
       z-index: 99;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 0.5rem;
     }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; }
-    .mobile-nav a:hover { color: var(--gold); }
-    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+    .mobile-nav.open { display: flex; animation: mnavFade 0.35s ease forwards; }
+    @keyframes mnavFade { from { opacity: 0; } to { opacity: 1; } }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.3rem; letter-spacing: 0.18em; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; padding: 0.7rem 2rem; }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--gold); }
+    .mobile-nav .lang-toggle { display: flex; gap: 0.6rem; margin-top: 1.5rem; padding-top: 1.8rem; border-top: 1px solid rgba(232,184,75,0.12); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.75rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+    .mobile-close:hover { color: var(--gold); }
 
     /* ══ PAGE HERO ══ */
     .page-hero {
@@ -560,29 +566,67 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ══ RESPONSIVE ══ */
+    /* ── Tablet ── */
     @media (max-width: 1024px) {
-      .service-section { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 3rem; }
+      .service-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 5.5rem 3rem; }
       .service-section.flip .service-visual { order: 0; }
       .service-section.flip .service-content { order: 0; }
-      .service-visual { height: 300px; }
-      .info-strip { grid-template-columns: 1fr; padding: 3rem; }
-      .cta-section { padding: 5rem 3rem; }
+      .service-visual { height: 360px; max-width: 480px; width: 100%; margin: 0 auto; }
+      .info-strip { grid-template-columns: 1fr; padding: 3.5rem 3rem; gap: 2px; }
+      .cta-section { padding: 5.5rem 3rem; }
+      .page-hero { padding: 9rem 3rem 4.5rem; }
+      footer { padding: 4rem 3rem 2rem; }
     }
 
+    /* ── Large phone / small tablet ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+      nav { padding: 0.5rem 1.25rem; }
+      nav.scrolled { padding: 0.5rem 1.25rem; }
+      .nav-logo img { height: 58px; }
       .nav-links { display: none; }
       .nav-right .lang-toggle { display: none; }
       .hamburger { display: flex; }
-      .page-hero { padding: 8rem 1.5rem 3rem; }
-      .service-section { padding: 4rem 1.5rem; }
-      .includes-grid { grid-template-columns: 1fr; }
+
+      .page-hero { padding: 7rem 1.5rem 3.5rem; }
+      .page-hero-title { font-size: clamp(2rem, 8vw, 3rem); }
+      .page-hero-sub { font-size: 0.92rem; max-width: 100%; }
+      .section-title { font-size: clamp(1.65rem, 7vw, 2.3rem); }
+
+      .service-section { padding: 4rem 1.5rem; gap: 2.2rem; }
+      .service-visual { height: 300px; }
+      .service-number { font-size: 3.6rem; bottom: 1rem; right: 1.3rem; }
+      .includes-grid { grid-template-columns: 1fr; gap: 0.7rem; }
+      .service-actions { flex-direction: column; width: 100%; max-width: 340px; }
+      .service-actions a { width: 100%; text-align: center; }
+
       .info-strip { padding: 3rem 1.5rem; }
+      .info-card { padding: 2.2rem 1.6rem; }
       .cta-section { padding: 4rem 1.5rem; }
-      footer { padding: 3rem 1.5rem 1.5rem; }
-      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+
+      footer { padding: 3.5rem 1.5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .footer-social { justify-content: center; }
+      .footer-links { align-items: center; }
       .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
-      .service-actions { flex-direction: column; }
+    }
+
+    /* ── Phone ── */
+    @media (max-width: 480px) {
+      .page-hero { padding: 6.5rem 1.25rem 3rem; }
+      .page-hero-title { font-size: clamp(1.85rem, 9vw, 2.4rem); }
+      .page-hero-label { font-size: 0.58rem; letter-spacing: 0.28em; }
+      .section-title { font-size: clamp(1.5rem, 8vw, 2rem); }
+      .body-text { font-size: 0.9rem; }
+
+      .service-section { padding: 3.5rem 1.25rem; }
+      .service-visual { height: 260px; }
+      .service-number { font-size: 3rem; }
+      .anchor-pill { font-size: 0.62rem; padding: 0.45rem 0.9rem; }
+
+      .info-strip { padding: 2.5rem 1.25rem; }
+      .cta-section { padding: 3.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+      .footer-bottom { font-size: 0.62rem; }
     }
   </style>
 </head>
@@ -625,8 +669,8 @@
   <!-- ══ PAGE HERO ══ -->
   <div class="page-hero">
     <span class="page-hero-label" id="hero-label">Pedro Miguel Ormaechea Riera</span>
-    <h1 class="page-hero-title" id="hero-title">Disciplinas de <span>Servicio</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Ya organices un retiro colectivo o busques una experiencia individual, Pedro Miguel adapta cada disciplina a tu contexto — combinadas o por separado, siempre desde la intención de servir.</p>
+    <h1 class="page-hero-title" id="hero-title">Servicios para tu <span>Bienestar</span></h1>
+    <p class="page-hero-sub" id="hero-sub">Ya sea que organices un Retiro en grupo o busques una experiencia individual, ShivaDrops adapta cada disciplina a tus necesidades, combinadas o por separado, siempre desde la intención de servir.<br><br>Cada servicio habilita un camino hacia una versión más consciente, vital y alineada de ti mismo.</p>
     <div class="service-anchors">
       <a href="#cocina" class="anchor-pill" id="a1">🍲 Cocinero Holístico</a>
       <a href="#coach" class="anchor-pill" id="a2">🌿 Coach Alimentación</a>
@@ -645,24 +689,20 @@
       <h2 class="section-title reveal" id="s1-title">Cocinero <span>Holístico</span></h2>
       <div class="divider-gold"></div>
       <div class="tag-strip reveal reveal-delay-1">
-        <span class="tag" id="s1-t1">Retiros de Yoga</span>
-        <span class="tag" id="s1-t2">Eventos Privados</span>
-        <span class="tag" id="s1-t3">Cocina Ayurvédica</span>
-        <span class="tag" id="s1-t4">Plant-Based</span>
+        <span class="tag" id="s1-t1">Retiros</span>
+        <span class="tag" id="s1-t2">Eventos</span>
+        <span class="tag" id="s1-t3">A domicilio</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s1-body1">
-        La cocina de Pedro Miguel es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.
+        La cocina consciente es un acto de presencia y amor. Cada menú es diseñado para acompañar la energía del encuentro — ingredientes simples, estacionales y locales, preparados con técnicas que honran la inteligencia del Alimento.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s1-body2">
-        Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.
+        Desde un desayuno regenerador después de una práctica hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo y sostiene la vida.
       </p>
       <div class="includes-grid reveal reveal-delay-2">
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i1">Menú personalizado al grupo</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i2">Adaptación a restricciones dietarias</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i3">Ingredientes orgánicos y locales</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i4">Cocina in situ o catering externo</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i5">Retiros de 1 a 14+ días</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s1-i6">Eventos privados y particulares</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i1">Menú personalizado</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i2">Adaptación a restricciones alimentarias</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s1-i3">Productos integrales, nutritivos y locales</span></div>
       </div>
       <div class="service-actions reveal reveal-delay-3">
         <a href="reservas.html" class="btn-primary" id="s1-cta1">Reservar Servicio</a>
@@ -679,14 +719,14 @@
       <div class="tag-strip reveal reveal-delay-1">
         <span class="tag" id="s2-t1">Coaching Individual</span>
         <span class="tag" id="s2-t2">Planes Personalizados</span>
-        <span class="tag" id="s2-t3">Ayurveda</span>
+        <span class="tag" id="s2-t3">Introducción al Ayurveda</span>
         <span class="tag" id="s2-t4">Online y Presencial</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s2-body1">
-        Más allá de lo que comemos, está la manera en que el grupo se relaciona con el alimento. Pedro Miguel ofrece talleres y sesiones de coaching nutricional que pueden integrarse al programa de tu retiro — individuales o grupales, presenciales u online.
+        Más allá de lo que comemos, está la manera en que nos relacionamos con el Alimento. ShivaDrops trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sostenible y gozoso.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s2-body2">
-        Integra principios ayurvédicos, alimentación intuitiva y herramientas de autoconocimiento para que la nutrición sea parte viva de la transformación que tu retiro propone.
+        El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.
       </p>
       <div class="includes-grid reveal reveal-delay-2">
         <div class="include-item"><div class="include-dot"></div><span id="s2-i1">Consulta inicial gratuita</span></div>
@@ -718,23 +758,22 @@
       <div class="divider-gold"></div>
       <div class="tag-strip reveal reveal-delay-1">
         <span class="tag" id="s3-t1">Rebirthing Breathwork</span>
-        <span class="tag" id="s3-t2">Sanación Holística</span>
-        <span class="tag" id="s3-t3">Individual y Grupal</span>
-        <span class="tag" id="s3-t4">Presencial</span>
+        <span class="tag" id="s3-t2">Sesión Holística</span>
+        <span class="tag" id="s3-t3">Individual y grupal</span>
+        <span class="tag" id="s3-t4">Presencial y online</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s3-body1">
         El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s3-body2">
-        Pedro Miguel acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.
+        ShivaDrops acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.
       </p>
       <div class="includes-grid reveal reveal-delay-2">
         <div class="include-item"><div class="include-dot"></div><span id="s3-i1">Sesiones individuales</span></div>
         <div class="include-item"><div class="include-dot"></div><span id="s3-i2">Círculos grupales</span></div>
         <div class="include-item"><div class="include-dot"></div><span id="s3-i3">Integración post-sesión</span></div>
         <div class="include-item"><div class="include-dot"></div><span id="s3-i4">Disponible en retiros</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s3-i5">Primera consulta gratuita</span></div>
-        <div class="include-item"><div class="include-dot"></div><span id="s3-i6">Duración: 90–120 minutos</span></div>
+        <div class="include-item"><div class="include-dot"></div><span id="s3-i5">Duración: 90–120 minutos</span></div>
       </div>
       <div class="service-actions reveal reveal-delay-3">
         <a href="reservas.html" class="btn-primary" id="s3-cta1">Reservar Sesión</a>
@@ -752,10 +791,11 @@
         <span class="tag" id="s4-t1">Clases Individuales</span>
         <span class="tag" id="s4-t2">Grupos</span>
         <span class="tag" id="s4-t3">Movimiento Consciente</span>
+        <span class="tag" id="s4-t5">Pranayama</span>
         <span class="tag" id="s4-t4">Meditación</span>
       </div>
       <p class="body-text reveal reveal-delay-1" id="s4-body1">
-        Las clases de yoga de Pedro Miguel integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.
+        Las clases de yoga de ShivaDrops integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.
       </p>
       <p class="body-text reveal reveal-delay-2" id="s4-body2">
         Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.
@@ -774,7 +814,7 @@
       </div>
     </div>
     <div class="service-visual reveal">
-      <img class="service-photo" src="assets/pics/sun.JPG" alt="Pedro Miguel — Instructor de Yoga">
+      <img class="service-photo" src="assets/pics/sun2.png" alt="Pedro Miguel — Instructor de Yoga">
       <span class="service-number">04</span>
     </div>
   </section>
@@ -784,7 +824,7 @@
     <div class="info-card reveal">
       <span class="info-icon">📍</span>
       <h3 class="info-title" id="info1-title">Ubicación</h3>
-      <p class="info-text" id="info1-text">Basado en Punta del Este, Uruguay. Disponible para asistir a retiros y eventos en cualquier parte del mundo.</p>
+      <p class="info-text" id="info1-text">Basado entre Punta del Este, Uruguay y Santa Teresa, Costa Rica. Disponible para asistir a retiros y eventos en cualquier parte del mundo.</p>
     </div>
     <div class="info-card reveal reveal-delay-1">
       <span class="info-icon">📅</span>
@@ -794,17 +834,17 @@
     <div class="info-card reveal reveal-delay-2">
       <span class="info-icon">💬</span>
       <h3 class="info-title" id="info3-title">Primera Consulta</h3>
-      <p class="info-text" id="info3-text">La consulta inicial es gratuita. Pedro Miguel evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.</p>
+      <p class="info-text" id="info3-text">La consulta inicial es gratuita. ShivaDrops evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.</p>
     </div>
   </div>
 
   <!-- ══ CTA ══ -->
   <div class="cta-section">
-    <h2 class="cta-title reveal" id="cta-title">¿Querés a Pedro Miguel en tu próximo <span>retiro</span>?</h2>
+    <h2 class="cta-title reveal" id="cta-title">¿Querés a ShivaDrops en tu próximo <span>retiro</span>?</h2>
     <p class="cta-sub reveal reveal-delay-1" id="cta-sub">Contanos sobre tu proyecto y coordinamos juntos el servicio que mejor se adapta a tu grupo.</p>
     <div class="cta-actions reveal reveal-delay-2">
       <a href="reservas.html" class="btn-primary" id="cta-btn1">Consultar Disponibilidad</a>
-      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Hablar con Pedro Miguel</a>
+      <a href="contacto.html" class="btn-ghost" id="cta-btn2">Hablar con ShivaDrops</a>
     </div>
   </div>
 
@@ -854,6 +894,7 @@
     // Mobile menu
     function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
 
+
     // Reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -864,73 +905,73 @@
     const T = {
       es: {
         'hero-label': 'Pedro Miguel Ormaechea Riera',
-        'hero-title': 'Disciplinas de <span>Servicio</span>',
-        'hero-sub':   'Ya organices un retiro colectivo o busques una experiencia individual, Pedro Miguel adapta cada disciplina a tu contexto — combinadas o por separado, siempre desde la intención de servir.',
+        'hero-title': 'Servicios para tu <span>Bienestar</span>',
+        'hero-sub':   'Ya sea que organices un Retiro en grupo o busques una experiencia individual, ShivaDrops adapta cada disciplina a tus necesidades, combinadas o por separado, siempre desde la intención de servir.<br><br>Cada servicio habilita un camino hacia una versión más consciente, vital y alineada de ti mismo.',
         'a1': '🍲 Cocinero Holístico', 'a2': '🌿 Coach Alimentación', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
         's1-title': 'Cocinero <span>Holístico</span>',
-        's1-t1':'Retiros de Yoga','s1-t2':'Eventos Privados','s1-t3':'Cocina Ayurvédica','s1-t4':'Plant-Based',
-        's1-body1': 'La cocina de Pedro Miguel es un acto de amor y conciencia. Cada menú se diseña para acompañar la energía del retiro — ingredientes orgánicos, estacionales y locales, preparados con técnicas que honran la inteligencia del alimento.',
-        's1-body2': 'Desde un desayuno regenerador antes del pranayama hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo sin agotarlo, sosteniendo la práctica desde adentro.',
-        's1-i1':'Menú personalizado al grupo','s1-i2':'Adaptación a restricciones dietarias','s1-i3':'Ingredientes orgánicos y locales','s1-i4':'Cocina in situ o catering externo','s1-i5':'Retiros de 1 a 14+ días','s1-i6':'Eventos privados y particulares',
+        's1-t1':'Retiros','s1-t2':'Eventos','s1-t3':'A domicilio',
+        's1-body1': 'La cocina consciente es un acto de presencia y amor. Cada menú es diseñado para acompañar la energía del encuentro — ingredientes simples, estacionales y locales, preparados con técnicas que honran la inteligencia del Alimento.',
+        's1-body2': 'Desde un desayuno regenerador después de una práctica hasta una cena integradora al cierre del día, cada plato es una ofrenda que nutre el cuerpo y sostiene la vida.',
+        's1-i1':'Menú personalizado','s1-i2':'Adaptación a restricciones alimentarias','s1-i3':'Productos integrales, nutritivos y locales',
         's1-cta1':'Reservar Servicio','s1-cta2':'Consultar Disponibilidad',
         's2-title': 'Coach de <span>Alimentación Consciente</span>',
-        's2-t1':'Coaching Individual','s2-t2':'Planes Personalizados','s2-t3':'Ayurveda','s2-t4':'Online y Presencial',
-        's2-body1': 'Más allá de lo que comemos, está la manera en que el grupo se relaciona con el alimento. Pedro Miguel ofrece talleres y sesiones de coaching nutricional que pueden integrarse al programa de tu retiro — individuales o grupales, presenciales u online.',
-        's2-body2': 'Integra principios ayurvédicos, alimentación intuitiva y herramientas de autoconocimiento para que la nutrición sea parte viva de la transformación que tu retiro propone.',
+        's2-t1':'Coaching Individual','s2-t2':'Planes Personalizados','s2-t3':'Introducción al Ayurveda','s2-t4':'Online y Presencial',
+        's2-body1': 'Más allá de lo que comemos, está la manera en que nos relacionamos con el Alimento. ShivaDrops trabaja contigo para comprender tus patrones, sanar tu vínculo con la comida y construir un estilo de vida nutritivo que sea sostenible y gozoso.',
+        's2-body2': 'El proceso integra principios ayurvédicos, técnicas de alimentación intuitiva y herramientas de autoconocimiento para que la nutrición se convierta en un acto de amor hacia uno mismo.',
         's2-i1':'Consulta inicial gratuita','s2-i2':'Plan nutricional personalizado','s2-i3':'Seguimiento continuo','s2-i4':'Recetarios y recursos digitales','s2-i5':'Sesiones online y presenciales','s2-i6':'Talleres grupales disponibles',
         's2-cta1':'Reservar Sesión','s2-cta2':'Consulta Gratuita',
         's3-title': 'Facilitador de <span>Breathwork</span>',
-        's3-t1':'Rebirthing Breathwork','s3-t2':'Sanación Holística','s3-t3':'Individual y Grupal','s3-t4':'Presencial',
+        's3-t1':'Rebirthing Breathwork','s3-t2':'Sesión Holística','s3-t3':'Individual y grupal','s3-t4':'Presencial y online',
         's3-body1': 'El Rebirthing Breathwork es una técnica de respiración consciente y continua que permite acceder a memorias, emociones y patrones almacenados en el cuerpo — liberando lo que ya no sirve y activando la energía vital en su expresión más pura.',
-        's3-body2': 'Pedro Miguel acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.',
-        's3-i1':'Sesiones individuales','s3-i2':'Círculos grupales','s3-i3':'Integración post-sesión','s3-i4':'Disponible en retiros','s3-i5':'Primera consulta gratuita','s3-i6':'Duración: 90–120 minutos',
+        's3-body2': 'ShivaDrops acompaña cada proceso con presencia y cuidado, creando un espacio seguro donde la respiración se convierte en llave de acceso a capas más profundas de la conciencia y el bienestar.',
+        's3-i1':'Sesiones individuales','s3-i2':'Círculos grupales','s3-i3':'Integración post-sesión','s3-i4':'Disponible en retiros','s3-i5':'Duración: 90–120 minutos',
         's3-cta1':'Reservar Sesión','s3-cta2':'Más Información',
         's4-title': 'Instructor de <span>Yoga</span>',
-        's4-t1':'Clases Individuales','s4-t2':'Grupos','s4-t3':'Movimiento Consciente','s4-t4':'Meditación',
-        's4-body1': 'Las clases de yoga de Pedro Miguel integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.',
+        's4-t1':'Clases Individuales','s4-t2':'Grupos','s4-t3':'Movimiento Consciente','s4-t5':'Pranayama','s4-t4':'Meditación',
+        's4-body1': 'Las clases de yoga de ShivaDrops integran el movimiento consciente con la respiración, la meditación y la filosofía del bienestar integral. No es solo ejercicio — es una práctica que transforma la relación con el propio cuerpo y con la vida.',
         's4-body2': 'Cada clase se adapta al nivel y las necesidades del practicante, creando un espacio de exploración seguro, profundo y transformador — tanto para quienes dan sus primeros pasos como para practicantes con experiencia.',
         's4-i1':'Clases individuales','s4-i2':'Clases grupales','s4-i3':'Todos los niveles','s4-i4':'Integración con breathwork','s4-i5':'Disponible en retiros','s4-i6':'Online y presencial',
         's4-cta1':'Reservar Clase','s4-cta2':'Consultar Horarios',
-        'info1-title':'Ubicación','info1-text':'Basado en Punta del Este, Uruguay. Disponible para asistir a retiros y eventos en cualquier parte del mundo.',
+        'info1-title':'Ubicación','info1-text':'Basado entre Punta del Este, Uruguay y Santa Teresa, Costa Rica. Disponible para asistir a retiros y eventos en cualquier parte del mundo.',
         'info2-title':'Disponibilidad','info2-text':'Agenda con al menos 2 semanas de anticipación. Para retiros de varios días se recomienda reservar con 1 mes o más de antelación.',
-        'info3-title':'Primera Consulta','info3-text':'La consulta inicial es gratuita. Pedro Miguel evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.',
-        'cta-title':'¿Querés a Pedro Miguel en tu próximo <span>retiro</span>?','cta-sub':'Contanos sobre tu proyecto y coordinamos juntos el servicio que mejor se adapta a tu grupo.',
-        'cta-btn1':'Consultar Disponibilidad','cta-btn2':'Hablar con Pedro Miguel',
+        'info3-title':'Primera Consulta','info3-text':'La consulta inicial es gratuita. ShivaDrops evalúa las necesidades de tu retiro o evento y propone la combinación de servicios más adecuada para tu grupo.',
+        'cta-title':'¿Querés a ShivaDrops en tu próximo <span>retiro</span>?','cta-sub':'Contanos sobre tu proyecto y coordinamos juntos el servicio que mejor se adapta a tu grupo.',
+        'cta-btn1':'Consultar Disponibilidad','cta-btn2':'Hablar con ShivaDrops',
       },
       en: {
         'hero-label': 'Pedro Miguel Ormaechea Riera',
-        'hero-title': 'Disciplines of <span>Service</span>',
-        'hero-sub':   'Whether you are organising a group retreat or seeking an individual experience, Pedro Miguel adapts each discipline to your context — combined or separately, always in service of your intention.',
+        'hero-title': 'Services for your <span>Wellbeing</span>',
+        'hero-sub':   'Whether you are organising a group retreat or looking for an individual experience, ShivaDrops adapts each discipline to your needs — combined or separately, always in service of your intention.<br><br>Each service opens a path toward a more conscious, vital and aligned version of yourself.',
         'a1': '🍲 Holistic Chef', 'a2': '🌿 Nutrition Coach', 'a3': '🌬️ Breathwork', 'a4': '🧘 Yoga',
         's1-title': 'Holistic <span>Chef</span>',
-        's1-t1':'Yoga Retreats','s1-t2':'Private Events','s1-t3':'Ayurvedic Cuisine','s1-t4':'Plant-Based',
-        's1-body1': "Pedro Miguel's kitchen is an act of love and consciousness. Each menu is designed to support the retreat's energy — organic, seasonal and local ingredients, prepared with techniques that honor the intelligence of food.",
-        's1-body2': 'From a regenerating breakfast before pranayama to an integrating dinner at the close of the day, each dish is an offering that nourishes the body without depleting it, sustaining the practice from within.',
-        's1-i1':'Menu tailored to the group','s1-i2':'Dietary restriction adaptation','s1-i3':'Organic and local ingredients','s1-i4':'On-site cooking or catering','s1-i5':'Retreats from 1 to 14+ days','s1-i6':'Private and individual events',
+        's1-t1':'Retreats','s1-t2':'Events','s1-t3':'At Home',
+        's1-body1': 'Conscious cooking is an act of presence and love. Each menu is designed to support the energy of the gathering — simple, seasonal and local ingredients, prepared with techniques that honour the intelligence of Food.',
+        's1-body2': 'From a regenerating breakfast after a practice to an integrating dinner at the close of the day, each dish is an offering that nourishes the body and sustains life.',
+        's1-i1':'Personalised menu','s1-i2':'Dietary restriction adaptation','s1-i3':'Wholesome, nutritious and local produce',
         's1-cta1':'Book Service','s1-cta2':'Check Availability',
         's2-title': '<span>Conscious Nutrition</span> Coach',
-        's2-t1':'Individual Coaching','s2-t2':'Personalized Plans','s2-t3':'Ayurveda','s2-t4':'Online & In-Person',
-        's2-body1': 'Beyond what we eat, it is the way a group relates to food. Pedro Miguel offers nutrition coaching workshops and sessions that can be integrated into your retreat program — individual or group, in-person or online.',
-        's2-body2': 'Integrating Ayurvedic principles, intuitive eating and self-knowledge tools so that nutrition becomes a living part of the transformation your retreat offers.',
+        's2-t1':'Individual Coaching','s2-t2':'Personalized Plans','s2-t3':'Introduction to Ayurveda','s2-t4':'Online & In-Person',
+        's2-body1': 'Beyond what we eat, there is the way we relate to Food. ShivaDrops works with you to understand your patterns, heal your relationship with eating and build a nutritious lifestyle that is sustainable and joyful.',
+        's2-body2': 'The process integrates Ayurvedic principles, intuitive eating techniques and self-knowledge tools so that nutrition becomes an act of love toward oneself.',
         's2-i1':'Free initial consultation','s2-i2':'Personalized nutrition plan','s2-i3':'Ongoing follow-up','s2-i4':'Recipe books & digital resources','s2-i5':'Online and in-person sessions','s2-i6':'Group workshops available',
         's2-cta1':'Book Session','s2-cta2':'Free Consultation',
         's3-title': '<span>Breathwork</span> Facilitator',
-        's3-t1':'Rebirthing Breathwork','s3-t2':'Holistic Healing','s3-t3':'Individual & Group','s3-t4':'In-Person',
+        's3-t1':'Rebirthing Breathwork','s3-t2':'Holistic Session','s3-t3':'Individual & Group','s3-t4':'In-Person & Online',
         's3-body1': 'Rebirthing Breathwork is a continuous conscious breathing technique that allows access to memories, emotions and patterns stored in the body — releasing what no longer serves and activating vital energy in its purest expression.',
-        's3-body2': 'Pedro Miguel accompanies each process with presence and care, creating a safe space where breathing becomes the key to accessing deeper layers of consciousness and wellbeing.',
-        's3-i1':'Individual sessions','s3-i2':'Group circles','s3-i3':'Post-session integration','s3-i4':'Available at retreats','s3-i5':'Free first consultation','s3-i6':'Duration: 90–120 minutes',
+        's3-body2': 'ShivaDrops accompanies each process with presence and care, creating a safe space where breathing becomes the key to accessing deeper layers of consciousness and wellbeing.',
+        's3-i1':'Individual sessions','s3-i2':'Group circles','s3-i3':'Post-session integration','s3-i4':'Available at retreats','s3-i5':'Duration: 90–120 minutes',
         's3-cta1':'Book Session','s3-cta2':'More Information',
         's4-title': 'Yoga <span>Instructor</span>',
-        's4-t1':'Individual Classes','s4-t2':'Group Classes','s4-t3':'Conscious Movement','s4-t4':'Meditation',
-        's4-body1': "Pedro Miguel's yoga classes integrate conscious movement with breathing, meditation and the philosophy of holistic wellbeing. It's not just exercise — it's a practice that transforms the relationship with one's own body and with life.",
+        's4-t1':'Individual Classes','s4-t2':'Group Classes','s4-t3':'Conscious Movement','s4-t5':'Pranayama','s4-t4':'Meditation',
+        's4-body1': "ShivaDrops yoga classes integrate conscious movement with breathing, meditation and the philosophy of holistic wellbeing. It's not just exercise — it's a practice that transforms the relationship with one's own body and with life.",
         's4-body2': 'Each class adapts to the level and needs of the practitioner, creating a safe, deep and transformative space of exploration — both for those taking their first steps and for experienced practitioners.',
         's4-i1':'Individual classes','s4-i2':'Group classes','s4-i3':'All levels','s4-i4':'Integration with breathwork','s4-i5':'Available at retreats','s4-i6':'Online and in-person',
         's4-cta1':'Book Class','s4-cta2':'Check Schedule',
-        'info1-title':'Location','info1-text':'Based in Punta del Este, Uruguay. Available to assist retreats and events anywhere in the world.',
+        'info1-title':'Location','info1-text':'Based between Punta del Este, Uruguay and Santa Teresa, Costa Rica. Available to assist retreats and events anywhere in the world.',
         'info2-title':'Availability','info2-text':'Book at least 2 weeks in advance. For multi-day retreats, booking 1 month or more ahead is recommended.',
-        'info3-title':'First Consultation','info3-text':'The initial consultation is free. Pedro Miguel assesses the needs of your retreat or event and proposes the best combination of services for your group.',
-        'cta-title':'Want Pedro Miguel at your next <span>retreat</span>?','cta-sub':'Tell us about your project and we\'ll put together the service that best fits your group.',
-        'cta-btn1':'Check Availability','cta-btn2':'Talk to Pedro Miguel',
+        'info3-title':'First Consultation','info3-text':'The initial consultation is free. ShivaDrops assesses the needs of your retreat or event and proposes the best combination of services for your group.',
+        'cta-title':'Want ShivaDrops at your next <span>retreat</span>?','cta-sub':'Tell us about your project and we\'ll put together the service that best fits your group.',
+        'cta-btn1':'Check Availability','cta-btn2':'Talk to ShivaDrops',
       }
     };
 

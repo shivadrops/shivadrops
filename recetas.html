@@ -34,10 +34,12 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1rem 3rem;
+      padding: 0.4rem 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
       transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
     }
 
@@ -47,7 +49,7 @@
       padding: 0.65rem 3rem;
       border-bottom: 1px solid rgba(232, 184, 75, 0.1);
     }
-    .nav-logo img { height: 109px; width: auto; filter: drop-shadow(0 0 8px rgba(201,135,10,0.3)); }
+    .nav-logo img { height: 72px; width: auto; }
     .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
     .nav-links a { font-family: 'Cinzel', serif; font-size: 0.91rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; position: relative; }
     .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
@@ -77,11 +79,14 @@
     .lang-flag { font-size: 0.9rem; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); }
-    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(21,11,0,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: 0.2em; color: var(--cream-dim); text-decoration: none; }
-    .mobile-nav a:hover { color: var(--gold); }
-    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; }
+    .mobile-nav { display: none; position: fixed; inset: 0; background: rgba(15,8,0,0.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .mobile-nav.open { display: flex; animation: mnavFade 0.35s ease forwards; }
+    @keyframes mnavFade { from { opacity: 0; } to { opacity: 1; } }
+    .mobile-nav a { font-family: 'Cinzel', serif; font-size: 1.3rem; letter-spacing: 0.18em; color: var(--cream-dim); text-decoration: none; transition: color 0.3s; padding: 0.7rem 2rem; }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--gold); }
+    .mobile-nav .lang-toggle { display: flex; gap: 0.6rem; margin-top: 1.5rem; padding-top: 1.8rem; border-top: 1px solid rgba(232,184,75,0.12); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.75rem; background: none; border: none; color: var(--cream-dim); font-size: 1.8rem; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+    .mobile-close:hover { color: var(--gold); }
 
     /* ══ HERO ══ */
     .page-hero {
@@ -424,42 +429,70 @@
     @keyframes slowSpin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
 
     /* ══ RESPONSIVE ══ */
+    /* ── Desktop down ── */
     @media (max-width: 1200px) {
       .meals-grid { grid-template-columns: repeat(3, 1fr); }
       .highlights-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
+    /* ── Tablet ── */
     @media (max-width: 900px) {
       .menu-header { grid-template-columns: 1fr; gap: 2rem; }
       .menu-photo { display: none; }
       .photo-gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
       .gallery-img:first-child { grid-row: span 1; }
+      .page-hero { padding: 9rem 3rem 4rem; }
+      .credentials { padding: 3.5rem 3rem; }
+      footer { padding: 4rem 3rem 2rem; }
     }
 
+    /* ── Large phone / small tablet ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      nav.scrolled { padding: 0.65rem 1.5rem; }
+      nav { padding: 0.5rem 1.25rem; }
+      nav.scrolled { padding: 0.5rem 1.25rem; }
+      .nav-logo img { height: 58px; }
       .nav-links { display: none; }
       .nav-right .lang-toggle { display: none; }
       .hamburger { display: flex; }
-      .page-hero { padding: 8rem 2rem 3rem; min-height: auto; }
-      .philo-strip { padding: 2.5rem 2rem; gap: 2rem; }
-      .retreat-nav { padding: 2rem 1rem 0; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; }
-      .retreat-tab { padding: 0.8rem 1.2rem; }
+
+      .page-hero { padding: 7rem 1.5rem 3rem; min-height: auto; }
+      .hero-eyebrow { font-size: 0.95rem; letter-spacing: 0.32em; margin-bottom: 1.1rem; }
+      .hero-title { font-size: clamp(2rem, 8.5vw, 3rem); }
+      .hero-sub { font-size: 0.9rem; max-width: 100%; }
+      .hero-attrs { margin-bottom: 2rem; }
+
+      .philo-strip { flex-direction: column; padding: 2.5rem 1.5rem; gap: 1.6rem; text-align: center; }
+      .retreat-nav { padding: 1.6rem 1rem 0; overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .retreat-nav::-webkit-scrollbar { display: none; }
+      .retreat-tab { padding: 0.8rem 1.2rem; white-space: nowrap; flex-shrink: 0; }
+
       .menu-section { padding: 3rem 1.5rem 4rem; }
+      .day-selector { flex-wrap: wrap; gap: 0.45rem; }
+      .day-btn { font-size: 1rem; padding: 0.45rem 1rem; }
       .meals-grid { grid-template-columns: 1fr 1fr; }
       .highlights-grid { grid-template-columns: 1fr; }
-      .menu-cta { flex-direction: column; text-align: center; }
-      .menu-cta-btns { justify-content: center; }
-      .credentials { padding: 3rem 2rem; }
-      footer { padding: 3rem 2rem 1.5rem; }
-      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .menu-cta { flex-direction: column; text-align: center; padding: 2.2rem 1.6rem; gap: 1.6rem; }
+      .menu-cta-btns { justify-content: center; flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+      .menu-cta-btns a, .menu-cta-btns button { width: 100%; justify-content: center; }
+
+      .credentials { padding: 3rem 1.5rem; }
+      footer { padding: 3.5rem 1.5rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
     }
 
+    /* ── Phone ── */
     @media (max-width: 500px) {
+      .page-hero { padding: 6.5rem 1.25rem 2.5rem; }
+      .hero-eyebrow { font-size: 0.82rem; letter-spacing: 0.28em; }
+      .hero-title { font-size: clamp(1.85rem, 9vw, 2.4rem); }
+      .menu-section { padding: 2.5rem 1.25rem 3.5rem; }
       .meals-grid { grid-template-columns: 1fr; }
       .day-selector { flex-wrap: wrap; }
+      .credentials { padding: 2.5rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 1.5rem; }
+      .footer-bottom { font-size: 0.62rem; }
     }
   </style>
 </head>
@@ -534,18 +567,21 @@
       <circle cx="200" cy="200" r="70" stroke="#e8b84b" stroke-width="0.5"/>
     </svg>
 
-    <span class="hero-eyebrow" id="hero-eyebrow">Alimento como Medicina</span>
+    <span class="hero-eyebrow" id="hero-eyebrow">El Alimento es Medicina</span>
     <h1 class="hero-title" id="hero-title">
-      Menús diseñados para<br><em>transformar</em>
+      Menús diseñados para<br>tu bienestar
     </h1>
     <p class="hero-sub" id="hero-sub">
-      Cada retiro merece una cocina que lo potencie. Pedro Miguel diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro — desde el amanecer hasta el cierre ceremonial.
+      Cada Retiro merece una cocina que lo potencie. ShivaDrops diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro.
     </p>
     <div class="hero-attrs">
+      <span class="attr-pill cream">Integral</span>
       <span class="attr-pill sage" id="attr-1">Plant-Based</span>
       <span class="attr-pill gold" id="attr-2">Ayurvédico</span>
       <span class="attr-pill cream" id="attr-3">Sin Gluten</span>
+      <span class="attr-pill cream">Sin Azúcar</span>
       <span class="attr-pill sage" id="attr-4">Alimentos Vivos</span>
+      <span class="attr-pill blue">Proteína</span>
       <span class="attr-pill blue" id="attr-5">Estacional</span>
       <span class="attr-pill cream" id="attr-6">Ceremonial</span>
     </div>
@@ -566,8 +602,8 @@
       <p class="philo-desc" id="ph3-desc">Fuego digestivo respetado en cada preparación</p>
     </div>
     <div class="philo-item reveal">
-      <p class="philo-label" id="ph4-label">Terroir</p>
-      <p class="philo-desc" id="ph4-desc">Ingredientes locales y estacionales, donde sea posible</p>
+      <p class="philo-label" id="ph4-label">Slow Food</p>
+      <p class="philo-desc" id="ph4-desc">Preferencia por ingredientes locales y de estación</p>
     </div>
     <div class="philo-item reveal">
       <p class="philo-label" id="ph5-label">Vibración</p>
@@ -579,7 +615,7 @@
   <div class="photo-gallery">
     <img class="gallery-img" src="assets/pics/Fotos_Tessa_Pedris_Feb2024_99.jpeg" alt="">
     <img class="gallery-img" src="assets/pics/dsc_0135.jpg" alt="">
-    <img class="gallery-img" src="assets/pics/dsc_0130.jpg" alt="">
+    <img class="gallery-img" src="assets/pics/dsc_0457.jpg" alt="">
     <img class="gallery-img" src="assets/pics/IMG_4309.jpeg" alt="">
     <img class="gallery-img" src="assets/pics/IMG_0241.jpeg" alt="">
   </div>
@@ -587,7 +623,10 @@
   <!-- ══ RETREAT TABS ══ -->
   <div class="retreat-nav" id="retreat-nav">
     <button class="retreat-tab active" onclick="showMenu('yoga')" id="tab-yoga">
-      <span id="tab-yoga-label">Yoga</span>
+      <span id="tab-yoga-label">Yoga 4 días</span>
+    </button>
+    <button class="retreat-tab" onclick="showMenu('yoga7')" id="tab-yoga7">
+      <span id="tab-yoga7-label">Yoga 7 días</span>
     </button>
     <button class="retreat-tab" onclick="showMenu('detox')" id="tab-detox">
       <span id="tab-detox-label">Detox</span>
@@ -604,24 +643,22 @@
     <button class="retreat-tab" onclick="showMenu('privado')" id="tab-privado">
       <span id="tab-privado-label">Evento Privado</span>
     </button>
-    <button class="retreat-tab" onclick="showMenu('swarupa')" id="tab-swarupa">
-      <span id="tab-swarupa-label">Swarupa · CR</span>
-    </button>
   </div>
 
   <!-- ════════════════════════════════════════
-       MENU: YOGA RETREAT
+       MENU: YOGA 4 DÍAS
   ════════════════════════════════════════ -->
   <div class="menu-section active" id="menu-yoga">
     <div class="menu-header reveal">
       <div class="menu-header-text">
         <p class="menu-type-label" id="yoga-type">Menú para Retiro de</p>
-        <h2 class="menu-title" id="yoga-title">Yoga <span>Integral</span></h2>
-        <p class="menu-subtitle" id="yoga-subtitle">"Nutrir el cuerpo para liberar la mente"</p>
-        <p class="menu-desc" id="yoga-desc">La cocina para un retiro de yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restorative).</p>
+        <h2 class="menu-title" id="yoga-title">Yoga <span>4 días</span></h2>
+        <p class="menu-subtitle" id="yoga-subtitle">"Nutrir el cuerpo y liberar la mente"</p>
+        <p class="menu-desc" id="yoga-desc">La cocina para un Retiro de Yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restaurativo).</p>
         <div class="menu-tags">
           <span class="menu-tag sage">Sáttvico</span>
           <span class="menu-tag gold">Sin gluten</span>
+          <span class="menu-tag gold">Sin azúcar</span>
           <span class="menu-tag sage">Vegetariano</span>
           <span class="menu-tag blue">Alta energía</span>
           <span class="menu-tag cream">Digestión ligera</span>
@@ -632,153 +669,128 @@
 
     <!-- Day tabs -->
     <div class="day-selector">
-      <button class="day-btn active" onclick="showDay('yoga','1')" id="yoga-day1" data-es="Día 1 — Apertura" data-en="Day 1 — Opening">Día 1 — Apertura</button>
-      <button class="day-btn" onclick="showDay('yoga','2')" id="yoga-day2" data-es="Día 2 — Práctica" data-en="Day 2 — Practice">Día 2 — Práctica</button>
-      <button class="day-btn" onclick="showDay('yoga','3')" id="yoga-day3" data-es="Día 3 — Cierre" data-en="Day 3 — Closing">Día 3 — Cierre</button>
+      <button class="day-btn active" onclick="showDay('yoga','1')" id="yoga-day1">Día 1 — Llegada</button>
+      <button class="day-btn" onclick="showDay('yoga','2')" id="yoga-day2">Día 2 — Apertura</button>
+      <button class="day-btn" onclick="showDay('yoga','3')" id="yoga-day3">Día 3 — Profundización</button>
+      <button class="day-btn" onclick="showDay('yoga','4')" id="yoga-day4">Día 4 — Cierre</button>
     </div>
 
-    <!-- Meals -->
-    <div class="meals-grid" id="yoga-meals-1">
+    <!-- Día 1 -->
+    <div class="meals-grid" id="yoga-meals-1" style="grid-template-columns: repeat(3, 1fr)">
       <div class="meal-card">
-        <span class="meal-time" id="y1-t1">Amanecer · 6:00</span>
-        <p class="meal-name" id="y1-n1">Agua de Cúrcuma & Jengibre</p>
-        <p class="meal-desc" id="y1-d1">Elixir de bienvenida: agua caliente con cúrcuma fresca, jengibre, pimienta negra y limón. Activa el fuego digestivo y despierta el sistema inmune antes de la práctica.</p>
-        <div class="meal-props">
-          <span class="meal-prop highlight">Agni activador</span>
-          <span class="meal-prop">Anti-inflamatorio</span>
-        </div>
+        <span class="meal-time">Bienvenida</span>
+        <p class="meal-name">Chai · Fruta fresca · Granola casera</p>
+        <p class="meal-desc">Recepción con chai especiado, fruta fresca de temporada y granola artesanal. El primer alimento del retiro: cálido, nutritivo y ceremonial.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Apertura</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="y1-t2">Desayuno · 8:30</span>
-        <p class="meal-name" id="y1-n2">Bowl de Kichari Blanco & Frutas Estacionales</p>
-        <p class="meal-desc" id="y1-d2">Arroz basmati con mung dal, ghee y especias suaves (comino, cilantro, hinojo). Acompañado de frutas frescas de temporada y miel cruda local.</p>
-        <div class="meal-props">
-          <span class="meal-prop highlight">Tri-dóshico</span>
-          <span class="meal-prop">Digestión suave</span>
-        </div>
+        <span class="meal-time">Cena</span>
+        <p class="meal-name">Kitchari</p>
+        <p class="meal-desc">Porotos mung, arroz basmati, calabaza, boniato y zanahoria con ghee, jengibre, pimienta negra y cúrcuma. El plato insignia del Ayurveda: nutritivo, fácil de digerir y equilibrador de los tres doshas.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Plato insignia Ayurveda</span><span class="meal-prop">Tri-dóshico</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="y1-t3">Almuerzo · 12:30</span>
-        <p class="meal-name" id="y1-n3">Curry Verde de Vegetales & Arroz Rojo</p>
-        <p class="meal-desc" id="y1-d3">Leche de coco con albahaca sagrada (tulsi), cúrcuma, espinaca y calabaza. Arroz rojo integral con semillas de sésamo negro. Chutneys artesanales de mango y menta.</p>
-        <div class="meal-props">
-          <span class="meal-prop highlight">Plato principal</span>
-          <span class="meal-prop">Sin gluten</span>
-          <span class="meal-prop">Vegan</span>
-        </div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time" id="y1-t4">Merienda · 16:00</span>
-        <p class="meal-name" id="y1-n4">Dátiles Rellenos & Leche Dorada</p>
-        <p class="meal-desc" id="y1-d4">Dátiles medjool rellenos de mantequilla de almendra y cardamomo. Golden milk con leche de avena, cúrcuma, canela, jengibre y pimienta.</p>
-        <div class="meal-props">
-          <span class="meal-prop highlight">Post-práctica</span>
-          <span class="meal-prop">Energizante natural</span>
-        </div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time" id="y1-t5">Cena · 19:00</span>
-        <p class="meal-name" id="y1-n5">Sopa de Lentejas Rojas & Pan de Avena</p>
-        <p class="meal-desc" id="y1-d5">Sopa liviana de lentejas rojas con comino, laurel y limón. Pan de avena sin gluten. Ensalada tibia de rúcula con aceite de oliva infusionado con romero. Digestión suave para el descanso.</p>
-        <div class="meal-props">
-          <span class="meal-prop highlight">Cena liviana</span>
-          <span class="meal-prop">Pre-descanso</span>
-        </div>
-      </div>
-    </div>
-    <div class="meals-grid" id="yoga-meals-2" style="display:none">
-      <div class="meal-card">
-        <span class="meal-time">Amanecer · 6:00</span>
-        <p class="meal-name" id="y2-n1">Pranayama Tea & Tónico de Adaptógenos</p>
-        <p class="meal-desc" id="y2-d1">Infusión de ashwagandha, tulsi y amalaki. Tónico de rhodiola y maca para sostener la energía nerviosa durante la práctica intensa del día central.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Adaptógeno</span><span class="meal-prop">Nervino</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Desayuno · 8:00</span>
-        <p class="meal-name" id="y2-n2">Porridge de Amaranto & Compota de Frutas</p>
-        <p class="meal-desc" id="y2-d2">Amaranto cocido con leche de almendra, vainilla y cardamomo. Compota caliente de manzana, pera y pasas de uva. Granola artesanal de quinoa inflada y coco.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Alta proteína vegetal</span><span class="meal-prop">Sin gluten</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Almuerzo · 13:00</span>
-        <p class="meal-name" id="y2-n3">Thali Ayurvédico del Día</p>
-        <p class="meal-desc" id="y2-d3">Bandeja con 5 preparaciones: dal de mung, sabji de estación, arroz basmati, chutney de coco, raita de pepino. Equilibra los 6 sabores (dulce, ácido, salado, picante, amargo, astringente).</p>
-        <div class="meal-props"><span class="meal-prop highlight">Menú completo</span><span class="meal-prop">6 sabores</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Merienda · 15:30</span>
-        <p class="meal-name" id="y2-n4">Smoothie de Batata Morada & Espirulina</p>
-        <p class="meal-desc" id="y2-d4">Batata morada asada, espirulina, jengibre fresco, limón y miel de caña. Potente combinación antioxidante y alcalinizante para el punto de mayor intensidad del retiro.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Antioxidante</span><span class="meal-prop">Alcalinizante</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Cena · 18:30</span>
-        <p class="meal-name" id="y2-n5">Cena Ceremonial de Fuego</p>
-        <p class="meal-desc" id="y2-d5">Hummus de remolacha, pan de semillas artesanal, falafel al horno con tahini de sésamo negro, ensalada de hierbas frescas. Servida en silencio como práctica de consciencia.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Compartido</span></div>
-      </div>
-    </div>
-    <div class="meals-grid" id="yoga-meals-3" style="display:none">
-      <div class="meal-card">
-        <span class="meal-time">Amanecer · 6:30</span>
-        <p class="meal-name" id="y3-n1">Té de Cierre & Oración al Sol</p>
-        <p class="meal-desc" id="y3-d1">Infusión de flores (rosa, manzanilla, hibisco) con miel y limón. Ritual de apertura consciente para el último amanecer del retiro. Acción de gracias a Pachamama.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Floral</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Desayuno · 9:00</span>
-        <p class="meal-name" id="y3-n2">Panqueques de Avena & Frutas del Bosque</p>
-        <p class="meal-desc" id="y3-d2">Panqueques de avena y banana, frutas del bosque frescas, jarabe de arce puro y crema de coco. Desayuno festivo para celebrar el cierre del retiro con alegría y abundancia.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Festivo</span><span class="meal-prop">Sin lácteos</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Almuerzo · 13:00</span>
-        <p class="meal-name" id="y3-n3">Gran Banquete de Despedida</p>
-        <p class="meal-desc" id="y3-d3">Buffet completo de las mejores preparaciones del retiro. Ensaladas vivas, curries, arroces aromáticos, panes artesanales, salsas y chutneys. Mesa de gratitud compartida.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Banquete</span><span class="meal-prop">Mesa compartida</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Tarde · 15:00</span>
-        <p class="meal-name" id="y3-n4">Ceremonia del Té de Cierre</p>
-        <p class="meal-desc" id="y3-d4">Espacio íntimo de té ceremonial con infusiones selectas, chocolates crudos y mantras de gratitud. Cierre energético del contenedor del retiro.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Ceremonial</span><span class="meal-prop">Cacao crudo</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time">Para el camino · 16:30</span>
-        <p class="meal-name" id="y3-n5">Kit de Integración para Llevar</p>
-        <p class="meal-desc" id="y3-d5">Canasta de despedida: recetario artesanal, mezcla de especias curadas, adaptógenos en polvo, tarjeta con recomendaciones personalizadas y semillas para continuar el viaje en casa.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Regalo</span><span class="meal-prop">Personalizado</span></div>
+        <span class="meal-time">Postre & Cierre</span>
+        <p class="meal-name">Trufas · Infusión digestiva</p>
+        <p class="meal-desc">Trufas de almendras, coco rallado y dátiles. Infusión digestiva de hierbas para cerrar la primera noche y favorecer el descanso profundo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Dulce nutritivo</span><span class="meal-prop">Digestivo</span></div>
       </div>
     </div>
 
-    <p class="sample-note" id="yoga-note">✦ Menú de muestra basado en un retiro de 3 días para 12 personas. Pedro Miguel adapta cada menú a la duración, grupo y estación del año.</p>
+    <!-- Día 2 -->
+    <div class="meals-grid" id="yoga-meals-2" style="display:none; grid-template-columns: repeat(3, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <p class="meal-name">Cacao · Pan de avena · Huevos revueltos · Guacamole</p>
+        <p class="meal-desc">Cacao suave, pan de avena artesanal, huevos revueltos y guacamole fresco. Desayuno nutritivo y completo para el primer día pleno de práctica.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Energizante</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <p class="meal-name">Ensalada Full Prana</p>
+        <p class="meal-desc">Quinoa, brócoli, zapallo asado, mix de hojas verdes, coleslaw, cherries, almendras especiadas, pasas y hummus artesanal.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Alta proteína</span><span class="meal-prop">Vegetariano</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <p class="meal-name">Lasagna sin gluten · Wow</p>
+        <p class="meal-desc">Lasagna sin gluten de zapallo asado, espinaca, brócoli y queso gratinado con salsa de tomates y pesto. De postre: bocado dulce nutritivo "Wow".</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Comfort food</span></div>
+      </div>
+    </div>
+
+    <!-- Día 3 -->
+    <div class="meals-grid" id="yoga-meals-3" style="display:none; grid-template-columns: repeat(3, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Desayuno</span>
+        <p class="meal-name">Golden milk · Pancakes de banana · Fruta · Granola · Mantequilla de maní</p>
+        <p class="meal-desc">Leche dorada con cúrcuma, pancakes de banana, fruta fresca de temporada, granola artesanal y mantequilla de maní. Desayuno festivo y nutritivo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Antiinflamatorio</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Almuerzo</span>
+        <p class="meal-name">Veggie Burgers</p>
+        <p class="meal-desc">Hamburguesas vegetales con papas y boniatos asados, tomate, pepino, mix de hojas verdes, coleslaw y mayo vegan.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Vegetariano</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Cena</span>
+        <p class="meal-name">Curry de vegetales · Snicker nutritivo</p>
+        <p class="meal-desc">Curry de vegetales con leche de coco, arroz aromático, cilantro, lima y rawmesan. De postre: Snicker nutritivo de dátiles y cacao crudo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Plant-based</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+    </div>
+
+    <!-- Día 4 -->
+    <div class="meals-grid" id="yoga-meals-4" style="display:none; grid-template-columns: repeat(3, 1fr)">
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Especial</span>
+        <p class="meal-name">Chipá sin gluten</p>
+        <p class="meal-desc">Pan de mandioca sin gluten, horneado al momento. Cierre cálido y artesanal para el último desayuno del retiro.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Artesanal</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Salado</span>
+        <p class="meal-name">Guacamole · Huevos revueltos · Fruta · Granola</p>
+        <p class="meal-desc">Guacamole fresco, huevos revueltos, fruta fresca de temporada y granola artesanal para completar el brunch de cierre. Nutritivo y festivo.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Completo</span></div>
+      </div>
+      <div class="meal-card">
+        <span class="meal-time">Brunch · Dulce</span>
+        <p class="meal-name">Chia pudding</p>
+        <p class="meal-desc">Chia pudding con leche vegetal, fruta fresca y granola. Cierre dulce, liviano y nutritivo del último día compartido.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Omega 3</span><span class="meal-prop">Sin gluten</span></div>
+      </div>
+    </div>
+
+    <p class="sample-note" id="yoga-note">✦ Menú de muestra basado en un retiro de 4 días y 3 noches para 12-15 personas. ShivaDrops adapta cada menú a la duración, grupo y estación del año.</p>
 
     <!-- Highlights -->
     <p class="highlights-title" id="yoga-hl-title">Platos Estrella del Retiro de Yoga</p>
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
-        <p class="hl-name" id="hl-y1-name">Kichari Dorado</p>
-        <p class="hl-desc" id="hl-y1-desc">El plato maestro del Ayurveda. Arroz basmati y mung dal cocinados con ghee y 9 especias sagradas. La comida más nutritiva y fácil de digerir de la tradición india.</p>
+        <p class="hl-name" id="hl-y1-name">Kitchari</p>
+        <p class="hl-desc" id="hl-y1-desc">Plato insignia del Ayurveda para equilibrar los doshas y activar el Agni (fuego digestivo). Porotos mung, arroz basmati, calabaza, boniato y zanahoria salteados con ghee, jengibre, pimienta negra y cúrcuma. La comida más nutritiva y fácil de digerir de la tradición de la India.</p>
       </div>
       <div class="highlight-card sage">
-        <p class="hl-name" id="hl-y2-name">Ensalada Prāṇa Viva</p>
-        <p class="hl-desc" id="hl-y2-desc">Mezcla de brotes vivos, hierbas aromáticas frescas, flores comestibles y semillas activadas. Aderezo de limón, tahini y hierbas andinas. Máxima energía vital en cada bocado.</p>
+        <p class="hl-name" id="hl-y2-name">Ensalada Full Prana</p>
+        <p class="hl-desc" id="hl-y2-desc">Ensalada tibia de quinoa, brócoli salteado, almendras tostadas y especiadas, pasas de arándanos rojos, perejil fresco. Cuñas de cabutiá, mix de hojas verdes y hummus.</p>
       </div>
       <div class="highlight-card blue">
-        <p class="hl-name" id="hl-y3-name">Kheer de Arroz & Azafrán</p>
-        <p class="hl-desc" id="hl-y3-desc">Postre sagrado ayurvédico. Arroz de grano corto cocinado lentamente en leche de almendra con azafrán, rosas, cardamomo y pistachos. Ofrenda dulce al final del día.</p>
+        <p class="hl-name" id="hl-y3-name">Wow</p>
+        <p class="hl-desc" id="hl-y3-desc">Bocado dulce nutritivo a base de dátiles, frutilla y almendras tostadas con cobertura de cacao y aceite de coco. Ofrenda dulce al final del día.</p>
       </div>
     </div>
 
     <div class="principles-bar">
       <p class="principles-label" id="yoga-princ-label">Principio del Retiro de Yoga</p>
-      <p class="principles-text" id="yoga-princ">"En un retiro de yoga la comida es práctica. Elegimos alimentos que incrementan la sattva — la cualidad de claridad, ligereza y paz — para que el cuerpo y la mente se conviertan en un instrumento afinado para la consciencia."</p>
+      <p class="principles-text" id="yoga-princ">"En un Retiro de Yoga el momento de compartir el Alimento es una práctica más. Elegimos Alimentos que incrementan Sattva — la cualidad de la energía asociada a la pureza y la bondad, que trae claridad, ligereza y paz — para que el cuerpo y la mente se conviertan en un instrumento afinado para la consciencia."</p>
     </div>
 
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
-        <p class="menu-cta-title" id="yoga-cta-title">¿Organizás un retiro de yoga?</p>
-        <p class="menu-cta-sub" id="yoga-cta-sub">Pedro Miguel trabaja contigo desde el diseño del menú hasta la cocina in situ. Disponible en Uruguay y a nivel mundial.</p>
+        <p class="menu-cta-title" id="yoga-cta-title">¿Estás planificando un Retiro de Yoga?</p>
+        <p class="menu-cta-sub" id="yoga-cta-sub">ShivaDrops trabaja contigo desde el diseño del menú, todas las especificaciones y el desarrollo de la cocina in situ. Disponible en Uruguay, Costa Rica y en todo el mundo.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve" id="yoga-cta-btn1">Reservar Servicio</a>
@@ -810,63 +822,63 @@
 
     <div class="meals-grid" id="detox-meals">
       <div class="meal-card">
-        <span class="meal-time" id="d-t1">Despertar · 6:00</span>
-        <p class="meal-name" id="d-n1">Agua Mineral & Arcilla Blanca</p>
-        <p class="meal-desc" id="d-d1">Vaso de agua tibia con unas gotas de jugo de limón, una pizca de arcilla blanca comestible y spirulina. Protocolo de limpieza intestinal profunda para el inicio del día.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Limpieza intestinal</span><span class="meal-prop">Alcalinizante</span></div>
+        <span class="meal-time" id="d-t1">Despertar</span>
+        <p class="meal-name" id="d-n1">Agua tibia con limón</p>
+        <p class="meal-desc" id="d-d1">Vaso de agua tibia con unas gotas de jugo de limón. Protocolo de limpieza para el inicio del día.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Detox</span><span class="meal-prop">Alcalinizante</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="d-t2">Jugo Verde · 7:30</span>
-        <p class="meal-name" id="d-n2">Jugo Maestro Detox</p>
-        <p class="meal-desc" id="d-d2">Pepino, apio, manzana verde, jengibre, limón, cilantro y una hoja de aloe vera. Extracción en frío para máxima biodisponibilidad enzimática. Suministra clorofila en forma directa.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Cold pressed</span><span class="meal-prop">Clorofila</span><span class="meal-prop">Enzimático</span></div>
+        <span class="meal-time" id="d-t2">Jugo Verde</span>
+        <p class="meal-name" id="d-n2">Jugo Verde Detox</p>
+        <p class="meal-desc" id="d-d2">Pepino, apio, manzana verde, jengibre, limón. Extracción en frío para máxima biodisponibilidad enzimática. Suministra clorofila en forma directa.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Clorofila</span><span class="meal-prop">Enzimático</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="d-t3">Desayuno · 9:00</span>
-        <p class="meal-name" id="d-n3">Chia Pudding & Frutas de Bajo IG</p>
-        <p class="meal-desc" id="d-d3">Semillas de chía activadas en leche de almendra con vainilla. Coronado con berries, granada y semillas de cáñamo. Sin azúcar añadido. Índice glucémico ultra bajo para estabilizar la energía.</p>
+        <span class="meal-time" id="d-t3">Desayuno</span>
+        <p class="meal-name" id="d-n3">Chia Pudding & Frutos Rojos</p>
+        <p class="meal-desc" id="d-d3">Semillas de chía activadas en leche de almendra con vainilla. Frutos rojos. Sin azúcar añadido. Índice glucémico ultra bajo para estabilizar la energía.</p>
         <div class="meal-props"><span class="meal-prop highlight">Omega 3</span><span class="meal-prop">Bajo IG</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="d-t4">Almuerzo · 12:30</span>
+        <span class="meal-time" id="d-t4">Almuerzo</span>
         <p class="meal-name" id="d-n4">Bowl Raw de Zoodles & Pesto Crudo</p>
-        <p class="meal-desc" id="d-d3b">Zucchini en espiral, brotes de alfalfa, tomates cherry, aguacate y pesto fresco de albahaca y nueces de macadamia. 100% sin cocción para preservar enzimas y nutrientes.</p>
+        <p class="meal-desc" id="d-d3b">Zucchini en espiral, brotes de alfalfa, tomates cherry, aguacate y pesto fresco de albahaca. 100% sin cocción para preservar enzimas y nutrientes.</p>
         <div class="meal-props"><span class="meal-prop highlight">Raw Food</span><span class="meal-prop">Enzimas vivas</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="d-t5">Cena · 18:00</span>
+        <span class="meal-time" id="d-t5">Cena</span>
         <p class="meal-name" id="d-n5">Caldo Mineral de 12 Horas</p>
         <p class="meal-desc" id="d-d5">Caldo largo de huesos de vegetales (cebolla, zanahoria, apio, perejil, kombu) cocinado 12 horas. Rico en minerales, silicio y glutamina para reparar la mucosa intestinal. Cierre suave del día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Intestino permeable</span><span class="meal-prop">Mineral</span></div>
       </div>
     </div>
 
-    <p class="sample-note" id="detox-note">✦ Protocolo de muestra para un día de detox completo. Pedro Miguel diseña programas de 3 a 21 días según los objetivos del retiro.</p>
+    <p class="sample-note" id="detox-note">✦ Protocolo de muestra para un día de detox completo. ShivaDrops diseña programas de 3 a 21 días según los objetivos del retiro.</p>
 
     <div class="highlights-grid reveal">
       <div class="highlight-card sage">
-        <p class="hl-name" id="hl-d1-name">Shot de Wheatgrass & Jengibre</p>
-        <p class="hl-desc" id="hl-d1-desc">Shot de pasto de trigo recién extraído con jengibre fresco. Concentrado máximo de clorofila, vitamina K y enzimas vivas. Ritual diario de cada mañana.</p>
+        <p class="hl-name" id="hl-d1-name">Shot de Cúrcuma & Jengibre</p>
+        <p class="hl-desc" id="hl-d1-desc">Shot de cúrcuma, pimienta negra y jengibre fresco. Antiinflamatorio y antioxidante. Boost para el sistema inmunológico. Ritual diario de cada mañana.</p>
       </div>
       <div class="highlight-card gold">
-        <p class="hl-name" id="hl-d2-name">Limonada con Cayena & Maple</p>
-        <p class="hl-desc" id="hl-d2-desc">La bebida de limpieza clásica renovada: limón fresco, cayena, sirope de maple puro y agua de manantial. Activa el metabolismo y la circulación linfática.</p>
+        <p class="hl-name" id="hl-d2-name">Limonada con Cayena & Menta</p>
+        <p class="hl-desc" id="hl-d2-desc">La bebida de limpieza clásica renovada: limón fresco, cayena, menta fresca y agua de manantial. Activa el metabolismo y la circulación linfática.</p>
       </div>
       <div class="highlight-card blue">
-        <p class="hl-name" id="hl-d3-name">Açaí Bowl Antioxidante</p>
-        <p class="hl-desc" id="hl-d3-desc">Puré de açaí salvaje con maqui berry, banana congelada y leche de coco. Topping de goji, cacao crudo, coco rallado y semillas activadas. El desayuno más antioxidante del mundo.</p>
+        <p class="hl-name" id="hl-d3-name">Smoothie Bowl Antioxidante</p>
+        <p class="hl-desc" id="hl-d3-desc">Papaya, arándanos, banana congelada y leche de coco con bayas de goji, cacao crudo, coco rallado y semillas activadas.</p>
       </div>
     </div>
 
     <div class="principles-bar">
       <p class="principles-label">Principio del Retiro Detox</p>
-      <p class="principles-text" id="detox-princ">"El cuerpo no necesita que lo ayudemos a detoxificar — ya sabe cómo. Nuestro rol es quitarle la carga: sin procesados, sin estimulantes, sin venenos. En ese espacio de limpieza, el cuerpo recuerda su capacidad infinita de regenerarse."</p>
+      <p class="principles-text" id="detox-princ">"El cuerpo no necesita que lo ayudemos a desintoxicar — ya sabe cómo. Nuestro rol es quitarle la carga: sin procesados, sin estimulantes, sin venenos. En ese espacio de limpieza, el cuerpo recuerda su capacidad infinita de regenerarse."</p>
     </div>
 
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
         <p class="menu-cta-title" id="detox-cta-title">¿Organizás un retiro de detox?</p>
-        <p class="menu-cta-sub" id="detox-cta-sub">Pedro Miguel diseña el protocolo completo: jugos, comidas, suplementos y rituales de limpieza. Adaptado a la duración y profundidad del proceso.</p>
+        <p class="menu-cta-sub" id="detox-cta-sub">ShivaDrops diseña el protocolo completo: jugos, comidas, suplementos y rituales de limpieza. Adaptado a la duración y profundidad del proceso.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve">Reservar</a>
@@ -884,7 +896,7 @@
         <p class="menu-type-label">Menú para Retiro de</p>
         <h2 class="menu-title" id="bw-title">Breathwork & <span>Consciencia</span></h2>
         <p class="menu-subtitle" id="bw-subtitle">"Alimentos que no interrumpen el silencio interior"</p>
-        <p class="menu-desc" id="bw-desc">Las sesiones de Rebirthing Breathwork y respiración holotrópica requieren el estómago liviano y la mente despejada. El menú evita todo estimulante (cafeína, picante excesivo, azúcares refinados) y prioriza alimentos grounding que ayudan a integrar las experiencias de expansión de consciencia.</p>
+        <p class="menu-desc" id="bw-desc">Las sesiones de Rebirthing Breathwork y respiración somática requieren el estómago liviano y la mente despejada. El menú evita todo estimulante (cafeína, picantes en exceso, azúcares refinados) y prioriza alimentos enraizantes que ayudan a integrar las experiencias de expansión de consciencia.</p>
         <div class="menu-tags">
           <span class="menu-tag gold">Sin cafeína</span>
           <span class="menu-tag sage">Grounding</span>
@@ -900,49 +912,49 @@
       <div class="meal-card">
         <span class="meal-time" id="bw-t1">Pre-sesión · 7:00</span>
         <p class="meal-name" id="bw-n1">Té de Cacao Ceremonial Suave</p>
-        <p class="meal-desc" id="bw-d1">Cacao crudo de baja dosis (20g) con leche de avena, miel, canela y una pizca de sal marina. El cacao abre el corazón y eleva la energía sin la disrupción de la cafeína.</p>
+        <p class="meal-desc" id="bw-d1">Cacao crudo de baja dosis (20g) con aceite de coco, miel, canela y una pizca de sal marina. El Cacao abre el corazón y eleva la energía sin la disrupción de la cafeína.</p>
         <div class="meal-props"><span class="meal-prop highlight">Abre-corazones</span><span class="meal-prop">Sin cafeína</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t2">Desayuno · 8:30</span>
         <p class="meal-name" id="bw-n2">Banana & Semillas — Desayuno Mínimo</p>
-        <p class="meal-desc" id="bw-d2">Banana madura, un puñado de semillas de calabaza activadas y una cucharada de mantequilla de almendra. Simple, liviano, sin elaborar. El cuerpo lo agradece antes de una sesión profunda.</p>
+        <p class="meal-desc" id="bw-d2">Banana madura, un puñado de semillas de calabaza activadas y una cucharada de mantequilla de almendra. Simple, liviano, efectivo. El cuerpo lo agradece antes de una sesión profunda.</p>
         <div class="meal-props"><span class="meal-prop highlight">Ultra liviano</span><span class="meal-prop">Serotonina</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="bw-t3">Post-sesión · 13:00</span>
         <p class="meal-name" id="bw-n3">Bowl de Integración — Raíces Asadas</p>
-        <p class="meal-desc" id="bw-d3">Batatas, remolachas y zanahorias asadas lentamente con ghee, tomillo y sal del Himalaya. Granos integrales. El calor y el peso de las raíces ayudan al sistema nervioso a aterrizar después de la expansión.</p>
+        <p class="meal-desc" id="bw-d3">Camotes, remolachas y zanahorias asadas lentamente con ghee/aceite de coco, tomillo y sal del Himalaya. Arroz integral. El calor y el peso de las raíces ayudan a regular el sistema nervioso y a aterrizar después de la expansión.</p>
         <div class="meal-props"><span class="meal-prop highlight">Grounding potente</span><span class="meal-prop">Sistema nervioso</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="bw-t4">Tarde · 16:00</span>
-        <p class="meal-name" id="bw-n4">Caldo de Miso & Wakame</p>
-        <p class="meal-desc" id="bw-d4">Caldo de miso blanco con alga wakame, tofu, cebollín y sésamo. Fermentado vivo. Los probióticos del miso calman el sistema digestivo y el mineral del wakame equilibra el sistema nervioso.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Mineral marino</span></div>
+        <span class="meal-time" id="bw-t4">Tarde</span>
+        <p class="meal-name" id="bw-n4">Golden Milk</p>
+        <p class="meal-desc" id="bw-d4">Leche vegetal infusionada con cúrcuma, pimienta negra, canela y jengibre. Especial para regular el sistema digestivo, remineralizar y equilibrar el sistema nervioso.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Regulador</span><span class="meal-prop">Mineralizante</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="bw-t5">Cena · 19:00</span>
-        <p class="meal-name" id="bw-n5">Sopa de Avena & Hierbas de Integración</p>
-        <p class="meal-desc" id="bw-d5">Avena cocinada con caldo de verduras, tomillo, sage, laurel y aceite de oliva. Con pan de masa madre. Cena sencilla y amorosa que cierra el ciclo del día con calidez y simplicidad.</p>
+        <span class="meal-time" id="bw-t5">Cena</span>
+        <p class="meal-name" id="bw-n5">Sopa de vegetales de Integración</p>
+        <p class="meal-desc" id="bw-d5">Verduras como la calabaza, el camote y la zanahoria licuadas con un toque de aceite de oliva/coco. Con rawmesan casero. Cena sencilla y amorosa que cierra el ciclo del día con calidez y simplicidad.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sedante suave</span><span class="meal-prop">Calor integrador</span></div>
       </div>
     </div>
 
-    <p class="sample-note">✦ Menú diseñado especialmente para sostener procesos transpersonales. Pedro Miguel coordina los horarios de comida con los facilitadores del retiro.</p>
+    <p class="sample-note">✦ Menú diseñado especialmente para sostener procesos transpersonales. ShivaDrops coordina los horarios de comida con los facilitadores del retiro.</p>
 
     <div class="highlights-grid reveal">
       <div class="highlight-card blue">
         <p class="hl-name">Cacao Ceremonial Completo</p>
-        <p class="hl-desc">Para ceremonias de mayor profundidad, Pedro Miguel prepara cacao ceremonial de origen (Guatemala o Perú) en dosis completa con rezos, intención y especias sagradas.</p>
+        <p class="hl-desc">Para ceremonias de mayor profundidad, ShivaDrops prepara cacao ceremonial de origen (Costa Rica o Perú) en dosis completa con rezos, intención y especias sagradas.</p>
       </div>
       <div class="highlight-card gold">
-        <p class="hl-name">Papas Rellenas al Fuego</p>
-        <p class="hl-desc">Papas enteras cocinadas sobre brasas, rellenas de puré de aguacate, cebollín y sal ahumada. El alimento más ancestral y grounding para noches de integración.</p>
+        <p class="hl-name">Papas Rellenas</p>
+        <p class="hl-desc">Papas enteras asadas, rellenas de puré de aguacate, cebolla colorada y sal ahumada. El alimento más ancestral y grounding para noches de integración.</p>
       </div>
       <div class="highlight-card sage">
-        <p class="hl-name">Congee de Arroz Medicinal</p>
-        <p class="hl-desc">Arroz blanco cocinado 2 horas hasta formar una sopa espesa. Con jengibre, miso y algas. Alimento de máxima digestibilidad y profundo descanso celular.</p>
+        <p class="hl-name">Arroz con leche</p>
+        <p class="hl-desc">Arroz blanco cocinado hasta formar una sopa espesa. Con canela y limón. Alimento de máxima digestibilidad y profundo descanso celular.</p>
       </div>
     </div>
 
@@ -954,7 +966,7 @@
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
         <p class="menu-cta-title" id="bw-cta-title">¿Facilitás un retiro de Breathwork?</p>
-        <p class="menu-cta-sub" id="bw-cta-sub">Pedro Miguel comprende la arquitectura energética de estas jornadas. Coordina menús y horarios con el facilitador para maximizar la profundidad del proceso.</p>
+        <p class="menu-cta-sub" id="bw-cta-sub">ShivaDrops comprende la arquitectura energética de estas jornadas. Coordina menús y horarios con el facilitador para maximizar la profundidad del proceso.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve">Reservar</a>
@@ -972,11 +984,11 @@
         <p class="menu-type-label">Menú para Retiro de</p>
         <h2 class="menu-title" id="ay-title">Cocina <span>Ayurvédica</span></h2>
         <p class="menu-subtitle" id="ay-subtitle">"La comida correcta, en el momento correcto, para el ser correcto"</p>
-        <p class="menu-desc" id="ay-desc">El Ayurveda — la ciencia de la vida — entiende que no existe una dieta perfecta universal: existe la dieta perfecta para tu dosha, tu estación y tu momento vital. Pedro Miguel evalúa la composición constitucional del grupo y diseña menús que balancean Vata, Pitta y Kapha en armonía con la naturaleza del retiro.</p>
+        <p class="menu-desc" id="ay-desc">El Ayurveda — la ciencia de la vida — entiende que no existe una dieta perfecta universal: existe la dieta perfecta para tu Dosha, tu estación y tu momento presente. ShivaDrops evalúa la composición constitucional del grupo y diseña menús que balancean Vata, Pitta y Kapha en armonía con la naturaleza del retiro.<br><br><em>Rasayana es un concepto central en la medicina ayurvédica que se traduce como "rejuvenecimiento" o "el camino de la esencia".</em></p>
         <div class="menu-tags">
           <span class="menu-tag gold">Tri-dóshico</span>
           <span class="menu-tag sage">Especias medicinales</span>
-          <span class="menu-tag gold">Ghee clarificado</span>
+          <span class="menu-tag gold">Ghee, oro líquido</span>
           <span class="menu-tag blue">Estacional</span>
           <span class="menu-tag cream">6 sabores</span>
         </div>
@@ -984,65 +996,59 @@
       <img class="menu-photo" src="assets/pics/0G0A9982.jpeg" alt="">
     </div>
 
-    <div class="meals-grid" id="ay-meals">
+    <div class="meals-grid" id="ay-meals" style="grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
-        <span class="meal-time" id="ay-t1">Dinacharya · 6:00</span>
-        <p class="meal-name" id="ay-n1">Rasayana Matutino</p>
-        <p class="meal-desc" id="ay-d1">Chyawanprash (mermelada ayurvédica de amla) con ghee y leche caliente de vaca. Rasayana clásico para rejuvenecer el tejido profundo (ojas). 5 minutos de práctica de respiración antes de tomarlo.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Rasayana</span><span class="meal-prop">Ojas builder</span></div>
+        <span class="meal-time" id="ay-t1">Desayuno</span>
+        <p class="meal-name" id="ay-n1">Golden Porridge</p>
+        <p class="meal-desc" id="ay-d1">Avena cocida con leche vegetal infusionada con cúrcuma, pimienta negra, canela y jengibre. Banana, pasas de uva, nueces tostadas y miel cruda. Especial para regular el sistema digestivo, remineralizar y equilibrar el sistema nervioso.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Regulador</span><span class="meal-prop">Mineralizante</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="ay-t2">Desayuno · 8:00</span>
-        <p class="meal-name" id="ay-n2">Kichari Tridóshico con Ghee & 9 Especias</p>
-        <p class="meal-desc" id="ay-d2">El plato más sagrado del Ayurveda. Arroz basmati y mung dal dorado cocinados juntos con ghee clarificado artesanal y la trinidad especiada: cúrcuma, comino, cilantro, jengibre, hinojo, cardamomo, canela, clavo y pimienta negra.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Satmya universal</span><span class="meal-prop">9 especias</span></div>
+        <span class="meal-time" id="ay-t2">Almuerzo</span>
+        <p class="meal-name" id="ay-n2">Kitchari</p>
+        <p class="meal-desc" id="ay-d2">Plato insignia del Ayurveda para equilibrar los doshas y activar el Agni (fuego digestivo). Porotos mung, arroz basmati, calabaza, boniato y zanahoria salteados con ghee/aceite de coco, jengibre, pimienta negra y cúrcuma. La comida más nutritiva y fácil de digerir de la tradición de la India.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Digestión óptima</span><span class="meal-prop">Tri-dóshico</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="ay-t3">Almuerzo · 12:00</span>
-        <p class="meal-name" id="ay-n3">Thali de Estación — Los 6 Sabores</p>
-        <p class="meal-desc" id="ay-d3">Banquete completo con 6 a 8 preparaciones que cubren todos los sabores ayurvédicos: dulce (dal), ácido (chutney de tamarindo), salado (pickle), picante (curry), amargo (karela), astringente (ensalada de lentejas).</p>
-        <div class="meal-props"><span class="meal-prop highlight">6 rasas</span><span class="meal-prop">Digestión óptima</span></div>
+        <span class="meal-time" id="ay-t3">Merienda</span>
+        <p class="meal-name" id="ay-n3">Chai Masala</p>
+        <p class="meal-desc" id="ay-d3">Infusión típica de India: jengibre, canela, clavo, cardamomo, pimienta negra. Bebida medicinal que activa el Agni y nutre los tejidos profundos.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Bebida medicinal</span><span class="meal-prop">Agni activador</span></div>
       </div>
       <div class="meal-card">
-        <span class="meal-time" id="ay-t4">Merienda · 15:30</span>
-        <p class="meal-name" id="ay-n4">Tridoshic Tea & Ladoos de Sésamo</p>
-        <p class="meal-desc" id="ay-d4">Infusión de las 3 hierbas sagradas: ashwagandha, tulsi y amalaki. Ladoos artesanales de sésamo negro, dátiles, cardamomo y ghee. Confitería medicinal de la tradición india.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Adaptógenos</span><span class="meal-prop">Dulce medicinal</span></div>
-      </div>
-      <div class="meal-card">
-        <span class="meal-time" id="ay-t5">Cena · 18:30</span>
-        <p class="meal-name" id="ay-n5">Sopa de Masoor Dal & Chapati Artesanal</p>
-        <p class="meal-desc" id="ay-d5">Sopa liviana de lentejas rojas (masoor) con tarka de semillas de mostaza, hojas de curry y ghee. Pan chapati hecho a mano con harina integral. Cena antes del sunset, como prescribe el Ayurveda.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Cena temprana</span><span class="meal-prop">Pan artesanal</span></div>
+        <span class="meal-time" id="ay-t4">Cena</span>
+        <p class="meal-name" id="ay-n4">Sopa de vegetales de Integración</p>
+        <p class="meal-desc" id="ay-d4">Verduras como la calabaza, el camote y la zanahoria licuadas con un toque de aceite de oliva/coco. Con rawmesan casero. Cena antes del sunset, como prescribe el Ayurveda.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sedante suave</span><span class="meal-prop">Cena temprana</span></div>
       </div>
     </div>
 
-    <p class="sample-note">✦ Pedro Miguel también realiza evaluaciones de dosha para los participantes del retiro y personaliza porciones y especias según cada constitución.</p>
+    <p class="sample-note">✦ ShivaDrops también realiza evaluaciones de Dosha para los participantes del Retiro y personaliza porciones y especias según cada constitución.</p>
 
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
         <p class="hl-name">Ghee Clarificado Artesanal</p>
-        <p class="hl-desc">Pedro Miguel elabora su propio ghee clarificando mantequilla orgánica a fuego lento con mantras. El ghee es considerado el alimento más sáttvico y el principal rasayana en la tradición ayurvédica.</p>
+        <p class="hl-desc">ShivaDrops elabora su propio ghee clarificando manteca orgánica a fuego lento con mantras. El ghee es considerado el alimento más Sáttvico y el principal Rasayana en la tradición de Ayurveda.</p>
       </div>
       <div class="highlight-card sage">
-        <p class="hl-name">Pasta de Especias Masala Propia</p>
-        <p class="hl-desc">Blend personalizado de 15 especias tostadas y molidas en el momento. Adaptado a la estación y al dosha predominante del grupo. La columna vertebral aromática de toda la cocina del retiro.</p>
+        <p class="hl-name">Masala de Especias</p>
+        <p class="hl-desc">Blend personalizado de especias tostadas y molidas en el momento. Adaptado a la estación y al Dosha predominante del grupo. La columna vertebral aromática de toda la cocina del retiro.</p>
       </div>
       <div class="highlight-card blue">
-        <p class="hl-name">Payasam de Luna Llena</p>
-        <p class="hl-desc">Postre ceremonial de luna llena: arroz de grano fino, leche entera, azafrán iraní, rosas secas, pistachos y pétalos de flores comestibles. Se cocina bajo la luna como práctica de gratitud.</p>
+        <p class="hl-name">Bliss Balls</p>
+        <p class="hl-desc">Postre típico de la India a base de maní, con dátiles y coco rallado en forma de trufas. Se lleva la atención a cada bocado como práctica de gratitud.</p>
       </div>
     </div>
 
     <div class="principles-bar">
       <p class="principles-label">Principio del Retiro Ayurvédico</p>
-      <p class="principles-text">"Ahara — el alimento — es el primer pilar del Ayurveda. No como dieta, sino como relación viva con la naturaleza. Comer en la hora correcta, cocinar con amor, usar especias con intención: esto es medicina. Esto es lo que enseño cada vez que me paro frente a un fogón."</p>
+      <p class="principles-text">"Ahara — el alimento — es el primer pilar del Ayurveda. No como dieta, sino como relación viva con la Naturaleza. Comer en la hora correcta, cocinar con amor, usar especias con intención: esto es medicina. Esto es lo que comparto cada vez que estoy frente al fuego o sentado en la mesa."</p>
     </div>
 
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
         <p class="menu-cta-title">¿Organizás un retiro de Ayurveda?</p>
-        <p class="menu-cta-sub">Pedro Miguel integra evaluaciones de dosha, charlas de nutrición y talleres de cocina junto al servicio de catering. Una experiencia educativa y transformadora.</p>
+        <p class="menu-cta-sub">ShivaDrops integra evaluaciones de dosha, charlas de nutrición y talleres de cocina junto al servicio de catering. Una experiencia educativa y transformadora.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve">Reservar</a>
@@ -1059,12 +1065,10 @@
       <div class="menu-header-text">
         <p class="menu-type-label">Menú para Retiro de</p>
         <h2 class="menu-title" id="med-title">Plantas <span>Maestras</span></h2>
-        <p class="menu-subtitle" id="med-subtitle">"Preparar el templo para la enseñanza"</p>
-        <p class="menu-desc" id="med-desc">Los retiros con plantas maestras (Ayahuasca, San Pedro Miguel, Psilocibina) y ceremonias de medicina exigen una dieta de preparación específica — la dieta del curandero. Sin alcohol, sin carne roja, sin azúcar, sin sal excesiva. Pedro Miguel diseña menús de preparación y de integración que honran el proceso de purificación y la sabiduría de la planta.</p>
-        <div class="meal-props" style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-        </div>
+        <p class="menu-subtitle" id="med-subtitle">"Preparar el templo para recibir la enseñanza"</p>
+        <p class="menu-desc" id="med-desc">Los Retiros con Plantas Maestras (Ayahuasca, San Pedro, Psilocibina) y ceremonias de medicina exigen una dieta de preparación específica — la dieta del curandero. Sin alcohol, sin carne roja, sin azúcar, sin sal excesiva. ShivaDrops diseña menús de preparación y de integración que honran el proceso de purificación y la sabiduría de la planta.</p>
         <div class="menu-tags">
-          <span class="menu-tag sage">Dieta del curandero</span>
+          <span class="menu-tag sage">Dieta</span>
           <span class="menu-tag gold">Sin alcohol</span>
           <span class="menu-tag cream">Sin carne roja</span>
           <span class="menu-tag blue">Preparación & integración</span>
@@ -1090,7 +1094,7 @@
       <div class="meal-card">
         <span class="meal-time" id="med-t3">Post-ceremonia · Mañana</span>
         <p class="meal-name" id="med-n3">Sopa de Integración & Fruta Dulce</p>
-        <p class="meal-desc" id="med-d3">Sopa liviana con fideos de arroz, zanahorias, apio y hierbas suaves. Frutas dulces y maduras: mango, papaya, sandía. El dulce ayuda a integrar y cerrar suavemente la energía de la noche.</p>
+        <p class="meal-desc" id="med-d3">Sopa liviana con zanahorias, apio y hierbas suaves. Frutas dulces y maduras: mango, papaya, sandía. El dulce ayuda a integrar y cerrar suavemente la energía de la noche.</p>
         <div class="meal-props"><span class="meal-prop highlight">Integrador</span><span class="meal-prop">Suave al estómago</span></div>
       </div>
       <div class="meal-card">
@@ -1102,12 +1106,12 @@
       <div class="meal-card">
         <span class="meal-time" id="med-t5">Cierre — Banquete sagrado</span>
         <p class="meal-name" id="med-n5">Banquete de Gratitud</p>
-        <p class="meal-desc" id="med-d5">Al finalizar el período de dieta, mesa comunitaria abundante con los sabores de la tierra: sopas ricas, panes artesanales, ensaladas vivas, postres de fruta. Celebración del retorno al mundo ordinario con gratitud.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Celebratorio</span><span class="meal-prop">Mesa comunitaria</span></div>
+        <p class="meal-desc" id="med-d5">Al finalizar el período de dieta, mesa comunitaria abundante con los sabores de la tierra: vegetales de raíz, ensaladas vivas, aderezos naturales, postres suaves. Celebración del retorno con gratitud.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Celebración</span><span class="meal-prop">Mesa comunitaria</span></div>
       </div>
     </div>
 
-    <p class="sample-note">✦ Pedro Miguel trabaja en estrecha colaboración con el facilitador/curandero para respetar las restricciones de cada tradición. El menú se adapta completamente al protocolo de la medicina.</p>
+    <p class="sample-note">✦ ShivaDrops trabaja en estrecha colaboración con el facilitador/curandero para respetar las restricciones de cada tradición. El menú se adapta completamente al protocolo de la medicina.</p>
 
     <div class="principles-bar">
       <p class="principles-label">Principio de los Retiros de Medicina</p>
@@ -1117,7 +1121,7 @@
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
         <p class="menu-cta-title">¿Facilitás ceremonias de medicina?</p>
-        <p class="menu-cta-sub">Pedro Miguel tiene experiencia trabajando junto a facilitadores de distintas tradiciones. Respeta los protocolos de cada linaje y asegura que la cocina sostenga el espacio sagrado.</p>
+        <p class="menu-cta-sub">ShivaDrops tiene experiencia trabajando junto a facilitadores de distintas tradiciones. Respeta los protocolos de cada linaje y asegura que la cocina sostenga el espacio sagrado.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve">Reservar</a>
@@ -1135,7 +1139,7 @@
         <p class="menu-type-label">Menú para</p>
         <h2 class="menu-title" id="priv-title">Evento <span>Privado</span></h2>
         <p class="menu-subtitle" id="priv-subtitle">"Alta cocina con alma — para momentos que merecen lo extraordinario"</p>
-        <p class="menu-desc" id="priv-desc">Para cenas privadas, celebraciones íntimas, retiros de bienestar personalizados o experiencias gastronómicas exclusivas. Pedro Miguel diseña menús de autor que combinan técnicas de alta cocina con los principios de la alimentación consciente y la sabiduría ayurvédica. Cada plato cuenta una historia, honra la tierra y sorprende al paladar.</p>
+        <p class="menu-desc" id="priv-desc">Para cenas privadas, celebraciones íntimas, Retiros de bienestar personalizados, para empresas o experiencias gastronómicas exclusivas. ShivaDrops diseña menús de autor que combinan técnicas de alta cocina con los principios de la alimentación consciente y la sabiduría de Ayurveda. Cada plato cuenta una historia, honra la Tierra y sorprende al paladar.</p>
         <div class="menu-tags">
           <span class="menu-tag gold">Alta cocina</span>
           <span class="menu-tag sage">Plant-forward</span>
@@ -1150,62 +1154,62 @@
     <div class="meals-grid" id="priv-meals">
       <div class="meal-card">
         <span class="meal-time" id="priv-t1">Aperitivo</span>
-        <p class="meal-name" id="priv-n1">Bienvenida — Kefir de Coco & Canapes Vivos</p>
-        <p class="meal-desc" id="priv-d1">Kefir artesanal de leche de coco con frutos rojos. Tabla de canapés crudos: crackers de semillas, hummus de remolacha, tartare de aguacate, láminas de nabo marinado y flores comestibles.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Probiótico</span><span class="meal-prop">Fermentado artesanal</span></div>
+        <p class="meal-name" id="priv-n1">Gazpacho Andaluz</p>
+        <p class="meal-desc" id="priv-d1">Gazpacho andaluz con aceite de oliva extra virgen y albahaca.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Internacional</span><span class="meal-prop">Refrescante</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t2">Entrada</span>
-        <p class="meal-name" id="priv-n2">Sopa de Miso Negro con Oro Comestible</p>
-        <p class="meal-desc" id="priv-d2">Miso de cebada envejecido 2 años, dashi de kombu, nameko, tofu sedoso y cebollino. Terminada con aceite de sésamo negro y láminas de oro comestible. Profundidad umami con elegancia minimalista.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Umami profundo</span><span class="meal-prop">Oro comestible</span></div>
+        <p class="meal-name" id="priv-n2">Clásicos huevitos rellenos</p>
+        <p class="meal-desc" id="priv-d2">Huevitos rellenos clásicos de la abuela. Un bocado familiar y reconfortante que invita a la mesa con calidez.</p>
+        <div class="meal-props"><span class="meal-prop highlight">De la abuela</span><span class="meal-prop">Saciedad</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t3">Plato principal</span>
-        <p class="meal-name" id="priv-n3">Risotto de Quinoa Negra & Trufa</p>
-        <p class="meal-desc" id="priv-d3">Quinoa negra cocinada al estilo risotto con vino blanco, caldo de hongos shiitake, mantequilla de caju y láminas de trufa negra fresca. Terminado con aceite de trufa y parmesano de macadamia.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Plato estrella</span><span class="meal-prop">Vegan</span><span class="meal-prop">Sin gluten</span></div>
+        <p class="meal-name" id="priv-n3">Pesca del día / Hongos ostra a la plancha</p>
+        <p class="meal-desc" id="priv-d3">Pesca del día o hongos ostra (opción vegana) a la plancha con verduras asadas y ensalada fresca con aderezo cítrico.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Nutritivo</span><span class="meal-prop">Comfort</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t4">Pre-postre</span>
-        <p class="meal-name" id="priv-n4">Sorbet de Yuzu & Cardamomo</p>
-        <p class="meal-desc" id="priv-d4">Sorbet de yuzu japonés, cardamomo verde y jengibre fresco. Sirve como palate cleanser entre el plato principal y el postre. Presentado en cáscara de limón con polvo de matcha y menta fresca.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Palate cleanser</span><span class="meal-prop">Digestivo</span></div>
+        <p class="meal-name" id="priv-n4">Frutos rojos con zest & miel</p>
+        <p class="meal-desc" id="priv-d4">Frutos rojos con zest de cítricos y miel cruda.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Antioxidante</span><span class="meal-prop">Enzimático</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time" id="priv-t5">Postre</span>
-        <p class="meal-name" id="priv-n5">Tarta de Cacao Crudo & Sal de Mar</p>
-        <p class="meal-desc" id="priv-d5">Base de dátiles y nueces. Ganache de cacao crudo peruano 100%, crema de coco y vainilla. Terminada con sal de Fleur de Sel y micro hierbas. Servida a temperatura ambiente para máxima expresión del cacao.</p>
-        <div class="meal-props"><span class="meal-prop highlight">Raw</span><span class="meal-prop">Sin azúcar refinado</span></div>
+        <p class="meal-name" id="priv-n5">Mousse de Cacao, Nueces & Sal de Mar</p>
+        <p class="meal-desc" id="priv-d5">Base de dátiles y palta, Cacao 100%, crema de coco y vainilla. Terminada con sal de mar, nueces tostadas y pétalos de rosas.</p>
+        <div class="meal-props"><span class="meal-prop highlight">Sin azúcar</span><span class="meal-prop">Raw</span></div>
       </div>
     </div>
 
-    <p class="sample-note">✦ Menú de alta cocina para cenas privadas de 6 a 20 personas. Pedro Miguel cotiza por persona según la complejidad del menú, el número de comensales y la ubicación del evento.</p>
+    <p class="sample-note">✦ Menú de alta cocina para cenas privadas de 6 a 20 personas. ShivaDrops cotiza por persona según la complejidad del menú, el número de comensales y la ubicación del evento.</p>
 
     <div class="highlights-grid reveal">
       <div class="highlight-card gold">
         <p class="hl-name">Mise en Place Ceremonial</p>
-        <p class="hl-desc">Pedro Miguel no solo cocina: diseña la experiencia completa. Mesa, flores, vajilla, música y ambiente. Cada detalle al servicio de la memoria que se quiere crear.</p>
+        <p class="hl-desc">ShivaDrops no solo cocina: diseña la experiencia completa. Mesa, flores, vajilla, música y ambiente. Cada detalle al servicio de la memoria que se quiere crear.</p>
       </div>
       <div class="highlight-card sage">
         <p class="hl-name">Maridaje de Infusiones</p>
-        <p class="hl-desc">En lugar de vinos, Pedro Miguel diseña una carta de infusiones medicinales maridadas con cada plato. Kombucha artesanal, kefir de agua, aguas de flores y tónicos de adaptógenos.</p>
+        <p class="hl-desc">En lugar de vinos, ShivaDrops diseña una carta de infusiones medicinales maridadas con cada plato. Kombucha artesanal, limonadas, aguas de flores y tónicos de adaptógenos.</p>
       </div>
       <div class="highlight-card blue">
         <p class="hl-name">Taller de Cocina Privado</p>
-        <p class="hl-desc">La cena puede incorporar un taller participativo: los invitados aprenden a preparar uno o dos platos del menú junto a Pedro Miguel. Una experiencia transformadora que va más allá de comer.</p>
+        <p class="hl-desc">La cena puede incorporar un taller participativo: los invitados aprenden a preparar uno o dos platos del menú junto a ShivaDrops. Una experiencia transformadora que va más allá de comer.</p>
       </div>
     </div>
 
     <div class="principles-bar">
       <p class="principles-label">Principio del Evento Privado</p>
-      <p class="principles-text">"Una cena extraordinaria no es solo buena comida. Es un espacio de conexión, de presencia compartida, de belleza hecha materia. Cuando cocino para una ocasión especial, pongo en cada plato toda mi historia, mis viajes y mi amor por la vida. Es mi forma de rezar."</p>
+      <p class="principles-text">"Una cena extraordinaria no es solo buena comida. Es un espacio de conexión, de presencia compartida, de belleza hecha materia. Cuando cocino para una ocasión especial, pongo en cada plato toda mi historia, mis viajes y mi amor por la vida. Es mi forma de recordar que somos un rezo vivo."</p>
     </div>
 
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
         <p class="menu-cta-title">¿Tenés un evento especial?</p>
-        <p class="menu-cta-sub">Bodas, celebraciones íntimas, retiros personalizados, cenas de negocios con consciencia. Pedro Miguel cotiza cada propuesta de forma personalizada.</p>
+        <p class="menu-cta-sub">Bodas, celebraciones íntimas, retiros personalizados, cenas de negocios con consciencia. ShivaDrops cotiza cada propuesta de forma personalizada.</p>
       </div>
       <div class="menu-cta-btns">
         <a href="reservas.html" class="btn-reserve">Solicitar Cotización</a>
@@ -1215,38 +1219,39 @@
   </div>
 
   <!-- ════════════════════════════════════════
-       MENU: SWARUPA CR (CASO REAL)
+       MENU: YOGA 7 DÍAS
   ════════════════════════════════════════ -->
-  <div class="menu-section" id="menu-swarupa">
+  <div class="menu-section" id="menu-yoga7">
     <div class="menu-header reveal">
       <div class="menu-header-text">
-        <p class="menu-type-label">Menú Real · Costa Rica · Julio 2025</p>
-        <h2 class="menu-title">Retiro <span>Swarupa CR</span></h2>
-        <p class="menu-subtitle">"17 — 24 de julio · 7 días"</p>
-        <p class="menu-desc">Menú real diseñado y ejecutado por Pedro Miguel en Costa Rica. Siete días de cocina consciente, sin gluten, con ingredientes frescos y locales, integrando los principios del Ayurveda y el alimento medicina. Del Kichari de bienvenida al brunch de despedida, cada plato acompañó el proceso del grupo.</p>
+        <p class="menu-type-label">Menú para Retiro de</p>
+        <h2 class="menu-title">Yoga <span>7 días</span></h2>
+        <p class="menu-subtitle">"Nutrir el cuerpo y liberar la mente"</p>
+        <p class="menu-desc">Menú diseñado y ejecutado por ShivaDrops. Siete días de cocina consciente, sin gluten, sin azúcar, con ingredientes frescos y locales, integrando los principios del Ayurveda y el Alimento Medicina. Del Kitchari de bienvenida al Brunch de despedida, cada plato acompaña el proceso del grupo.</p>
         <div class="menu-tags">
-          <span class="menu-tag gold">Menú Real</span>
-          <span class="menu-tag sage">7 días</span>
-          <span class="menu-tag gold">Sin gluten</span>
-          <span class="menu-tag blue">Costa Rica</span>
-          <span class="menu-tag cream">Ayurvédico</span>
+          <span class="menu-tag gold">Sáttvico</span>
+          <span class="menu-tag sage">Sin gluten</span>
+          <span class="menu-tag gold">Sin azúcar</span>
+          <span class="menu-tag blue">Vegetariano</span>
+          <span class="menu-tag sage">Ayurvédico</span>
+          <span class="menu-tag cream">Comida Real</span>
         </div>
       </div>
       <img class="menu-photo" src="assets/pics/IMG_7580.jpeg" alt="">
     </div>
 
     <div class="day-selector">
-      <button class="day-btn active" onclick="showDay('swarupa','1')" id="swarupa-day1">Jue 17</button>
-      <button class="day-btn" onclick="showDay('swarupa','2')" id="swarupa-day2">Vie 18</button>
-      <button class="day-btn" onclick="showDay('swarupa','3')" id="swarupa-day3">Sáb 19</button>
-      <button class="day-btn" onclick="showDay('swarupa','4')" id="swarupa-day4">Dom 20</button>
-      <button class="day-btn" onclick="showDay('swarupa','5')" id="swarupa-day5">Lun 21</button>
-      <button class="day-btn" onclick="showDay('swarupa','6')" id="swarupa-day6">Mar 22</button>
-      <button class="day-btn" onclick="showDay('swarupa','7')" id="swarupa-day7">Mié 23</button>
+      <button class="day-btn active" onclick="showDay('yoga7','1')" id="yoga7-day1">Día 1</button>
+      <button class="day-btn" onclick="showDay('yoga7','2')" id="yoga7-day2">Día 2</button>
+      <button class="day-btn" onclick="showDay('yoga7','3')" id="yoga7-day3">Día 3</button>
+      <button class="day-btn" onclick="showDay('yoga7','4')" id="yoga7-day4">Día 4</button>
+      <button class="day-btn" onclick="showDay('yoga7','5')" id="yoga7-day5">Día 5</button>
+      <button class="day-btn" onclick="showDay('yoga7','6')" id="yoga7-day6">Día 6</button>
+      <button class="day-btn" onclick="showDay('yoga7','7')" id="yoga7-day7">Día 7</button>
     </div>
 
     <!-- Jueves 17 -->
-    <div class="meals-grid" id="swarupa-meals-1" style="grid-template-columns: repeat(3, 1fr)">
+    <div class="meals-grid" id="yoga7-meals-1" style="grid-template-columns: repeat(3, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Bienvenida</span>
         <p class="meal-name">Pipas</p>
@@ -1268,7 +1273,7 @@
     </div>
 
     <!-- Viernes 18 -->
-    <div class="meals-grid" id="swarupa-meals-2" style="display:none; grid-template-columns: repeat(4, 1fr)">
+    <div class="meals-grid" id="yoga7-meals-2" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
@@ -1278,7 +1283,7 @@
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
         <p class="meal-name">Ensalada de Quinoa con Almendras Especiadas</p>
-        <p class="meal-desc">Mix de quinoa, brócoli, almendras especiadas, pasas y perejil con huevitos. Cuñas de cabutiá, hojas verdes y hummus artesanal.</p>
+        <p class="meal-desc">Mix de quinoa, brócoli, almendras especiadas, pasas y perejil. Cuñas de cabutiá, hojas verdes y hummus artesanal.</p>
         <div class="meal-props"><span class="meal-prop highlight">Alta proteína</span><span class="meal-prop">Vegetariano</span></div>
       </div>
       <div class="meal-card">
@@ -1295,8 +1300,8 @@
       </div>
     </div>
 
-    <!-- Sábado 19 -->
-    <div class="meals-grid" id="swarupa-meals-3" style="display:none; grid-template-columns: repeat(4, 1fr)">
+    <!-- Día 3 -->
+    <div class="meals-grid" id="yoga7-meals-3" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
         <p class="meal-name">Golden Milk · Pan sin Gluten · Huevos & Guacamole</p>
@@ -1306,25 +1311,25 @@
       <div class="meal-card">
         <span class="meal-time">Almuerzo</span>
         <p class="meal-name">Buddha Bowl</p>
-        <p class="meal-desc">Arroz integral, tartare de atún, zanahoria, pepino, palta, tomate, albahaca, hojas verdes, repollo encurtido y dressing de tahini.</p>
+        <p class="meal-desc">Arroz integral, garbanzos crocantes, zanahoria, pepino, palta, tomate, albahaca, hojas verdes, repollo encurtido y dressing de tahini.</p>
         <div class="meal-props"><span class="meal-prop highlight">Completo</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <p class="meal-name">Curry de Vegetales · Triffle Tropical</p>
-        <p class="meal-desc">Curry de brócoli, calabaza, zanahoria y boniato con maní tostado, cilantro y lima. De postre: triffle de banana, coco y mango con base de frutos secos.</p>
+        <p class="meal-name">Curry de Vegetales</p>
+        <p class="meal-desc">Curry de brócoli, calabaza, zanahoria y boniato con maní tostado, cilantro y lima.</p>
         <div class="meal-props"><span class="meal-prop highlight">Plant-based</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <p class="meal-name">Infusión digestiva</p>
-        <p class="meal-desc">Infusión de hierbas medicinales para cerrar el día y favorecer la digestión y el descanso profundo.</p>
+        <p class="meal-name">Triffle Tropical · Infusión digestiva</p>
+        <p class="meal-desc">De postre: triffle de banana, coco y mango con base de frutos secos. Infusión de hierbas medicinales para cerrar el día y favorecer la digestión y el descanso profundo.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
       </div>
     </div>
 
-    <!-- Domingo 20 -->
-    <div class="meals-grid" id="swarupa-meals-4" style="display:none; grid-template-columns: repeat(4, 1fr)">
+    <!-- Día 4 -->
+    <div class="meals-grid" id="yoga7-meals-4" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
@@ -1339,20 +1344,20 @@
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <p class="meal-name">Atún a la Plancha · Brownie con Frutos Rojos</p>
-        <p class="meal-desc">Atún a la plancha con puré de papas y ensalada fresca de cherries, pepino, rabanitos y piña, con aderezo de mango y mostaza. Brownie de postre.</p>
+        <p class="meal-name">Atún a la Plancha</p>
+        <p class="meal-desc">Atún a la plancha con puré de papas y ensalada fresca de cherries, pepino, rabanitos y piña, con aderezo de mango y mostaza.</p>
         <div class="meal-props"><span class="meal-prop highlight">Proteína</span><span class="meal-prop">Sin gluten</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <p class="meal-name">Infusión digestiva</p>
-        <p class="meal-desc">Infusión de hierbas para favorecer la digestión y el descanso profundo al final del día.</p>
+        <p class="meal-name">Brownie con Frutos Rojos · Infusión digestiva</p>
+        <p class="meal-desc">Brownie sin gluten y sin azúcar de postre. Infusión de hierbas para favorecer la digestión y el descanso profundo al final del día.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
       </div>
     </div>
 
-    <!-- Lunes 21 -->
-    <div class="meals-grid" id="swarupa-meals-5" style="display:none; grid-template-columns: repeat(4, 1fr)">
+    <!-- Día 5 -->
+    <div class="meals-grid" id="yoga7-meals-5" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
         <p class="meal-name">Pancakes · Tahini · Jugo de Papaya</p>
@@ -1367,20 +1372,20 @@
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <p class="meal-name">Lasagna Sin Gluten · Carrot Cake</p>
-        <p class="meal-desc">Lasagna sin gluten con calabaza asada, brócoli, espinacas y queso gratinado, con salsa de tomate y pesto. Carrot cake de postre.</p>
+        <p class="meal-name">Lasagna Sin Gluten</p>
+        <p class="meal-desc">Lasagna sin gluten con calabaza asada, brócoli, espinacas y queso gratinado, con salsa de tomate y pesto.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Comfort food</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <p class="meal-name">Infusión digestiva</p>
-        <p class="meal-desc">Infusión de hierbas medicinales para preparar el cuerpo para el descanso nocturno.</p>
+        <p class="meal-name">Carrot Cake · Infusión digestiva</p>
+        <p class="meal-desc">Carrot cake con salsa de tahini, vainilla y miel de postre. Infusión de hierbas medicinales para preparar el cuerpo para el descanso nocturno.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
       </div>
     </div>
 
-    <!-- Martes 22 -->
-    <div class="meals-grid" id="swarupa-meals-6" style="display:none; grid-template-columns: repeat(4, 1fr)">
+    <!-- Día 6 -->
+    <div class="meals-grid" id="yoga7-meals-6" style="display:none; grid-template-columns: repeat(4, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Desayuno</span>
         <p class="meal-name">Smoothie Bowl · Chia Pudding · Granola</p>
@@ -1395,20 +1400,20 @@
       </div>
       <div class="meal-card">
         <span class="meal-time">Cena</span>
-        <p class="meal-name">Risotto de Remolacha · Snicker Raw</p>
-        <p class="meal-desc">Risotto de remolacha con hongos salteados y castañas tostadas. Postre Snicker raw: base de granola, dulce de dátiles y chocolate crudo.</p>
+        <p class="meal-name">Risotto de Remolacha</p>
+        <p class="meal-desc">Risotto de remolacha con hongos salteados y castañas tostadas.</p>
         <div class="meal-props"><span class="meal-prop highlight">Sin gluten</span><span class="meal-prop">Cacao crudo</span></div>
       </div>
       <div class="meal-card">
         <span class="meal-time">Cierre</span>
-        <p class="meal-name">Infusión digestiva</p>
-        <p class="meal-desc">Infusión de hierbas para cerrar la última noche del retiro con calma y presencia.</p>
+        <p class="meal-name">Snicker Raw · Infusión digestiva</p>
+        <p class="meal-desc">Postre Snicker raw: base de granola, dulce de dátiles y chocolate crudo. Infusión de hierbas para cerrar la última noche del retiro con calma y presencia.</p>
         <div class="meal-props"><span class="meal-prop highlight">Medicinal</span><span class="meal-prop">Digestivo</span></div>
       </div>
     </div>
 
-    <!-- Miércoles 23 — Brunch de despedida -->
-    <div class="meals-grid" id="swarupa-meals-7" style="display:none; grid-template-columns: repeat(3, 1fr)">
+    <!-- Día 7 — Brunch de despedida -->
+    <div class="meals-grid" id="yoga7-meals-7" style="display:none; grid-template-columns: repeat(3, 1fr)">
       <div class="meal-card">
         <span class="meal-time">Brunch · Despedida</span>
         <p class="meal-name">Smoothie · Mandala de Frutas</p>
@@ -1429,46 +1434,50 @@
       </div>
     </div>
 
-    <p class="sample-note">✦ Menú real ejecutado por Pedro Miguel en Costa Rica, julio 2025. Cada día adaptado al ritmo, la energía y las necesidades del grupo Swarupa CR.</p>
+    <p class="sample-note">✦ Menú real ejecutado por ShivaDrops en Costa Rica. Cada día adaptado al ritmo, la energía y las necesidades del grupo del Retiro.</p>
 
     <div class="principles-bar">
       <p class="principles-label">Del cocinero</p>
-      <p class="principles-text">"Cocinar para un retiro es una práctica espiritual. Cada plato es una ofrenda: a los participantes, al proceso que están viviendo, a la tierra que nos da el alimento. El Kichari de bienvenida y el Chipá de despedida enmarcan siete días de presencia, servicio y alquimia vibracional."</p>
+      <p class="principles-text">"Cocinar para un Retiro es una práctica espiritual. Cada plato es una ofrenda: a los participantes, al proceso que están viviendo, a la Tierra que nos da el Alimento. El Kitchari de bienvenida y el Chipá de despedida enmarcan siete días de presencia, servicio y alquimia vibracional."</p>
     </div>
 
     <div class="menu-cta reveal">
       <div class="menu-cta-text">
-        <p class="menu-cta-title">¿Querés un menú así para tu retiro?</p>
-        <p class="menu-cta-sub">Pedro Miguel diseña el menú completo según la duración, la disciplina y la energía de tu grupo — desde el primer desayuno hasta el brunch de cierre.</p>
+        <p class="menu-cta-title">¿Estás planificando un Retiro de Yoga de 7 días?</p>
+        <p class="menu-cta-sub">ShivaDrops diseña el menú completo según la duración, la disciplina y la energía de tu grupo — desde el primer desayuno hasta el brunch de cierre.</p>
       </div>
       <div class="menu-cta-btns">
-        <a href="reservas.html" class="btn-reserve">Consultar disponibilidad</a>
-        <a href="contacto.html" class="btn-consult">Escribirle a Pedro Miguel</a>
+        <a href="reservas.html" class="btn-reserve">Reservar Servicio</a>
+        <a href="contacto.html" class="btn-consult">Consultar</a>
       </div>
     </div>
   </div>
 
   <!-- ══ CREDENTIALS STRIP ══ -->
   <section class="credentials">
-    <p class="cred-eyebrow" id="cred-eyebrow">Por qué elegir a Pedro Miguel</p>
-    <h2 class="cred-title" id="cred-title">Un cocinero que es también <span>facilitador</span></h2>
-    <p class="cred-desc" id="cred-desc">La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. Pedro Miguel no solo domina la técnica — lleva a la cocina su formación en Ayurveda, su práctica de yoga, su experiencia con el Breathwork y su profunda conexión con la naturaleza. Cada menú es una extensión del mismo trabajo de transformación que sucede en el tapete de práctica.</p>
+    <p class="cred-eyebrow" id="cred-eyebrow">Por qué elegir a ShivaDrops</p>
+    <h2 class="cred-title" id="cred-title">Un cocinero que <span>amplía el contenedor</span></h2>
+    <p class="cred-desc" id="cred-desc">La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. ShivaDrops no solo domina la técnica — a todos los años de experiencia en gastronomía internacional y cocina de restaurantes le suma su formación en Ayurveda, su práctica de Yoga, su experiencia con el Breathwork y su profunda conexión con la Naturaleza. Cada menú es una extensión del mismo trabajo de autoconocimiento y profundización en su bienestar y transformación que ha sucedido a lo largo de años de práctica.</p>
     <div class="cred-grid">
       <div class="cred-item reveal">
-        <span class="cred-num">10+</span>
-        <p class="cred-label" id="cred-1">Años de cocina holística y retiros</p>
+        <span class="cred-num">12+</span>
+        <p class="cred-label" id="cred-1">Años de cocina profesional</p>
+      </div>
+      <div class="cred-item reveal">
+        <span class="cred-num">7+</span>
+        <p class="cred-label" id="cred-2">Cocina holística y retiros</p>
       </div>
       <div class="cred-item reveal">
         <span class="cred-num">4</span>
-        <p class="cred-label" id="cred-2">Disciplinas integradas en cada menú</p>
+        <p class="cred-label" id="cred-3">Disciplinas integradas en cada menú</p>
       </div>
       <div class="cred-item reveal">
         <span class="cred-num">100%</span>
-        <p class="cred-label" id="cred-3">Personalizado para cada retiro</p>
+        <p class="cred-label" id="cred-4">Personalizado para cada retiro</p>
       </div>
       <div class="cred-item reveal">
         <span class="cred-num">🌍</span>
-        <p class="cred-label" id="cred-4">Disponible en todo el mundo</p>
+        <p class="cred-label" id="cred-5">Disponible en todo el mundo</p>
       </div>
     </div>
   </section>
@@ -1556,72 +1565,72 @@
     const T = {
       es: {
         // Hero
-        'hero-eyebrow':   'Alimento como Medicina',
-        'hero-title':     'Menús diseñados para<br><em>transformar</em>',
-        'hero-sub':       'Cada retiro merece una cocina que lo potencie. Pedro Miguel diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro — desde el amanecer hasta el cierre ceremonial.',
+        'hero-eyebrow':   'El Alimento es Medicina',
+        'hero-title':     'Menús diseñados para<br>tu bienestar',
+        'hero-sub':       'Cada Retiro merece una cocina que lo potencie. ShivaDrops diseña menús completos adaptados a la energía, intención y disciplina de cada encuentro.',
         'attr-1':'Plant-Based','attr-2':'Ayurvédico','attr-3':'Sin Gluten','attr-4':'Alimentos Vivos','attr-5':'Estacional','attr-6':'Ceremonial',
         // Philosophy
         'ph1-label':'Intención','ph1-desc':'Cada plato diseñado para sostener la práctica del día',
         'ph2-label':'Equilibrio','ph2-desc':'Doshas y energía en balance a lo largo del día',
-        'ph3-label':'Agni','ph3-desc':'Fuego digestivo respetado en cada preparación',
-        'ph4-label':'Terroir','ph4-desc':'Ingredientes locales y estacionales, donde sea posible',
+        'ph3-label':'Agni','ph3-desc':'Fuego digestivo contemplado en cada preparación',
+        'ph4-label':'Slow Food','ph4-desc':'Preferencia por ingredientes locales y de estación',
         'ph5-label':'Vibración','ph5-desc':'Cocina preparada con amor, presencia y gratitud',
         // Tabs
-        'tab-yoga-label':'Yoga','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
+        'tab-yoga-label':'Yoga 4 días','tab-yoga7-label':'Yoga 7 días','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
         'tab-ayurveda-label':'Ayurveda','tab-medicina-label':'Plantas & Medicina','tab-privado-label':'Evento Privado',
         // Yoga days
-        'yoga-day1':'Día 1 — Apertura','yoga-day2':'Día 2 — Práctica','yoga-day3':'Día 3 — Cierre',
+        'yoga-day1':'Día 1 — Llegada','yoga-day2':'Día 2 — Apertura','yoga-day3':'Día 3 — Profundización','yoga-day4':'Día 4 — Cierre',
         // Yoga menu
-        'yoga-type':'Menú para Retiro de','yoga-title':'Yoga <span>Integral</span>',
-        'yoga-subtitle':'"Nutrir el cuerpo para liberar la mente"',
-        'yoga-desc':'La cocina para un retiro de yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restorative).',
-        'yoga-note':'✦ Menú de muestra basado en un retiro de 3 días para 12 personas. Pedro Miguel adapta cada menú a la duración, grupo y estación del año.',
+        'yoga-type':'Menú para Retiro de','yoga-title':'Yoga <span>4 días</span>',
+        'yoga-subtitle':'"Nutrir el cuerpo y liberar la mente"',
+        'yoga-desc':'La cocina para un Retiro de Yoga busca ser liviana, energizante y sin toxinas. Los alimentos sáttvicos — frescos, puros, nutritivos — sostienen la práctica sin crear pesadez ni distracción mental. Los menús varían según si la práctica es activa (Vinyasa, Ashtanga) o contemplativa (Yin, Restaurativo).',
+        'yoga-note':'✦ Menú de muestra basado en un retiro de 4 días y 3 noches para 12-15 personas. ShivaDrops adapta cada menú a la duración, grupo y estación del año.',
         'yoga-hl-title':'Platos Estrella del Retiro de Yoga',
         'yoga-princ-label':'Principio del Retiro de Yoga',
-        'yoga-cta-title':'¿Organizás un retiro de yoga?','yoga-cta-btn1':'Reservar Servicio','yoga-cta-btn2':'Consultar',
-        'yoga-cta-sub':'Pedro Miguel trabaja contigo desde el diseño del menú hasta la cocina in situ. Disponible en Uruguay y a nivel mundial.',
+        'yoga-cta-title':'¿Estás planificando un Retiro de Yoga?','yoga-cta-btn1':'Reservar Servicio','yoga-cta-btn2':'Consultar',
+        'yoga-cta-sub':'ShivaDrops trabaja contigo desde el diseño del menú, todas las especificaciones y el desarrollo de la cocina in situ. Disponible en Uruguay, Costa Rica y en todo el mundo.',
         // Credentials
-        'cred-eyebrow':'Por qué elegir a Pedro Miguel',
-        'cred-title':'Un cocinero que es también <span>facilitador</span>',
-        'cred-desc':'La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. Pedro Miguel no solo domina la técnica — lleva a la cocina su formación en Ayurveda, su práctica de yoga, su experiencia con el Breathwork y su profunda conexión con la naturaleza.',
-        'cred-1':'Años de cocina holística y retiros','cred-2':'Disciplinas integradas en cada menú',
-        'cred-3':'Personalizado para cada retiro','cred-4':'Disponible en todo el mundo',
+        'cred-eyebrow':'Por qué elegir a ShivaDrops',
+        'cred-title':'Un cocinero que <span>amplía el contenedor</span>',
+        'cred-desc':'La diferencia entre un chef y un cocinero holístico es la consciencia con que se cocina. ShivaDrops no solo domina la técnica — a todos los años de experiencia en gastronomía internacional le suma su formación en Ayurveda, su práctica de Yoga, su experiencia con el Breathwork y su profunda conexión con la Naturaleza.',
+        'cred-1':'Años de cocina profesional','cred-2':'Cocina holística y retiros',
+        'cred-3':'Disciplinas integradas en cada menú','cred-4':'Personalizado para cada retiro','cred-5':'Disponible en todo el mundo',
         // Footer
         'ft-nav-title':'Navegación','ft-contact-title':'Contacto','ft-rights':'Todos los derechos reservados',
       },
       en: {
-        'hero-eyebrow':   'Food as Medicine',
-        'hero-title':     'Menus designed to<br><em>transform</em>',
-        'hero-sub':       'Every retreat deserves a kitchen that amplifies it. Pedro Miguel designs complete menus adapted to the energy, intention and discipline of each gathering — from dawn to the ceremonial closing.',
+        'hero-eyebrow':   'Food is Medicine',
+        'hero-title':     'Menus designed for<br>your wellbeing',
+        'hero-sub':       'Every retreat deserves a kitchen that amplifies it. ShivaDrops designs complete menus adapted to the energy, intention and discipline of each gathering.',
         'attr-1':'Plant-Based','attr-2':'Ayurvedic','attr-3':'Gluten-Free','attr-4':'Living Foods','attr-5':'Seasonal','attr-6':'Ceremonial',
         'ph1-label':'Intention','ph1-desc':'Every dish designed to support the day\'s practice',
         'ph2-label':'Balance','ph2-desc':'Doshas and energy in harmony throughout the day',
         'ph3-label':'Agni','ph3-desc':'Digestive fire honored in every preparation',
-        'ph4-label':'Terroir','ph4-desc':'Local and seasonal ingredients, wherever possible',
+        'ph4-label':'Slow Food','ph4-desc':'Preference for local and seasonal ingredients',
         'ph5-label':'Vibration','ph5-desc':'Food cooked with love, presence and gratitude',
-        'tab-yoga-label':'Yoga','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
+        'tab-yoga-label':'Yoga 4 days','tab-yoga7-label':'Yoga 7 days','tab-detox-label':'Detox','tab-breathwork-label':'Breathwork',
         'tab-ayurveda-label':'Ayurveda','tab-medicina-label':'Plant Medicine','tab-privado-label':'Private Event',
-        'yoga-day1':'Day 1 — Opening','yoga-day2':'Day 2 — Practice','yoga-day3':'Day 3 — Closing',
-        'yoga-type':'Menu for','yoga-title':'Integral <span>Yoga</span>',
+        'yoga-day1':'Day 1 — Arrival','yoga-day2':'Day 2 — Opening','yoga-day3':'Day 3 — Deepening','yoga-day4':'Day 4 — Closing',
+        'yoga-type':'Menu for','yoga-title':'Yoga <span>4 days</span>',
         'yoga-subtitle':'"Nourishing the body to free the mind"',
         'yoga-desc':'Yoga retreat cooking aims to be light, energizing and toxin-free. Sāttvic foods — fresh, pure, nourishing — support practice without creating heaviness or mental distraction. Menus vary depending on whether the practice is active (Vinyasa, Ashtanga) or contemplative (Yin, Restorative).',
-        'yoga-note':'✦ Sample menu based on a 3-day retreat for 12 people. Pedro Miguel adapts each menu to the duration, group and season of the year.',
+        'yoga-note':'✦ Sample menu based on a 4-day, 3-night retreat for 12–15 people. ShivaDrops adapts each menu to the duration, group and season of the year.',
         'yoga-hl-title':'Star Dishes of the Yoga Retreat',
         'yoga-princ-label':'Yoga Retreat Principle',
-        'yoga-cta-title':'Are you organizing a yoga retreat?','yoga-cta-btn1':'Book Service','yoga-cta-btn2':'Enquire',
-        'yoga-cta-sub':'Pedro Miguel works with you from menu design to on-site cooking. Available in Uruguay and worldwide.',
-        'cred-eyebrow':'Why choose Pedro Miguel',
-        'cred-title':'A cook who is also a <span>facilitator</span>',
-        'cred-desc':'The difference between a chef and a holistic cook is the consciousness with which one cooks. Pedro Miguel not only masters technique — he brings to the kitchen his Ayurvedic training, yoga practice, Breathwork experience and his deep connection with nature.',
-        'cred-1':'Years of holistic cooking & retreats','cred-2':'Disciplines integrated in each menu',
-        'cred-3':'Customized for every retreat','cred-4':'Available worldwide',
+        'yoga-cta-title':'Are you planning a Yoga Retreat?','yoga-cta-btn1':'Book Service','yoga-cta-btn2':'Enquire',
+        'yoga-cta-sub':'ShivaDrops works with you from menu design, all specifications and on-site cooking. Available in Uruguay, Costa Rica and worldwide.',
+        'cred-eyebrow':'Why choose ShivaDrops',
+        'cred-title':'A cook who <span>expands the container</span>',
+        'cred-desc':'The difference between a chef and a holistic cook is the consciousness with which one cooks. ShivaDrops not only masters technique — he brings to the kitchen his Ayurvedic training, Yoga practice, Breathwork experience and his deep connection with Nature.',
+        'cred-1':'Years of professional cooking','cred-2':'Holistic cooking & retreats',
+        'cred-3':'Disciplines integrated in each menu','cred-4':'Customized for every retreat','cred-5':'Available worldwide',
         'ft-nav-title':'Navigation','ft-contact-title':'Contact','ft-rights':'All rights reserved',
       }
     };
 
     function setLang(lang) {
       const t = T[lang];
-      const htmlIds = ['hero-title','yoga-title','cred-title'];
+      const htmlIds = ['hero-title','yoga-title','cred-title','yoga-cta-title'];
       Object.keys(t).forEach(id => {
         if (typeof t[id] !== 'string') return;
         const el = document.getElementById(id);
