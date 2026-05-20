@@ -23,11 +23,6 @@
       --cream:      #f0e4cc;
       --cream-dim:  rgba(240, 228, 204, 0.6);
       --cream-faint:rgba(240, 228, 204, 0.25);
-      --blocked:    #3d1a1a;
-      --blocked-text:#a05050;
-      --selected:   #2a54c4;
-      --in-range:   rgba(42, 84, 196, 0.15);
-      --available:  rgba(232, 184, 75, 0.06);
       --success:    #2d6a4f;
     }
 
@@ -39,7 +34,7 @@
     }
 
     /* ══ NAV ══ */
-        nav {
+    nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
@@ -69,7 +64,7 @@
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a.active { color: var(--gold); }
-        .nav-cta {
+    .nav-cta {
       background: transparent !important;
       color: var(--blue-light) !important;
       padding: 0.55rem 1.6rem;
@@ -142,7 +137,7 @@
       align-items: start;
     }
 
-    /* ══ CALENDAR ══ */
+    /* ══ CALENDAR PANEL ══ */
     .calendar-panel {
       background: var(--bg-section);
       border: 1px solid rgba(232, 184, 75, 0.1);
@@ -151,213 +146,46 @@
       top: 100px;
     }
 
-    .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-
-    .cal-nav-btn {
-      background: none;
-      border: 1px solid rgba(232, 184, 75, 0.2);
-      border-radius: 2px;
-      width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      color: var(--cream-dim);
-      font-size: 1rem;
-      transition: all 0.2s;
-    }
-    .cal-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-    .cal-month-label {
+    .gcal-title {
       font-family: 'Cinzel', serif;
-      font-size: 1rem;
+      font-size: 0.72rem;
       font-weight: 500;
-      color: var(--cream);
-      letter-spacing: 0.08em;
-      text-align: center;
-      flex: 1;
-    }
-
-    .cal-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      margin-bottom: 4px;
-    }
-
-    .cal-weekday {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--cream-faint);
-      padding: 0.4rem 0;
-    }
-
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 3px;
-    }
-
-    .cal-day {
-      aspect-ratio: 1;
+      color: var(--blue-light);
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 0.82rem;
-      font-weight: 300;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.15s;
-      position: relative;
-      user-select: none;
+      gap: 0.8rem;
     }
-
-    .cal-day.empty { cursor: default; }
-
-    .cal-day.past {
-      color: rgba(240, 228, 204, 0.15);
-      cursor: not-allowed;
-    }
-
-    .cal-day.today {
-      color: var(--gold);
-      font-weight: 500;
-    }
-    .cal-day.today::after {
+    .gcal-title::after {
       content: '';
-      position: absolute;
-      bottom: 3px; left: 50%; transform: translateX(-50%);
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--gold);
+      flex: 1;
+      height: 1px;
+      background: rgba(74, 125, 224, 0.2);
     }
 
-    .cal-day.blocked {
-      background: var(--blocked);
-      color: var(--blocked-text);
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
-
-    .cal-day.available:not(.past):not(.blocked):hover {
-      background: rgba(232, 184, 75, 0.12);
-      color: var(--cream);
-    }
-
-    .cal-day.in-range {
-      background: var(--in-range);
-      color: var(--cream);
-      border-radius: 0;
-    }
-
-    .cal-day.selected-start,
-    .cal-day.selected-end {
-      background: var(--selected);
-      color: #fff;
-      font-weight: 500;
-      box-shadow: 0 0 12px rgba(42, 84, 196, 0.5);
+    .gcal-frame {
+      width: 100%;
       border-radius: 2px;
-      z-index: 1;
+      overflow: hidden;
+      border: 1px solid rgba(232, 184, 75, 0.08);
+    }
+    .gcal-frame iframe {
+      display: block;
+      width: 100%;
+      height: 500px;
+      border: 0;
     }
 
-    .cal-day.selected-start.selected-end {
-      border-radius: 2px;
-    }
-
-    /* Loading state */
-    .cal-loading {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
+    .gcal-note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      font-weight: 300;
       color: var(--cream-faint);
+      line-height: 1.7;
       font-style: italic;
     }
-
-    /* Calendar legend */
-    .cal-legend {
-      display: flex;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      margin-top: 1.2rem;
-      padding-top: 1.2rem;
-      border-top: 1px solid rgba(232,184,75,0.08);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.91rem;
-      color: var(--cream-faint);
-    }
-
-    .legend-dot {
-      width: 10px; height: 10px;
-      border-radius: 2px;
-    }
-
-    .legend-dot.available { background: rgba(232,184,75,0.2); border: 1px solid rgba(232,184,75,0.3); }
-    .legend-dot.blocked   { background: var(--blocked); }
-    .legend-dot.selected  { background: var(--selected); }
-    .legend-dot.range     { background: var(--in-range); border: 1px solid rgba(42,84,196,0.3); }
-
-    /* Selection summary */
-    .selection-summary {
-      margin-top: 1.2rem;
-      padding: 1rem 1.2rem;
-      background: rgba(42, 84, 196, 0.1);
-      border: 1px solid rgba(42, 84, 196, 0.25);
-      border-radius: 2px;
-      display: none;
-    }
-    .selection-summary.visible { display: block; }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-      padding: 0.3rem 0;
-    }
-
-    .summary-label { color: var(--cream-faint); font-weight: 300; }
-
-    .summary-value {
-      color: var(--cream);
-      font-weight: 400;
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-    }
-
-    .summary-duration {
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--gold);
-      text-align: center;
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid rgba(42,84,196,0.2);
-    }
-
-    .clear-btn {
-      background: none;
-      border: none;
-      color: var(--cream-faint);
-      font-size: 0.91rem;
-      cursor: pointer;
-      text-decoration: underline;
-      font-family: 'Raleway', sans-serif;
-      margin-top: 0.5rem;
-      transition: color 0.2s;
-    }
-    .clear-btn:hover { color: var(--cream); }
 
     /* ══ FORM PANEL ══ */
     .form-panel {
@@ -422,8 +250,6 @@
     }
 
     .service-opt-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
-
-    .service-opt-text {}
     .service-opt-name {
       font-family: 'Cinzel', serif;
       font-size: 0.72rem;
@@ -463,38 +289,12 @@
       font-weight: bold;
     }
 
-    /* Date display */
-    .date-display {
+    /* Date inputs */
+    .date-inputs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.8rem;
     }
-
-    .date-box {
-      padding: 1rem 1.2rem;
-      border: 1px solid rgba(232, 184, 75, 0.12);
-      border-radius: 2px;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .date-box-label {
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue-light);
-      margin-bottom: 0.4rem;
-      display: block;
-    }
-
-    .date-box-value {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      color: var(--cream);
-      min-height: 1.2rem;
-    }
-
-    .date-box-value.empty { color: var(--cream-faint); font-style: italic; font-family: 'Raleway', sans-serif; font-size: 0.78rem; }
 
     .duration-display {
       grid-column: 1 / -1;
@@ -515,7 +315,7 @@
     .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
 
     .form-label {
-      font-size: 1.2rem;
+      font-size: 0.68rem;
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -536,6 +336,7 @@
       width: 100%;
     }
 
+    .form-input[type="date"] { color-scheme: dark; }
     .form-input::placeholder, .form-textarea::placeholder { color: var(--cream-faint); }
 
     .form-input:focus, .form-textarea:focus {
@@ -544,7 +345,6 @@
     }
 
     .form-input.error { border-color: rgba(200, 80, 80, 0.5); }
-
     .form-textarea { min-height: 110px; resize: vertical; }
 
     /* Submit */
@@ -677,7 +477,6 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ══ RESPONSIVE ══ */
-    /* ── Tablet ── */
     @media (max-width: 1024px) {
       .booking-wrapper { grid-template-columns: 1fr; padding: 3.5rem 3rem 5rem; gap: 3.5rem; max-width: 640px; }
       .calendar-panel { position: static; }
@@ -686,7 +485,6 @@
       footer { padding: 4rem 3rem 2rem; }
     }
 
-    /* ── Large phone / small tablet ── */
     @media (max-width: 768px) {
       nav { padding: 0.5rem 1.25rem; }
       nav.scrolled { padding: 0.5rem 1.25rem; }
@@ -700,14 +498,11 @@
 
       .booking-wrapper { padding: 2.5rem 1.25rem 4rem; gap: 3rem; }
       .calendar-panel { padding: 1.4rem 1.1rem; }
-      .calendar-header { margin-bottom: 1.2rem; }
-      .cal-weekday { font-size: 0.95rem; padding: 0.3rem 0; }
-      .cal-grid { gap: 4px; }
-      .cal-day { font-size: 0.9rem; }
-      .cal-nav-btn { width: 40px; height: 40px; }
+      .gcal-frame iframe { height: 380px; }
 
       .service-cards { grid-template-columns: 1fr; }
       .service-option { padding: 1.1rem; }
+      .date-inputs { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .form-input, .form-textarea { font-size: 16px; }
 
@@ -719,17 +514,13 @@
       .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
     }
 
-    /* ── Phone ── */
     @media (max-width: 480px) {
       .page-hero { padding: 6.5rem 1.25rem 2rem; }
       .page-hero-title { font-size: clamp(1.75rem, 9vw, 2.3rem); }
       .page-hero-label { font-size: 0.58rem; letter-spacing: 0.28em; }
       .booking-wrapper { padding: 2rem 1rem 3.5rem; }
       .calendar-panel { padding: 1.2rem 0.85rem; }
-      .cal-grid { gap: 3px; }
-      .cal-day { font-size: 0.85rem; }
-      .cal-weekday { font-size: 0.82rem; }
-      .cal-month-label { font-size: 0.92rem; }
+      .gcal-frame iframe { height: 320px; }
       .info-strip { padding: 2.5rem 1.25rem; }
       footer { padding: 3rem 1.25rem 1.5rem; }
       .footer-bottom { font-size: 0.62rem; }
@@ -737,39 +528,6 @@
   </style>
 </head>
 <body>
-
-  <!--
-  ══════════════════════════════════════════════════════════════
-  CONFIGURACIÓN — Leer antes de publicar
-  ══════════════════════════════════════════════════════════════
-  1. WhatsApp de Pedro Miguel:
-     Editar PEDRO_WHATSAPP en el CONFIG de abajo (con código de país, sin +)
-     Ej: Uruguay = 598XXXXXXXX
-
-  2. Calendario de fechas bloqueadas — OPCIÓN A: Google Calendar (recomendado)
-     a) En Google Calendar → clic en los 3 puntos del calendario → "Configuración y uso compartido"
-     b) En "Permisos de acceso" activar "Hacer público este calendario"
-     c) Copiar el "ID del calendario" que aparece más abajo (ej: abc123@group.calendar.google.com)
-        y pegarlo en GCAL_ID
-     d) Obtener una API key gratuita en console.cloud.google.com:
-        Nuevo proyecto → Activar "Google Calendar API" → Credenciales → Crear API key
-        (Restringirla a "Google Calendar API" para mayor seguridad)
-        Pegarla en GCAL_API_KEY
-     e) Pedro agrega eventos normales a su Google Calendar para las fechas reservadas
-        → el sitio los lee automáticamente como días bloqueados
-
-  3. Calendario de fechas bloqueadas — OPCIÓN B: Google Sheet (alternativa)
-     a) Crear una Google Sheet con estas columnas en la fila 1:
-        inicio | fin | servicio | notas
-        (fechas en formato YYYY-MM-DD, ej: 2024-03-15)
-     b) Publicar la hoja: Archivo → Compartir → Publicar en la web → CSV
-     c) Copiar el ID de la hoja (la parte larga de la URL) y pegarlo en SHEET_ID
-     (Solo se usa si GCAL_ID está vacío)
-
-  4. Para bloquear fechas manualmente sin conectar nada, agregar al array MANUAL_BLOCKED:
-     { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
-  ══════════════════════════════════════════════════════════════
-  -->
 
   <!-- ══ NAV ══ -->
   <nav id="navbar">
@@ -807,7 +565,7 @@
   <div class="page-hero">
     <span class="page-hero-label" id="hero-label">Shivadrops</span>
     <h1 class="page-hero-title" id="hero-title">Reserva tu <span>experiencia</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Shivadrops se pondrá en contacto contigo para confirmar los detalles.</p>
+    <p class="page-hero-sub" id="hero-sub">Consultá la disponibilidad de Pedro en el calendario, elegí tus fechas y enviá tu solicitud. Shivadrops se pondrá en contacto con vos para confirmar los detalles.</p>
   </div>
 
   <!-- ══ BOOKING ══ -->
@@ -815,47 +573,11 @@
 
     <!-- CALENDAR -->
     <div class="calendar-panel">
-      <div class="calendar-header">
-        <button class="cal-nav-btn" onclick="changeMonth(-1)" id="btn-prev">‹</button>
-        <div class="cal-month-label" id="cal-month-label">Cargando...</div>
-        <button class="cal-nav-btn" onclick="changeMonth(1)" id="btn-next">›</button>
+      <div class="gcal-title" id="gcal-title">Disponibilidad</div>
+      <div class="gcal-frame">
+        <iframe src="https://calendar.google.com/calendar/embed?src=shivadropsu%40gmail.com&ctz=America%2FMontevideo&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=1" frameborder="0" scrolling="no"></iframe>
       </div>
-
-      <div class="cal-weekdays" id="cal-weekdays">
-        <div class="cal-weekday" id="wd-0">Dom</div>
-        <div class="cal-weekday" id="wd-1">Lun</div>
-        <div class="cal-weekday" id="wd-2">Mar</div>
-        <div class="cal-weekday" id="wd-3">Mié</div>
-        <div class="cal-weekday" id="wd-4">Jue</div>
-        <div class="cal-weekday" id="wd-5">Vie</div>
-        <div class="cal-weekday" id="wd-6">Sáb</div>
-      </div>
-
-      <div class="cal-grid" id="cal-grid">
-        <div class="cal-loading" id="cal-loading" style="grid-column:1/-1">
-          Cargando disponibilidad...
-        </div>
-      </div>
-
-      <div class="cal-legend">
-        <div class="legend-item"><div class="legend-dot available"></div><span id="leg-available">Disponible</span></div>
-        <div class="legend-item"><div class="legend-dot blocked"></div><span id="leg-blocked">No disponible</span></div>
-        <div class="legend-item"><div class="legend-dot selected"></div><span id="leg-selected">Seleccionado</span></div>
-        <div class="legend-item"><div class="legend-dot range"></div><span id="leg-range">Tu período</span></div>
-      </div>
-
-      <div class="selection-summary" id="selection-summary">
-        <div class="summary-row">
-          <span class="summary-label" id="sum-start-lbl">Inicio</span>
-          <span class="summary-value" id="sum-start">—</span>
-        </div>
-        <div class="summary-row">
-          <span class="summary-label" id="sum-end-lbl">Fin</span>
-          <span class="summary-value" id="sum-end">—</span>
-        </div>
-        <div class="summary-duration" id="sum-duration"></div>
-        <button class="clear-btn" onclick="clearSelection()" id="clear-btn">Limpiar selección</button>
-      </div>
+      <p class="gcal-note" id="gcal-note">Consultá el calendario para ver la disponibilidad de Pedro, luego elegí tus fechas en el formulario.</p>
     </div>
 
     <!-- FORM -->
@@ -904,17 +626,17 @@
         </div>
       </div>
 
-      <!-- Dates summary -->
+      <!-- Dates -->
       <div>
-        <div class="form-section-title" id="step2-title">02 · Fechas seleccionadas</div>
-        <div class="date-display">
-          <div class="date-box">
-            <span class="date-box-label" id="db-start-lbl">Inicio</span>
-            <div class="date-box-value empty" id="db-start">← Selecciona en el calendario</div>
+        <div class="form-section-title" id="step2-title">02 · Fechas del evento</div>
+        <div class="date-inputs">
+          <div class="form-group">
+            <label class="form-label" id="lbl-date-start">Fecha inicio *</label>
+            <input type="date" class="form-input" id="inp-date-start" onchange="handleDateInput()">
           </div>
-          <div class="date-box">
-            <span class="date-box-label" id="db-end-lbl">Fin</span>
-            <div class="date-box-value empty" id="db-end">← Selecciona en el calendario</div>
+          <div class="form-group">
+            <label class="form-label" id="lbl-date-end">Fecha fin *</label>
+            <input type="date" class="form-input" id="inp-date-end" onchange="handleDateInput()">
           </div>
           <div class="duration-display" id="db-duration"></div>
         </div>
@@ -950,7 +672,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" id="lbl-message">Mensaje o detalles adicionales</label>
-            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Shivadrops sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
+            <textarea class="form-textarea" id="inp-message" placeholder="Contale a Shivadrops sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
           </div>
         </div>
       </div>
@@ -1015,7 +737,7 @@
               <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
             </svg>
           </a>
-          <a href="https://wa.me/598" class="social-link" target="_blank" aria-label="WhatsApp">
+          <a href="https://wa.me/59891215632" class="social-link" target="_blank" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
             </svg>
@@ -1054,96 +776,20 @@
   </footer>
 
   <script>
-    // ══════════════════════════════════════════════
-    // CONFIGURACIÓN — EDITAR ANTES DE PUBLICAR
-    // ══════════════════════════════════════════════
-    const CONFIG = {
-      // WhatsApp de Pedro Miguel (código de país + número, sin + ni espacios)
-      PEDRO_WHATSAPP: '59891215632',
+    const CONFIG = { PEDRO_WHATSAPP: '59891215632' };
 
-      // ── Google Calendar público (recomendado) ──────────────────────────
-      // GCAL_ID: ID del calendario de Pedro
-      //   → Google Calendar (web) → clic en los 3 puntos del calendario
-      //   → "Configuración y uso compartido" → sección "ID del calendario"
-      //   → activar "Hacer público este calendario"
-      //   Ejemplo: 'pedro@gmail.com' o 'abc123@group.calendar.google.com'
-      //
-      // GCAL_API_KEY: clave de API de Google Cloud Console (una sola vez)
-      //   → console.cloud.google.com → Nuevo proyecto → Biblioteca
-      //   → buscar "Google Calendar API" → Activar
-      //   → Credenciales → Crear credenciales → Clave de API
-      //   → Restricciones de API: Google Calendar API
-      // ──────────────────────────────────────────────────────────────────
-      GCAL_ID:      '',
-      GCAL_API_KEY: '',
-
-      // Respaldo: Google Sheet (se usa solo si GCAL_ID está vacío)
-      SHEET_ID: '',
-
-      // Fechas bloqueadas manuales (siempre activas, para cualquier caso urgente)
-      // Formato: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
-      MANUAL_BLOCKED: []
-    };
-    // ══════════════════════════════════════════════
-
-    // ─── State ───
-    let currentYear  = new Date().getFullYear();
-    let currentMonth = new Date().getMonth();
     let selectedStart = null;
     let selectedEnd   = null;
-    let selecting     = 'start'; // 'start' | 'end'
-    let blockedRanges = [];
     let currentLang   = 'es';
 
-    // ─── Month names ───
     const MONTHS = {
       es: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
       en: ['January','February','March','April','May','June','July','August','September','October','November','December']
     };
 
-    const WEEKDAYS = {
-      es: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
-      en: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-    };
-
-    // ─── Date helpers ───
-    function dateStr(d) {
-      // Returns YYYY-MM-DD
-      return d.toISOString().split('T')[0];
-    }
-
     function parseDate(s) {
       const [y, m, d] = s.split('-').map(Number);
       return new Date(y, m - 1, d);
-    }
-
-    function isBlocked(date) {
-      const ds = dateStr(date);
-      return blockedRanges.some(r => ds >= r.start && ds <= r.end);
-    }
-
-    function isInRange(date) {
-      if (!selectedStart || !selectedEnd) return false;
-      const ds = dateStr(date);
-      return ds > dateStr(selectedStart) && ds < dateStr(selectedEnd);
-    }
-
-    function isSelectedStart(date) {
-      return selectedStart && dateStr(date) === dateStr(selectedStart);
-    }
-
-    function isSelectedEnd(date) {
-      return selectedEnd && dateStr(date) === dateStr(selectedEnd);
-    }
-
-    function isPast(date) {
-      const today = new Date(); today.setHours(0,0,0,0);
-      return date < today;
-    }
-
-    function isToday(date) {
-      const today = new Date();
-      return dateStr(date) === dateStr(today);
     }
 
     function diffDays(a, b) {
@@ -1156,247 +802,47 @@
       return `${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
     }
 
-    // ─── Load blocked dates ───
-    async function loadBlockedDates() {
-      blockedRanges = [...CONFIG.MANUAL_BLOCKED];
+    function handleDateInput() {
+      const sv = document.getElementById('inp-date-start').value;
+      const ev = document.getElementById('inp-date-end').value;
+      selectedStart = sv ? parseDate(sv) : null;
+      selectedEnd   = ev ? parseDate(ev) : null;
 
-      if (CONFIG.GCAL_ID && CONFIG.GCAL_API_KEY) {
-        await loadFromGoogleCalendar();
-      } else if (CONFIG.SHEET_ID) {
-        await loadFromGoogleSheet();
-      }
-
-      renderCalendar();
-    }
-
-    async function loadFromGoogleCalendar() {
-      try {
-        const now     = new Date();
-        const timeMin = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-        const timeMax = new Date(now.getFullYear() + 1, now.getMonth() + 1, 1).toISOString();
-        const url     = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CONFIG.GCAL_ID)}/events`
-                      + `?key=${CONFIG.GCAL_API_KEY}`
-                      + `&timeMin=${timeMin}&timeMax=${timeMax}`
-                      + `&singleEvents=true&orderBy=startTime`;
-
-        const res  = await fetch(url);
-        const data = await res.json();
-
-        if (!data.items) return;
-
-        for (const event of data.items) {
-          const start = event.start.date || (event.start.dateTime || '').split('T')[0];
-          let   end   = event.end.date   || (event.end.dateTime   || '').split('T')[0];
-
-          // Google Calendar all-day end is exclusive — subtract 1 day
-          if (event.end.date) {
-            const d = new Date(end + 'T12:00:00');
-            d.setDate(d.getDate() - 1);
-            end = d.toISOString().split('T')[0];
-          }
-
-          if (start && end) blockedRanges.push({ start, end });
-        }
-      } catch (e) {
-        console.warn('No se pudo cargar Google Calendar:', e);
-      }
-    }
-
-    async function loadFromGoogleSheet() {
-      try {
-        const url  = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
-        const res  = await fetch(url);
-        const text = await res.text();
-
-        const rows = text.trim().split('\n').slice(1);
-        for (const row of rows) {
-          const cols  = row.split(',').map(v => v.replace(/^"|"$/g, '').trim());
-          const start = cols[0];
-          const end   = cols[1];
-          if (start && end && /^\d{4}-\d{2}-\d{2}$/.test(start) && /^\d{4}-\d{2}-\d{2}$/.test(end)) {
-            blockedRanges.push({ start, end });
-          }
-        }
-      } catch (e) {
-        console.warn('No se pudo cargar Google Sheet:', e);
-      }
-    }
-
-    // ─── Render calendar ───
-    function renderCalendar() {
-      const grid  = document.getElementById('cal-grid');
-      const label = document.getElementById('cal-month-label');
-      const loading = document.getElementById('cal-loading');
-      if (loading) loading.remove();
-
-      label.textContent = `${MONTHS[currentLang][currentMonth]} ${currentYear}`;
-
-      // Weekday headers
-      WEEKDAYS[currentLang].forEach((wd, i) => {
-        const el = document.getElementById('wd-' + i);
-        if (el) el.textContent = wd;
-      });
-
-      grid.innerHTML = '';
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-      // Empty cells
-      for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day empty';
-        grid.appendChild(empty);
-      }
-
-      // Day cells
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(currentYear, currentMonth, d);
-        const cell = document.createElement('div');
-        cell.className = 'cal-day';
-
-        const past    = isPast(date);
-        const blocked = isBlocked(date);
-        const today   = isToday(date);
-        const start   = isSelectedStart(date);
-        const end     = isSelectedEnd(date);
-        const inRange = isInRange(date);
-
-        if (past)    cell.classList.add('past');
-        else if (blocked) cell.classList.add('blocked');
-        else         cell.classList.add('available');
-        if (today)   cell.classList.add('today');
-        if (start)   cell.classList.add('selected-start');
-        if (end)     cell.classList.add('selected-end');
-        if (inRange) cell.classList.add('in-range');
-
-        cell.textContent = d;
-
-        if (!past && !blocked) {
-          cell.addEventListener('click', () => onDayClick(date));
-        }
-
-        grid.appendChild(cell);
-      }
-    }
-
-    // ─── Day click ───
-    function onDayClick(date) {
-      if (selecting === 'start') {
-        selectedStart = date;
-        selectedEnd   = null;
-        selecting     = 'end';
+      if (selectedStart && selectedEnd && selectedEnd < selectedStart) {
+        selectedEnd = null;
+        document.getElementById('inp-date-end').value = '';
+        showNotice(
+          currentLang === 'es'
+            ? '⚠️ La fecha de fin debe ser posterior a la de inicio.'
+            : '⚠️ End date must be after start date.',
+          'warning'
+        );
       } else {
-        if (date < selectedStart) {
-          // Clicked before start — swap
-          selectedEnd   = selectedStart;
-          selectedStart = date;
-        } else {
-          selectedEnd = date;
-        }
-        // Check no blocked dates in range
-        if (rangeHasBlocked(selectedStart, selectedEnd)) {
-          showNotice(
-            currentLang === 'es'
-              ? '⚠️ El rango seleccionado incluye fechas no disponibles. Por favor elige otro período.'
-              : '⚠️ The selected range includes unavailable dates. Please choose a different period.',
-            'warning'
-          );
-          selectedEnd = null;
-          selecting   = 'end';
-          renderCalendar();
-          updateSummary();
-          return;
-        }
-        selecting = 'start';
         hideNotice();
       }
-      renderCalendar();
       updateSummary();
     }
 
-    function rangeHasBlocked(start, end) {
-      let d = new Date(start);
-      d.setDate(d.getDate() + 1); // don't check start itself
-      while (d < end) {
-        if (isBlocked(d)) return true;
-        d.setDate(d.getDate() + 1);
-      }
-      return false;
-    }
-
-    // ─── Update summary ───
     function updateSummary() {
-      const summary  = document.getElementById('selection-summary');
-      const sumStart = document.getElementById('sum-start');
-      const sumEnd   = document.getElementById('sum-end');
-      const sumDur   = document.getElementById('sum-duration');
-      const dbStart  = document.getElementById('db-start');
-      const dbEnd    = document.getElementById('db-end');
-      const dbDur    = document.getElementById('db-duration');
-
-      if (selectedStart) {
-        const startFmt = formatDate(selectedStart, currentLang);
-        sumStart.textContent = startFmt;
-        dbStart.textContent  = startFmt;
-        dbStart.classList.remove('empty');
-      } else {
-        const ph = currentLang === 'es' ? '← Selecciona en el calendario' : '← Select on the calendar';
-        sumStart.textContent = '—';
-        dbStart.textContent  = ph;
-        dbStart.classList.add('empty');
-      }
-
-      if (selectedEnd) {
-        const endFmt = formatDate(selectedEnd, currentLang);
-        const days   = Math.max(1, diffDays(selectedStart, selectedEnd));
-        const durTxt = currentLang === 'es'
+      const dbDur = document.getElementById('db-duration');
+      if (selectedStart && selectedEnd) {
+        const days = Math.max(1, diffDays(selectedStart, selectedEnd));
+        const txt = currentLang === 'es'
           ? `${days} día${days !== 1 ? 's' : ''} de servicio`
           : `${days} day${days !== 1 ? 's' : ''} of service`;
-
-        sumEnd.textContent  = endFmt;
-        sumDur.textContent  = durTxt;
-        dbEnd.textContent   = endFmt;
-        dbEnd.classList.remove('empty');
-        dbDur.textContent   = durTxt;
+        dbDur.textContent = txt;
         dbDur.classList.add('visible');
-        summary.classList.add('visible');
       } else {
-        const ph = currentLang === 'es' ? '← Selecciona en el calendario' : '← Select on the calendar';
-        sumEnd.textContent = '—';
-        sumDur.textContent = '';
-        dbEnd.textContent  = ph;
-        dbEnd.classList.add('empty');
         dbDur.classList.remove('visible');
-        if (!selectedStart) summary.classList.remove('visible');
       }
     }
 
-    function clearSelection() {
-      selectedStart = null;
-      selectedEnd   = null;
-      selecting     = 'start';
-      renderCalendar();
-      updateSummary();
-      document.getElementById('selection-summary').classList.remove('visible');
-      hideNotice();
-    }
-
-    // ─── Month navigation ───
-    function changeMonth(dir) {
-      currentMonth += dir;
-      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-      if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
-      renderCalendar();
-    }
-
-    // ─── Service selector ───
     function selectService(label) {
       document.querySelectorAll('.service-option').forEach(el => el.classList.remove('selected'));
       label.classList.add('selected');
       label.querySelector('input').checked = true;
     }
 
-    // ─── Notices ───
     function showNotice(msg, type) {
       const el = document.getElementById('form-notice');
       el.textContent = msg;
@@ -1404,11 +850,9 @@
     }
 
     function hideNotice() {
-      const el = document.getElementById('form-notice');
-      el.className = 'form-notice';
+      document.getElementById('form-notice').className = 'form-notice';
     }
 
-    // ─── Submit → WhatsApp ───
     function submitBooking() {
       const name     = document.getElementById('inp-name').value.trim();
       const email    = document.getElementById('inp-email').value.trim();
@@ -1417,10 +861,8 @@
       const location = document.getElementById('inp-location').value.trim();
       const message  = document.getElementById('inp-message').value.trim();
       const service  = document.querySelector('input[name="service"]:checked');
-
       const es = currentLang === 'es';
 
-      // Validation
       const errors = [];
       if (!name)    errors.push(es ? 'nombre' : 'name');
       if (!email)   errors.push(es ? 'email' : 'email');
@@ -1484,12 +926,9 @@ ${message ? `\n💬 *Message:*\n${message}` : ''}
 _Sent from shivadrops.com_`;
       }
 
-      const encoded = encodeURIComponent(msg);
-      const waNum   = CONFIG.PEDRO_WHATSAPP.replace(/\D/g, '');
-      window.open(`https://wa.me/${waNum}?text=${encoded}`, '_blank');
+      window.open(`https://wa.me/${CONFIG.PEDRO_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // ─── Submit → Email ───
     function submitByEmail() {
       const name     = document.getElementById('inp-name').value.trim();
       const email    = document.getElementById('inp-email').value.trim();
@@ -1498,7 +937,6 @@ _Sent from shivadrops.com_`;
       const location = document.getElementById('inp-location').value.trim();
       const message  = document.getElementById('inp-message').value.trim();
       const service  = document.querySelector('input[name="service"]:checked');
-
       const es = currentLang === 'es';
 
       const errors = [];
@@ -1571,57 +1009,70 @@ Sent from shivadrops.com`;
       window.location.href = `mailto:shivadropsu@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
-    // ─── Language ───
     const T = {
       es: {
-        'hero-label': 'Shivadrops',
-        'hero-title': 'Reserva tu <span>experiencia</span>',
-        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Shivadrops se pondrá en contacto contigo para confirmar los detalles.',
-        'leg-available':'Disponible','leg-blocked':'No disponible','leg-selected':'Seleccionado','leg-range':'Tu período',
-        'sum-start-lbl':'Inicio','sum-end-lbl':'Fin',
-        'step1-title':'01 · Elige tu servicio',
-        'step2-title':'02 · Fechas seleccionadas',
-        'step3-title':'03 · Tus datos',
+        'hero-label':       'Shivadrops',
+        'hero-title':       'Reserva tu <span>experiencia</span>',
+        'hero-sub':         'Consultá la disponibilidad de Pedro en el calendario, elegí tus fechas y enviá tu solicitud. Shivadrops se pondrá en contacto con vos para confirmar los detalles.',
+        'gcal-title':       'Disponibilidad',
+        'gcal-note':        'Consultá el calendario para ver la disponibilidad de Pedro, luego elegí tus fechas en el formulario.',
+        'step1-title':      '01 · Elige tu servicio',
+        'step2-title':      '02 · Fechas del evento',
+        'step3-title':      '03 · Tus datos',
         's1n':'Cocinero Holístico','s1s':'Retiros y Eventos',
         's2n':'Coach Alimentación','s2s':'Coaching Individual',
-        's3n':'Breathwork','s3s':'Rebirthing',
-        's4n':'Yoga','s4s':'Individual o Grupal',
-        'db-start-lbl':'Inicio','db-end-lbl':'Fin',
-        'lbl-name':'Nombre completo *','lbl-email':'Email *',
-        'lbl-phone':'WhatsApp *','lbl-people':'Número de personas',
-        'lbl-location':'Lugar del evento / retiro',
-        'lbl-message':'Mensaje o detalles adicionales',
+        's3n':'Breathwork',        's3s':'Rebirthing',
+        's4n':'Yoga',              's4s':'Individual o Grupal',
+        'lbl-date-start':   'Fecha inicio *',
+        'lbl-date-end':     'Fecha fin *',
+        'lbl-name':         'Nombre completo *',
+        'lbl-email':        'Email *',
+        'lbl-phone':        'WhatsApp *',
+        'lbl-people':       'Número de personas',
+        'lbl-location':     'Lugar del evento / retiro',
+        'lbl-message':      'Mensaje o detalles adicionales',
         'btn-reservar-text':'Reservar por WhatsApp',
-        'btn-email-text':'Enviar por Email',
-        'submit-note':'WhatsApp abre una conversación directa con Pedro. Si no tenés WhatsApp, usá el email — recibirás respuesta en 24–48 hs.',
-        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Shivadrops revisa la disponibilidad y confirma tu reserva directamente con vos.',
-        'i2-title':'Tiempo de respuesta','i2-text':'Shivadrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
-        'i3-title':'Disponibilidad mundial','i3-text':'Shivadrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
+        'submit-divider':   '— o —',
+        'btn-email-text':   'Enviar por Email',
+        'submit-note':      'WhatsApp abre una conversación directa con Pedro. Si no tenés WhatsApp, usá el email — recibirás respuesta en 24–48 hs.',
+        'i1-title':'¿Cómo funciona?',
+        'i1-text': 'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Shivadrops revisa la disponibilidad y confirma tu reserva directamente con vos.',
+        'i2-title':'Tiempo de respuesta',
+        'i2-text': 'Shivadrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
+        'i3-title':'Disponibilidad mundial',
+        'i3-text': 'Shivadrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
       },
       en: {
-        'hero-label': 'Shivadrops',
-        'hero-title': 'Book your <span>experience</span>',
-        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Shivadrops will get in touch with you to confirm the details.',
-        'leg-available':'Available','leg-blocked':'Not available','leg-selected':'Selected','leg-range':'Your period',
-        'sum-start-lbl':'Start','sum-end-lbl':'End',
-        'step1-title':'01 · Choose your service',
-        'step2-title':'02 · Selected dates',
-        'step3-title':'03 · Your details',
-        's1n':'Holistic Chef','s1s':'Retreats & Events',
-        's2n':'Nutrition Coach','s2s':'Individual Coaching',
-        's3n':'Breathwork','s3s':'Rebirthing',
-        's4n':'Yoga','s4s':'Individual or Group',
-        'db-start-lbl':'Start','db-end-lbl':'End',
-        'lbl-name':'Full name *','lbl-email':'Email *',
-        'lbl-phone':'WhatsApp *','lbl-people':'Number of people',
-        'lbl-location':'Event / retreat location',
-        'lbl-message':'Message or additional details',
+        'hero-label':       'Shivadrops',
+        'hero-title':       'Book your <span>experience</span>',
+        'hero-sub':         'Check Pedro\'s availability on the calendar, pick your dates and send your request. Shivadrops will get in touch with you to confirm the details.',
+        'gcal-title':       'Availability',
+        'gcal-note':        'Check the calendar to see Pedro\'s availability, then select your dates in the form.',
+        'step1-title':      '01 · Choose your service',
+        'step2-title':      '02 · Event dates',
+        'step3-title':      '03 · Your details',
+        's1n':'Holistic Chef',    's1s':'Retreats & Events',
+        's2n':'Nutrition Coach',  's2s':'Individual Coaching',
+        's3n':'Breathwork',       's3s':'Rebirthing',
+        's4n':'Yoga',             's4s':'Individual or Group',
+        'lbl-date-start':   'Start date *',
+        'lbl-date-end':     'End date *',
+        'lbl-name':         'Full name *',
+        'lbl-email':        'Email *',
+        'lbl-phone':        'WhatsApp *',
+        'lbl-people':       'Number of people',
+        'lbl-location':     'Event / retreat location',
+        'lbl-message':      'Message or additional details',
         'btn-reservar-text':'Book via WhatsApp',
-        'btn-email-text':'Send by Email',
-        'submit-note':'WhatsApp opens a direct conversation with Pedro. No WhatsApp? Use email instead — you\'ll hear back within 24–48 hrs.',
-        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Shivadrops reviews availability and confirms your booking directly with you.',
-        'i2-title':'Response time','i2-text':'Shivadrops responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
-        'i3-title':'Worldwide availability','i3-text':'Shivadrops assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
+        'submit-divider':   '— or —',
+        'btn-email-text':   'Send by Email',
+        'submit-note':      'WhatsApp opens a direct conversation with Pedro. No WhatsApp? Use email instead — you\'ll hear back within 24–48 hrs.',
+        'i1-title':'How does it work?',
+        'i1-text': 'You select dates and a service, send your request via WhatsApp. Shivadrops reviews availability and confirms your booking directly with you.',
+        'i2-title':'Response time',
+        'i2-text': 'Shivadrops responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
+        'i3-title':'Worldwide availability',
+        'i3-text': 'Shivadrops assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
       }
     };
 
@@ -1641,21 +1092,24 @@ Sent from shivadrops.com`;
           (lang === 'es' && id.includes('es')) || (lang === 'en' && id.includes('en'))
         );
       });
-      // Re-render calendar labels in new language
-      renderCalendar();
       updateSummary();
       localStorage.setItem('sd-lang', lang);
     }
 
-    // ─── Nav scroll ───
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
     });
 
     function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
 
-    // ─── Init ───
-    loadBlockedDates();
+    // Init — set minimum selectable dates to today
+    const todayStr  = new Date().toISOString().split('T')[0];
+    const inpStart  = document.getElementById('inp-date-start');
+    const inpEnd    = document.getElementById('inp-date-end');
+    inpStart.min    = todayStr;
+    inpEnd.min      = todayStr;
+    inpStart.addEventListener('change', () => { if (inpStart.value) inpEnd.min = inpStart.value; });
+
     const saved = localStorage.getItem('sd-lang');
     if (saved && saved !== 'es') setLang(saved);
   </script>
