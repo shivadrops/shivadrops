@@ -1,4 +1,4 @@
-# ShivaDrops — Project Brief
+# Shivadrops — Project Brief
 
 ## Target Audience — CRITICAL FRAMING
 **The website is for retreat facilitators and event organizers who want to HIRE Pedro.**
@@ -11,7 +11,7 @@
 ---
 
 ## The Person
-**Pedro Miguel Ormaechea Riera** — founder of ShivaDrops.
+**Pedro Miguel Ormaechea Riera** — founder of Shivadrops.
 - Natural and holistic cook, conscious nutrition coach, yoga teacher, and breathwork facilitator
 - Based in **Punta del Este, Uruguay** — available for retreats and events worldwide
 - Describes his work as "vibrational alchemy" rooted in genuine goodness
@@ -20,7 +20,7 @@
 - Contact: shivadropsu@gmail.com | Instagram: @shivadrops | Facebook: pormariera
 
 ## The Brand
-- **Name**: ShivaDrops
+- **Name**: Shivadrops
 - **Logo**: Water drop containing the Flower of Life (sacred geometry) — represents purity, spiritual nourishment, the sacred in the everyday
 - **Colors**: Deep navy blue, warm gold/amber, cream/off-white
 - **Language**: Bilingual — Spanish default, English toggle via flag icons in corner
@@ -32,7 +32,7 @@
 | File | Page | Description |
 |------|------|-------------|
 | `index.html` | **Landing (Splash)** | Entry page — logo, brand description, "Ingresar" button → goes to `home.html` |
-| `home.html` | **Home** | What ShivaDrops is — brand intro, Pedro's story, philosophy; speaks to facilitators/organizers considering him as a hire |
+| `home.html` | **Home** | What Shivadrops is — brand intro, Pedro's story, philosophy; speaks to facilitators/organizers considering him as a hire |
 | `servicios.html` | **Servicios** | The 4 services Pedro offers to retreats/events — framed as "what I bring to your retreat" |
 | `recetas.html` | **Menús** | Sample menus for different retreat types — positions Pedro as a top culinary expert that organizers want for their event |
 | `reservas.html` | **Reservas** | Booking system — calendar, service selector, form → WhatsApp; used by organizers or private clients to request Pedro |
@@ -126,3 +126,62 @@ Free digital content available for download (PDFs, guides, recipes, etc.)
 6. [ ] `descargas.html` — Downloads page
 7. [ ] `contacto.html` — Contact page
 8. [ ] Shared CSS / nav component (duplicated or extracted to `style.css`)
+
+---
+
+## Launch Checklist — Pasos para publicar el sitio
+
+### PASO 1 — Pendiente de Pedro (enviarle el mail a shivadropsu@gmail.com)
+
+- [ ] **GitHub**: Pedro crea cuenta en github.com con su email → pasar usuario para agregarlo como dueño del repo
+- [ ] **Netlify**: Pedro crea cuenta en netlify.com con el mismo email de GitHub → pasar credenciales o hacerlo en llamada
+- [ ] **Dominio**: Pedro tiene dominio comprado → pasar credenciales del registrador (GoDaddy, Namecheap, etc.) para apuntarlo a Netlify
+- [ ] **Google Calendar ID**: Pedro abre calendar.google.com en el browser → hace el calendario público → copia y pasa el "ID del calendario"
+- [ ] **Google API key**: Pedro abre console.cloud.google.com → crea proyecto "Shivadrops" → activa Google Calendar API → genera API key → pasa el código (empieza con `AIzaSy...`)
+
+### PASO 2 — Configurar el código con los datos de Pedro
+
+Una vez que Pedro pase sus datos, editar `reservas.html`:
+
+```js
+const CONFIG = {
+  PEDRO_WHATSAPP: '59891215632',   // ya configurado
+  GCAL_ID:        '',              // pegar el ID del calendario de Pedro
+  GCAL_API_KEY:   '',              // pegar la API key de Google Cloud
+  SHEET_ID:       '',              // dejar vacío si se usa Google Calendar
+  MANUAL_BLOCKED: []
+};
+```
+
+### PASO 3 — Transferir el repo a la cuenta de Pedro
+
+```bash
+# GitHub → Settings → Danger Zone → Transfer repository
+# Ingresar el usuario de GitHub de Pedro
+# Luego aceptar la invitación desde la cuenta de Pedro
+# Agregarse como colaborador en el repo de Pedro
+```
+
+### PASO 4 — Conectar Netlify con GitHub
+
+1. Entrar a netlify.com con la cuenta de Pedro
+2. "Add new site" → "Import an existing project" → conectar GitHub
+3. Seleccionar el repo Shivadrops
+4. Build command: *(dejar vacío — es HTML estático)*
+5. Publish directory: `/` (raíz)
+6. Clic en "Deploy site"
+
+### PASO 5 — Conectar el dominio
+
+1. En Netlify → "Domain settings" → "Add a domain" → ingresar el dominio de Pedro
+2. Netlify muestra los DNS servers (ej: `dns1.p01.nsone.net`)
+3. En el panel del registrador del dominio → cambiar los nameservers por los de Netlify
+4. Esperar propagación DNS: 5 minutos a 24 horas
+
+### PASO 6 — Verificar y lanzar
+
+- [ ] Abrir el dominio y probar todas las páginas
+- [ ] Probar el botón de WhatsApp en Reservas (verifica que llega bien a Pedro)
+- [ ] Confirmar que el calendario lee fechas de Google Calendar correctamente
+- [ ] Probar en mobile (iPhone y Android)
+- [ ] Revisar que el toggle ES/EN funciona en todas las páginas

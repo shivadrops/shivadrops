@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShivaDrops — Reservas</title>
+  <title>Shivadrops — Reservas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -589,6 +589,38 @@
 
     .wa-icon { font-size: 1.3rem; }
 
+    .submit-divider {
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--cream-faint);
+    }
+
+    .btn-email {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--cream-dim);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid rgba(240,228,204,0.15);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    .btn-email:hover {
+      border-color: rgba(240,228,204,0.35);
+      color: var(--cream);
+      background: rgba(240,228,204,0.04);
+    }
+
     .submit-note {
       font-size: 0.72rem;
       font-weight: 300;
@@ -714,22 +746,34 @@
      Editar PEDRO_WHATSAPP en el CONFIG de abajo (con código de país, sin +)
      Ej: Uruguay = 598XXXXXXXX
 
-  2. Calendario de fechas bloqueadas:
+  2. Calendario de fechas bloqueadas — OPCIÓN A: Google Calendar (recomendado)
+     a) En Google Calendar → clic en los 3 puntos del calendario → "Configuración y uso compartido"
+     b) En "Permisos de acceso" activar "Hacer público este calendario"
+     c) Copiar el "ID del calendario" que aparece más abajo (ej: abc123@group.calendar.google.com)
+        y pegarlo en GCAL_ID
+     d) Obtener una API key gratuita en console.cloud.google.com:
+        Nuevo proyecto → Activar "Google Calendar API" → Credenciales → Crear API key
+        (Restringirla a "Google Calendar API" para mayor seguridad)
+        Pegarla en GCAL_API_KEY
+     e) Pedro agrega eventos normales a su Google Calendar para las fechas reservadas
+        → el sitio los lee automáticamente como días bloqueados
+
+  3. Calendario de fechas bloqueadas — OPCIÓN B: Google Sheet (alternativa)
      a) Crear una Google Sheet con estas columnas en la fila 1:
         inicio | fin | servicio | notas
         (fechas en formato YYYY-MM-DD, ej: 2024-03-15)
      b) Publicar la hoja: Archivo → Compartir → Publicar en la web → CSV
      c) Copiar el ID de la hoja (la parte larga de la URL) y pegarlo en SHEET_ID
-     d) Cada vez que Pedro Miguel cierre una reserva, solo agrega una fila con las fechas
+     (Solo se usa si GCAL_ID está vacío)
 
-  3. Para bloquear fechas temporalmente sin la hoja, agregar al array DEMO_BLOCKED:
+  4. Para bloquear fechas manualmente sin conectar nada, agregar al array MANUAL_BLOCKED:
      { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
   ══════════════════════════════════════════════════════════════
   -->
 
   <!-- ══ NAV ══ -->
   <nav id="navbar">
-    <a href="home.html" class="nav-logo"><img src="assets/logobig_t.png" alt="ShivaDrops"></a>
+    <a href="home.html" class="nav-logo"><img src="assets/logobig_t.png" alt="Shivadrops"></a>
     <ul class="nav-links">
       <li><a href="home.html" data-es="Inicio" data-en="Home">Inicio</a></li>
       <li><a href="servicios.html" data-es="Servicios" data-en="Services">Servicios</a></li>
@@ -761,9 +805,9 @@
 
   <!-- ══ PAGE HERO ══ -->
   <div class="page-hero">
-    <span class="page-hero-label" id="hero-label">ShivaDrops</span>
+    <span class="page-hero-label" id="hero-label">Shivadrops</span>
     <h1 class="page-hero-title" id="hero-title">Reserva tu <span>experiencia</span></h1>
-    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. ShivaDrops se pondrá en contacto contigo para confirmar los detalles.</p>
+    <p class="page-hero-sub" id="hero-sub">Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Shivadrops se pondrá en contacto contigo para confirmar los detalles.</p>
   </div>
 
   <!-- ══ BOOKING ══ -->
@@ -906,7 +950,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" id="lbl-message">Mensaje o detalles adicionales</label>
-            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a ShivaDrops sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
+            <textarea class="form-textarea" id="inp-message" placeholder="Cuéntale a Shivadrops sobre tu retiro, necesidades especiales, restricciones alimentarias, etc."></textarea>
           </div>
         </div>
       </div>
@@ -920,8 +964,13 @@
           <span class="wa-icon">💬</span>
           <span id="btn-reservar-text">Reservar por WhatsApp</span>
         </button>
+        <div class="submit-divider" id="submit-divider">— o —</div>
+        <button class="btn-email" onclick="submitByEmail()" id="btn-email">
+          <span>✉</span>
+          <span id="btn-email-text">Enviar por Email</span>
+        </button>
         <p class="submit-note" id="submit-note">
-          Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. ShivaDrops revisará la disponibilidad y confirmará tu reserva personalmente.
+          WhatsApp abre una conversación directa con Pedro. Si no tenés WhatsApp, usá el email — recibirás respuesta en 24–48 hs.
         </p>
       </div>
 
@@ -933,17 +982,17 @@
     <div class="info-card">
       <span class="info-icon">📋</span>
       <h3 class="info-title" id="i1-title">¿Cómo funciona?</h3>
-      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. ShivaDrops revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
+      <p class="info-text" id="i1-text">Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Shivadrops revisa la disponibilidad y confirma tu reserva directamente con vos.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">⏱️</span>
       <h3 class="info-title" id="i2-title">Tiempo de respuesta</h3>
-      <p class="info-text" id="i2-text">ShivaDrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
+      <p class="info-text" id="i2-text">Shivadrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.</p>
     </div>
     <div class="info-card">
       <span class="info-icon">🌍</span>
       <h3 class="info-title" id="i3-title">Disponibilidad mundial</h3>
-      <p class="info-text" id="i3-text">ShivaDrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
+      <p class="info-text" id="i3-text">Shivadrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.</p>
     </div>
   </div>
 
@@ -951,7 +1000,7 @@
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="assets/logobig_t.png" alt="ShivaDrops">
+        <img src="assets/logobig_t.png" alt="Shivadrops">
         <p class="footer-tagline">"al andar se hace el camino"</p>
         <div class="footer-social">
           <a href="https://instagram.com/shivadrops" class="social-link" target="_blank" aria-label="Instagram">
@@ -999,7 +1048,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2024 ShivaDrops · Pedro Miguel Ormaechea Riera</span>
+      <span class="footer-copy">© 2024 Shivadrops · Pedro Miguel Ormaechea Riera</span>
       <span class="footer-copy">Todos los derechos reservados</span>
     </div>
   </footer>
@@ -1010,23 +1059,30 @@
     // ══════════════════════════════════════════════
     const CONFIG = {
       // WhatsApp de Pedro Miguel (código de país + número, sin + ni espacios)
-      // Uruguay: 598XXXXXXXXX
-      PEDRO_WHATSAPP: '598XXXXXXXXX',
+      PEDRO_WHATSAPP: '59891215632',
 
-      // Google Sheet ID para fechas bloqueadas
-      // Pasos:
-      // 1. Crear Google Sheet con columnas: inicio | fin | servicio | notas
-      // 2. Archivo > Compartir > Publicar en la web > Hoja1 > CSV > Publicar
-      // 3. Pegar aquí el ID de la URL de la hoja
-      // Ejemplo de ID: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms'
+      // ── Google Calendar público (recomendado) ──────────────────────────
+      // GCAL_ID: ID del calendario de Pedro
+      //   → Google Calendar (web) → clic en los 3 puntos del calendario
+      //   → "Configuración y uso compartido" → sección "ID del calendario"
+      //   → activar "Hacer público este calendario"
+      //   Ejemplo: 'pedro@gmail.com' o 'abc123@group.calendar.google.com'
+      //
+      // GCAL_API_KEY: clave de API de Google Cloud Console (una sola vez)
+      //   → console.cloud.google.com → Nuevo proyecto → Biblioteca
+      //   → buscar "Google Calendar API" → Activar
+      //   → Credenciales → Crear credenciales → Clave de API
+      //   → Restricciones de API: Google Calendar API
+      // ──────────────────────────────────────────────────────────────────
+      GCAL_ID:      '',
+      GCAL_API_KEY: '',
+
+      // Respaldo: Google Sheet (se usa solo si GCAL_ID está vacío)
       SHEET_ID: '',
 
-      // Fechas bloqueadas manuales (mientras no hay Google Sheet configurada)
+      // Fechas bloqueadas manuales (siempre activas, para cualquier caso urgente)
       // Formato: { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
-      MANUAL_BLOCKED: [
-        // Ejemplo — eliminar cuando se conecte la hoja:
-        // { start: '2024-04-10', end: '2024-04-15' },
-      ]
+      MANUAL_BLOCKED: []
     };
     // ══════════════════════════════════════════════
 
@@ -1100,24 +1156,61 @@
       return `${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
     }
 
-    // ─── Load blocked dates from Google Sheet ───
+    // ─── Load blocked dates ───
     async function loadBlockedDates() {
-      // Start with manual blocked dates
       blockedRanges = [...CONFIG.MANUAL_BLOCKED];
 
-      if (!CONFIG.SHEET_ID) {
-        renderCalendar();
-        return;
+      if (CONFIG.GCAL_ID && CONFIG.GCAL_API_KEY) {
+        await loadFromGoogleCalendar();
+      } else if (CONFIG.SHEET_ID) {
+        await loadFromGoogleSheet();
       }
 
+      renderCalendar();
+    }
+
+    async function loadFromGoogleCalendar() {
       try {
-        const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+        const now     = new Date();
+        const timeMin = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+        const timeMax = new Date(now.getFullYear() + 1, now.getMonth() + 1, 1).toISOString();
+        const url     = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CONFIG.GCAL_ID)}/events`
+                      + `?key=${CONFIG.GCAL_API_KEY}`
+                      + `&timeMin=${timeMin}&timeMax=${timeMax}`
+                      + `&singleEvents=true&orderBy=startTime`;
+
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (!data.items) return;
+
+        for (const event of data.items) {
+          const start = event.start.date || (event.start.dateTime || '').split('T')[0];
+          let   end   = event.end.date   || (event.end.dateTime   || '').split('T')[0];
+
+          // Google Calendar all-day end is exclusive — subtract 1 day
+          if (event.end.date) {
+            const d = new Date(end + 'T12:00:00');
+            d.setDate(d.getDate() - 1);
+            end = d.toISOString().split('T')[0];
+          }
+
+          if (start && end) blockedRanges.push({ start, end });
+        }
+      } catch (e) {
+        console.warn('No se pudo cargar Google Calendar:', e);
+      }
+    }
+
+    async function loadFromGoogleSheet() {
+      try {
+        const url  = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
         const res  = await fetch(url);
         const text = await res.text();
 
-        const rows = text.trim().split('\n').slice(1); // skip header row
+        const rows = text.trim().split('\n').slice(1);
         for (const row of rows) {
-          const cols = row.split(',').map(v => v.replace(/^"|"$/g, '').trim());
+          const cols  = row.split(',').map(v => v.replace(/^"|"$/g, '').trim());
           const start = cols[0];
           const end   = cols[1];
           if (start && end && /^\d{4}-\d{2}-\d{2}$/.test(start) && /^\d{4}-\d{2}-\d{2}$/.test(end)) {
@@ -1125,10 +1218,8 @@
           }
         }
       } catch (e) {
-        console.warn('No se pudo cargar el calendario remoto:', e);
+        console.warn('No se pudo cargar Google Sheet:', e);
       }
-
-      renderCalendar();
     }
 
     // ─── Render calendar ───
@@ -1257,7 +1348,7 @@
 
       if (selectedEnd) {
         const endFmt = formatDate(selectedEnd, currentLang);
-        const days   = diffDays(selectedStart, selectedEnd);
+        const days   = Math.max(1, diffDays(selectedStart, selectedEnd));
         const durTxt = currentLang === 'es'
           ? `${days} día${days !== 1 ? 's' : ''} de servicio`
           : `${days} day${days !== 1 ? 's' : ''} of service`;
@@ -1357,7 +1448,7 @@
         msg =
 `Hola Pedro Miguel 👋
 
-Quiero hacer una reserva en *ShivaDrops*:
+Quiero hacer una reserva en *Shivadrops*:
 
 📋 *Servicio:* ${service.value}
 📅 *Inicio:* ${startFmt}
@@ -1376,7 +1467,7 @@ _Enviado desde shivadrops.com_`;
         msg =
 `Hello Pedro Miguel 👋
 
-I'd like to make a booking at *ShivaDrops*:
+I'd like to make a booking at *Shivadrops*:
 
 📋 *Service:* ${service.value}
 📅 *Start:* ${startFmt}
@@ -1398,12 +1489,94 @@ _Sent from shivadrops.com_`;
       window.open(`https://wa.me/${waNum}?text=${encoded}`, '_blank');
     }
 
+    // ─── Submit → Email ───
+    function submitByEmail() {
+      const name     = document.getElementById('inp-name').value.trim();
+      const email    = document.getElementById('inp-email').value.trim();
+      const phone    = document.getElementById('inp-phone').value.trim();
+      const people   = document.getElementById('inp-people').value.trim();
+      const location = document.getElementById('inp-location').value.trim();
+      const message  = document.getElementById('inp-message').value.trim();
+      const service  = document.querySelector('input[name="service"]:checked');
+
+      const es = currentLang === 'es';
+
+      const errors = [];
+      if (!name)    errors.push(es ? 'nombre' : 'name');
+      if (!email)   errors.push(es ? 'email' : 'email');
+      if (!phone)   errors.push(es ? 'WhatsApp' : 'WhatsApp');
+      if (!service) errors.push(es ? 'servicio' : 'service');
+      if (!selectedStart || !selectedEnd) errors.push(es ? 'fechas' : 'dates');
+
+      if (errors.length) {
+        showNotice(
+          es ? `Por favor completa: ${errors.join(', ')}.`
+             : `Please complete: ${errors.join(', ')}.`,
+          'error'
+        );
+        return;
+      }
+
+      hideNotice();
+
+      const startFmt = formatDate(selectedStart, currentLang);
+      const endFmt   = formatDate(selectedEnd, currentLang);
+      const days     = Math.max(1, diffDays(selectedStart, selectedEnd));
+
+      const subject = es
+        ? `Reserva Shivadrops — ${service.value}`
+        : `Shivadrops Booking — ${service.value}`;
+
+      let body;
+      if (es) {
+        body =
+`Hola Pedro Miguel,
+
+Quiero hacer una reserva en Shivadrops:
+
+Servicio: ${service.value}
+Inicio: ${startFmt}
+Fin: ${endFmt}
+Duración: ${days} día${days !== 1 ? 's' : ''}
+${people ? `Personas: ${people}` : ''}
+${location ? `Lugar: ${location}` : ''}
+
+Nombre: ${name}
+Email: ${email}
+WhatsApp: ${phone}
+${message ? `\nMensaje:\n${message}` : ''}
+
+Enviado desde shivadrops.com`;
+      } else {
+        body =
+`Hello Pedro Miguel,
+
+I'd like to make a booking at Shivadrops:
+
+Service: ${service.value}
+Start: ${startFmt}
+End: ${endFmt}
+Duration: ${days} day${days !== 1 ? 's' : ''}
+${people ? `People: ${people}` : ''}
+${location ? `Location: ${location}` : ''}
+
+Name: ${name}
+Email: ${email}
+WhatsApp: ${phone}
+${message ? `\nMessage:\n${message}` : ''}
+
+Sent from shivadrops.com`;
+      }
+
+      window.location.href = `mailto:shivadropsu@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
     // ─── Language ───
     const T = {
       es: {
-        'hero-label': 'ShivaDrops',
+        'hero-label': 'Shivadrops',
         'hero-title': 'Reserva tu <span>experiencia</span>',
-        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. ShivaDrops se pondrá en contacto contigo para confirmar los detalles.',
+        'hero-sub':   'Selecciona las fechas en el calendario, elige tu servicio y envía tu solicitud. Shivadrops se pondrá en contacto contigo para confirmar los detalles.',
         'leg-available':'Disponible','leg-blocked':'No disponible','leg-selected':'Seleccionado','leg-range':'Tu período',
         'sum-start-lbl':'Inicio','sum-end-lbl':'Fin',
         'step1-title':'01 · Elige tu servicio',
@@ -1419,15 +1592,16 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Lugar del evento / retiro',
         'lbl-message':'Mensaje o detalles adicionales',
         'btn-reservar-text':'Reservar por WhatsApp',
-        'submit-note':'Al hacer clic se abrirá WhatsApp con tu solicitud pre-completada. ShivaDrops revisará la disponibilidad y confirmará tu reserva personalmente.',
-        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. ShivaDrops revisa la disponibilidad y confirma tu reserva directamente con vos.',
-        'i2-title':'Tiempo de respuesta','i2-text':'ShivaDrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
-        'i3-title':'Disponibilidad mundial','i3-text':'ShivaDrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
+        'btn-email-text':'Enviar por Email',
+        'submit-note':'WhatsApp abre una conversación directa con Pedro. Si no tenés WhatsApp, usá el email — recibirás respuesta en 24–48 hs.',
+        'i1-title':'¿Cómo funciona?','i1-text':'Seleccionás fechas y servicio, enviás tu solicitud por WhatsApp. Shivadrops revisa la disponibilidad y confirma tu reserva directamente con vos.',
+        'i2-title':'Tiempo de respuesta','i2-text':'Shivadrops responde en un plazo de 24–48 horas. Para retiros de varios días se recomienda reservar con al menos 3–4 semanas de antelación.',
+        'i3-title':'Disponibilidad mundial','i3-text':'Shivadrops asiste a retiros y eventos en cualquier parte del mundo. Los viajes internacionales se coordinan directamente con él para cubrir traslados y logística.',
       },
       en: {
-        'hero-label': 'ShivaDrops',
+        'hero-label': 'Shivadrops',
         'hero-title': 'Book your <span>experience</span>',
-        'hero-sub':   'Select dates on the calendar, choose your service and send your request. ShivaDrops will get in touch with you to confirm the details.',
+        'hero-sub':   'Select dates on the calendar, choose your service and send your request. Shivadrops will get in touch with you to confirm the details.',
         'leg-available':'Available','leg-blocked':'Not available','leg-selected':'Selected','leg-range':'Your period',
         'sum-start-lbl':'Start','sum-end-lbl':'End',
         'step1-title':'01 · Choose your service',
@@ -1443,10 +1617,11 @@ _Sent from shivadrops.com_`;
         'lbl-location':'Event / retreat location',
         'lbl-message':'Message or additional details',
         'btn-reservar-text':'Book via WhatsApp',
-        'submit-note':'Clicking will open WhatsApp with your request pre-filled. ShivaDrops will review availability and confirm your booking personally.',
-        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. ShivaDrops reviews availability and confirms your booking directly with you.',
-        'i2-title':'Response time','i2-text':'ShivaDrops responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
-        'i3-title':'Worldwide availability','i3-text':'ShivaDrops assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
+        'btn-email-text':'Send by Email',
+        'submit-note':'WhatsApp opens a direct conversation with Pedro. No WhatsApp? Use email instead — you\'ll hear back within 24–48 hrs.',
+        'i1-title':'How does it work?','i1-text':'You select dates and a service, send your request via WhatsApp. Shivadrops reviews availability and confirms your booking directly with you.',
+        'i2-title':'Response time','i2-text':'Shivadrops responds within 24–48 hours. For multi-day retreats, booking at least 3–4 weeks in advance is recommended.',
+        'i3-title':'Worldwide availability','i3-text':'Shivadrops assists with retreats and events anywhere in the world. International travel is coordinated directly with him to cover logistics.',
       }
     };
 
